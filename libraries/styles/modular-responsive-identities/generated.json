@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "style_id": "modular-responsive-identities",
+  "coverage": "all_source_samples",
+  "examples": [
+    {
+      "id": "MR01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "MR01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Generate exactly one finished minimalist brand-language study, landscape 3:2. This is an AI reinterpretation of the referenced source case for a design library, not an official brand redesign. Rebuild the artwork with sophisticated proportions and excellent spacing. Flat front-facing artwork, wide calm negative space, warm ivory #F2F0E8 ground and charcoal ink, a single muted color family only. No scenery, mockup, frame, glow, chrome, glossy 3D, gradients, dense pattern or decorative noise. Preserve the source concept but simplify its visual treatment.\nReference role: modular typographic cells. Retain the idea of words in gently skewed, rounded rectangular containers. Compose five separate modules in two balanced rows, leaving airy margins around the compact group. Top row text \"Welcome\" and \"to\". Bottom row text \"NLP\", \"Now\" and a simple right arrow. Use beautifully spaced light geometric sans-serif lettering, correctly spelled. The four word containers are dark charcoal, the arrow container is muted moss #707D67, all text ivory. Subtle differences in module width and slanted sides express the system. Eliminate all glossy biomorphic objects from the source; the negative space between the modules is the main visual rhythm. No other text.",
+      "input_files": [
+        "references/MR01-cells.jpg"
+      ],
+      "output_file": "generated/MR01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "f456b1785eecdb71063e2c4b099d286ba4649ab56f1472c37eb71880be644002",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看全幅，检查文字、模块家族和主次留白。",
+        "notes": "两行五块模块、Welcome/to/NLP/Now 和箭头均清楚，宽窄和切边保持模块语法；去除原高光体块。字面有轻微明暗，不当作实际字体文件。"
+      }
+    },
+    {
+      "id": "MR02",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "MR02",
+      "tool": "image_gen.imagegen",
+      "prompt": "Generate exactly one finished minimalist brand-language study, landscape 3:2. This is an AI reinterpretation of the referenced source case for a design library, not an official brand redesign. Rebuild the artwork with sophisticated proportions and excellent spacing. Flat front-facing artwork, wide calm negative space, warm ivory #F2F0E8 ground and charcoal ink, a single muted color family only. No scenery, mockup, frame, glow, chrome, glossy 3D, gradients, dense pattern or decorative noise. Preserve the source concept but simplify its visual treatment.\nReference role: expanded rounded-bar and teardrop components used in the Slack campaign. Create one calm Swiss editorial composition: an elegantly spaced vertical cluster of about twelve individual rounded bars and rounded teardrop modules at the left, a large clean empty field at the right. The modules visibly share the same unit height but vary their lengths. Use charcoal plus one muted moss green, not four bright brand colors. Put the exact lowercase word \"slack\" in modest clean sans-serif near the lower right, with generous clearspace. No invented brand symbol next to the word. Preserve component family resemblance and the idea of an expandable system. Remove the bus shelter, outdoor photograph, slogan, purple background and dense confetti. No other text.",
+      "input_files": [
+        "references/MR02-application.jpg"
+      ],
+      "output_file": "generated/MR02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "07fbbc29d72b2f53e6ed6ea26bb711e984235f0d406b6ad8fcdfd7d77503db5a",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看全幅，检查文字、模块家族和主次留白。",
+        "notes": "圆头条与圆角水滴同高度扩展，slack 字样正确，左侧图形与右侧留白清楚。实际模块约三十个，多于prompt建议数量，但单列条带、两色和大留白保持克制；不是原四色官方资产。"
+      }
+    }
+  ]
+}

@@ -15,6 +15,12 @@
 
 `visual-system` 约束 AI 编程 Agent 完成品牌设计工作：设计或迭代 Logo，从参考中提取视觉方法，验证字体，建立品牌语言与手册，制作可编辑的品牌物料，再把品牌参数以 tokens、字体配置和组件状态示例的形式交给开发。Agent 可以从新简报开始，也可以接着已有成果做，只执行你要求的阶段。
 
+## 在不同 Agent 中开始
+
+使用能读取中文说明的 Agent，直接通过文件工具打开 [SKILL.md](SKILL.md)，以其所在目录为 Skill 根目录，沿命中的任务路由继续，不依赖专用的 Skill 调用命令。科技、AI、SaaS 的方向研究可先看[风格选择表](libraries/styles/SELECT.md)，分别确定识别、传播物料与界面参数的用途。
+
+[运行能力说明](references/runtime.md)按产物列出依赖。只有文字能力时可以完成简报与方向研究；看图、渲染、tokens 校验和平台接入需相应实际工具。缺项记明并交接当前文件与选择，不冒称通过。ui-constraints、code-video 等是按任务选用的相邻工作流，缺少它们不阻断可独立完成的品牌工作。这套约定支持迁移使用，不代表已在所有 Agent 或平台认证。
+
 ## 覆盖的任务
 
 | 任务 | Agent 的入口 |
@@ -38,12 +44,14 @@
 
 机械检查、视觉目检和行为测试分开报告。小尺寸、单色与反白、深浅底、拼写和真实应用都在实际产物上核对，校验器通过不能报告成视觉通过。
 
+直观看当前例图，打开[风格案例导航](libraries/styles/CASEBOOK.md)。各包原图档案保留品牌系统与应用观察，AI 重新演绎与原创研究分区展示；三例未生成与一例辅助图形替代均明确标记。
+
 ## 目录内容
 
 ```text
 SKILL.md                 入口：任务路由与工作规则
-references/              15 张规则卡（BD-*）、流程与交付合同
-libraries/styles/        16 个风格包、198 个参考样本，逐图记录来源
+references/              16 张规则卡（BD-*）、运行能力说明、流程与交付合同
+libraries/styles/        12 类风格、152 张 AI 图（119 重绘＋33 原创）、122 源样本与3例阻碍
 libraries/fonts/         Space Grotesk、Noto Sans SC、JetBrains Mono（OFL）及一组已测搭配
 libraries/prompts/       Prompt 模式：新构思、轮廓细化、材质配色、字标、应用展示
 libraries/applications/  公告 1200×630、竖版 1080×1350、封面 1600×900 模板及渲染器
@@ -53,30 +61,26 @@ agents/openai.yaml       Codex 展示元数据
 AGENTS.md                维护本 Skill 时的规则
 ```
 
-每个风格包都有 `STYLE.md`、`EXAMPLES.md`、`PROMPTS.md` 和 `sources.json`。16 个包的状态都是 `provisional`：参考已提取并核对，迁移到新品牌的效果尚未验证。
+每包有 `STYLE.md`、`EXAMPLES.md`、`PROMPTS.md`、`generated.json`、`REFERENCES.md` 和 `sources.json`，包含原创的包另有 `originals.json`。12 类、每类至少 10 张、共 152 张研究图按[简约艺术方向](libraries/styles/ART-DIRECTION.md)展示；原作、来源重绘与独立原创分别登记。包状态仍为 `provisional`：静态研究不等于真实品牌采用、完整迁移、字体、正式资产或产品集成通过。
 
 | 风格包 | 方法 |
 | --- | --- |
-| `semantic-tech-marks` | Alex Tass · 科技语义与字母融合 |
-| `modern-product-wordmarks` | Mihai Dolganiuc · 现代产品字标 |
-| `folded-ribbon-paths` | Dmitry Lepisov · 折带与连续路径 |
-| `geometric-letter-monograms` | Jeroen van Eerden · 几何字母与组合 |
+| `pixel-grid-identities` | 像素网格与离散图形；Mistral、MediaViz |
+| `editorial-typographic-systems` | 编辑式字体与信息层级、手绘概念插画；Anthropic、Perplexity、Notion、Intercom |
+| `modular-responsive-identities` | 可组合与可变识别；Cohere、Slack |
+| `parametric-science-visuals` | 参数化科学图形；Secondmind、Covariant |
+| `semantic-tech-marks` | 科技语义与字母融合 |
+| `modern-product-wordmarks` | 现代产品字标 |
+| `folded-ribbon-paths` | 折带与连续路径 |
+| `geometric-letter-monograms` | 几何字母与组合 |
 | `geometric-negative-space` | 几何负空间 |
 | `monochrome-product-marks` | 黑白产品意象 |
-| `soft-dimensional-symbols` | 轻立体图形 |
-| `holographic-chrome-relief` | Martin Naumann · 虹彩金属浮雕，只借材质层 |
-| `modernist-corporate-symbols` | Chermayeff & Geismar & Haviv · 现代主义企业符号 |
-| `handwritten-script-wordmarks` | 手写与连笔字标 |
+| `modernist-corporate-symbols` | 现代主义企业符号 |
 | `monoline-contour-marks` | 单线与轮廓图形 |
-| `retro-skeuomorphic-marks` | 复古精密拟物 |
-| `retro-badge-emblems` | 复古徽章 |
-| `ornamental-folk-symbols` | Stefan Kanchev · 装饰与民艺符号 |
-| `illustrative-brand-mascots` | Von Glitschka · 插画品牌角色 |
-| `capsule-eye-bot-avatars` | 黑色胶囊眼极简 Bot 头像 |
 
 ## 安装
 
-仓库约 140 MB，主要是参考图片和 Noto Sans SC 字体，建议浅克隆。
+仓库包含原始参考、生成示例与字体文件，建议浅克隆。
 
 Claude Code 全局可用：
 
@@ -94,7 +98,7 @@ git clone --depth 1 https://github.com/Bearisbug/visual-system.git ~/.claude/ski
 | uv（Python 3，仅标准库） | 运行 vendor 的 tokens 生成器与 `check-tokens` |
 | `xmllint` | 检查时解析 SVG |
 | ImageMagick 7（`magick`） | `check.sh --deep`，以及 release 校验中的 PNG 与透明度检查 |
-| 浏览器 | 预览模板、导出 PNG；默认使用 Microsoft Edge |
+| 具备相应检查 / 导出能力的浏览器 | 预览模板、导出 PNG；优先 Edge，不可用时记录实际浏览器 |
 | 生图工具（可选） | 位图探索与材质研究；矢量母版直接用 SVG 构建 |
 
 ## 用法
@@ -124,6 +128,6 @@ node scripts/check-tokens.mjs /abs/path/to/brand --lint /abs/path/to/example.css
 
 ## 许可
 
-原创文本、脚本、模板与 Logo 采用 [MIT 许可](LICENSE)。随附字体（SIL OFL 1.1）、胶囊眼 Bot Prompt（CC BY-NC 4.0）与第三方参考图片沿用各自条款，详见 [NOTICE](NOTICE.md)。权利人可以提交 issue，要求移除图片或更正署名。
+原创文本、脚本、模板与 Logo 采用 [MIT 许可](LICENSE)。随附字体（SIL OFL 1.1）、第三方参考与含第三方标志的 AI 重绘分别按声明处理，详见 [NOTICE](NOTICE.md)。权利人可以提交 issue，要求移除图片或更正署名。
 
 Logo 把同一个圆角方形嵌套了三次，分别作字碗、字腔和强调色块，对应「一份母版，任何尺寸都成立」。

@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "style_id": "semantic-tech-marks",
+  "coverage": "all_source_samples",
+  "examples": [
+    {
+      "id": "T01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "T01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one refined AI reinterpretation study of the attached Cirrus logo, based on its existing concept, not an official redesign or a source restoration. Reference role: the attached image defines the recognizable C-like curved ribbon and sharp wing-like terminal points, plus exact brand spelling. Keep the open flowing C silhouette, inner curved notch and two tapered corners; simplify all rendering. Compose a centered compact symbol above the exact word \"Cirrus\", in a carefully spaced contemporary sans serif. Landscape 3:2 canvas, warm white background, generous clear margins. Symbol in muted petrol blue with a single slightly darker flat fold plane; word in near-black. Flat graphic or extremely shallow matte relief only, crisp deliberate contours, optically balanced typography. One main mark and one name only. No cyan glow, gradients, chrome, glossy plastic, objects, extra captions, watermark, border, multiple variants or UI.",
+      "input_files": [
+        "references/T01.png"
+      ],
+      "output_file": "generated/T01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "ea1259d44acb4dcf53fa018be8c0eb5e5eedb53ea754237d12699d206536b52f",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已逐张查看：开口 C 式带状主体、内凹曲线与两个尖端保留，Cirrus 拼写清楚；暖白留白、近黑字标与低饱和蓝色折面统一，属于重新演绎而非精确复原。"
+      }
+    },
+    {
+      "id": "T02",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "T02",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make a single AI reinterpretation study of the attached logo; keep its recognizable concept and key structural relationships, with refined minimal presentation. Not an official redesign, not a restoration. Landscape 3:2, warm white background, generous space, one symbol and exact name only, clean deliberate edges and careful optical spacing. Near-black typography and at most one muted accent hue. Flat matte graphic, no chrome, neon, candy gradients, cast shadows, texture clutter, captions, watermark, frames, mockups or additional variants. Reference role: the reference identifies Sentience, using two interwoven rising wave bands that jointly suggest an S. Preserve both bands, broad curving diagonal ascent, and visible crossing. Use two restrained tonal values of muted indigo, with a darker overlap, instead of cyan and magenta. Place symbol above exact text \"Sentience\" in a balanced contemporary sans serif; retain capital S followed by lowercase letters.",
+      "input_files": [
+        "references/T02.png"
+      ],
+      "output_file": "generated/T02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "be09d2dab0b8dc15f2ee1e92e3d61dc122f0fabd07df155dc41a697f6ec6cbc8",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：双波带上扬并交错形成 S 式关系，Sentience 拼写完整；高饱和双色改为同一靛蓝色相的层次，留白清楚。"
+      }
+    },
+    {
+      "id": "T03",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "T03",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make a single AI reinterpretation study of the attached logo; keep its recognizable concept and key structural relationships, with refined minimal presentation. Not an official redesign, not a restoration. Landscape 3:2, warm white background, generous space, one symbol and exact name only, clean deliberate edges and careful optical spacing. Near-black typography and at most one muted accent hue. Flat matte graphic, no chrome, neon, candy gradients, cast shadows, texture clutter, captions, watermark, frames, mockups or additional variants. Reference role: Trialog uses three rounded ribbon segments joined around an open triangular center. Preserve exactly three arms, rounded terminal construction and triangular central negative space. Use muted deep burgundy with darker crossing planes. Compose a restrained horizontal lockup with triangle mark left and exact uppercase text \"TRIALOG\" right, in a rounded clean sans serif, matched visual weight. The mark remains a triangular loop rather than a solid triangle.",
+      "input_files": [
+        "references/T03.png"
+      ],
+      "output_file": "generated/T03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "b750003c56c1cb9db3f2c661bbd5ab715a9d1cd66dd62710ef87e3aa41a14748",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：三段圆头带保留三角闭合关系和中央留白，TRIALOG 拼写完整；酒红折面与近黑文字的横向组合简洁，未声称精确复原。"
+      }
+    },
+    {
+      "id": "T04",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "T04",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Produce one restrained AI reinterpretation study of this reference, preserving the recognizable concept and key structure. This is a study, not an official redesign or restoration. Landscape 3:2 warm white canvas, generous negative space, crisp graphic contours, flat matte shapes, optically balanced. Near-black plus at most one subdued accent hue, tonal values of that hue permitted. No glossy surfaces, neon, rainbow palette, chrome, added decorative geometry, mockup objects, long captions, watermark, borders or extra variants. Reference role: stacked diagonal analytical planes around a strong white A-shaped negative-space channel, with the two-line name \"Aspect\" / \"Analytics\". Retain the ascending sheet edges and unmistakable open A channel, simplify small planes if needed without filling the A. Use muted cobalt-navy shades. Mark left, exact words on two balanced lines right, carefully set in a near-black sans serif.",
+      "input_files": [
+        "references/T04.png"
+      ],
+      "output_file": "generated/T04.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "196546f2b4461e3bc3c435cd2e517d07cf5a05f7815cc3dbadca4508d10879ce",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：递升平面、白色 A 式通道和两行 Aspect Analytics 均保留且可辨，蓝色层次统一到一个色相；版面清楚，未作精确几何复原声明。"
+      }
+    },
+    {
+      "id": "T05",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "T05",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Produce one restrained AI reinterpretation study of this reference, preserving the recognizable concept and key structure. This is a study, not an official redesign or restoration. Landscape 3:2 warm white canvas, generous negative space, crisp graphic contours, flat matte shapes, optically balanced. Near-black plus at most one subdued accent hue, tonal values of that hue permitted. No glossy surfaces, neon, rainbow palette, chrome, added decorative geometry, mockup objects, long captions, watermark, borders or extra variants. Reference role: a symbol-only V formed by exactly two broad rounded diagonal pill-like bands, joined at the bottom with a darker overlap. Preserve two upper circular ends and the rounded bottom point. Use muted indigo tonal values, clean flat treatment. Center the symbol alone with spacious margins; no wordmark, letters or text at all.",
+      "input_files": [
+        "references/T05.png"
+      ],
+      "output_file": "generated/T05.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "848de29d09e80b9087e2f4071d8b94330ce5aaa94e510e0d94f887ed0aebeb8d",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：两个圆端斜带与底部圆角形成 V，交叠关系清楚；保留纯符号范围，同一靛蓝色相与暖白背景，未增加字样。"
+      }
+    },
+    {
+      "id": "T06",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "T06",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Produce one restrained AI reinterpretation study of this reference, preserving the recognizable concept and key structure. This is a study, not an official redesign or restoration. Landscape 3:2 warm white canvas, generous negative space, crisp graphic contours, flat matte shapes, optically balanced. Near-black plus at most one subdued accent hue, tonal values of that hue permitted. No glossy surfaces, neon, rainbow palette, chrome, added decorative geometry, mockup objects, long captions, watermark, borders or extra variants. Reference role: TinyNotes horizontal logo. Keep the compact square icon divided into muted ochre upper area and near-black lower area, including its distinct small folded-page/speech notch at the meeting edge. Exact text \"TinyNotes\" to the right, bold clean sans serif with capital T and N. Preserve icon-to-name relationship, make the ochre calm rather than luminous yellow.",
+      "input_files": [
+        "references/T06.png"
+      ],
+      "output_file": "generated/T06.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "a4f4e0a0219ab6ecc587cd63314feb7720aa7e6e378e0baeaffd2a2953f3246d",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：黄黑方块与折页式缺口、TinyNotes 的大小写拼写均保留；强调色收敛为暖黄，粗重字标与大留白清楚。"
+      }
+    },
+    {
+      "id": "T07",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "T07",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Reinterpret this individual reference as one minimal art-directed visual study, retaining its identifiable concept and critical shape relationships. Do not claim an official redesign or exact restoration. Use a landscape 3:2 warm-white canvas, centered horizontal logo lockup, generous margins and balanced clear space. Near-black typography plus a single restrained accent hue, tonal values allowed. Flat matte graphic shapes, precise edges, deliberate optical kerning. No rainbow palette, fluorescent colors, chrome, candy gradients, elaborate objects, long text, watermark, labels, border or secondary examples. Reference role: nimble has a modular N-like mark made of square blocks and diagonal joins, with one detached upper-right square and one detached lower-left square; a square dot on the i echoes the blocks. Preserve these relationships. Use muted burnt-orange / terracotta tonal planes for the small mark and i dot, near-black lowercase exact text \"nimble\".",
+      "input_files": [
+        "references/T07.png"
+      ],
+      "output_file": "generated/T07.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "8ed506dbc5bacfbe40a925ed43e729d509724ba1dbb953e36c6bb4d8424d4ffc",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：N 式模块及上下分离方块保留，nimble 全小写且 i 的方点呼应图形；橙红多色收敛为土橙单色相，主体清楚。"
+      }
+    },
+    {
+      "id": "T08",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "T08",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Reinterpret this individual reference as one minimal art-directed visual study, retaining its identifiable concept and critical shape relationships. Do not claim an official redesign or exact restoration. Use a landscape 3:2 warm-white canvas, centered horizontal logo lockup, generous margins and balanced clear space. Near-black typography plus a single restrained accent hue, tonal values allowed. Flat matte graphic shapes, precise edges, deliberate optical kerning. No rainbow palette, fluorescent colors, chrome, candy gradients, elaborate objects, long text, watermark, labels, border or secondary examples. Reference role: Cobiro is an open C built from four connected isometric cube modules. Preserve the angular cube construction, open right side and coherent C silhouette. Simplify the current multi-hue cube faces to muted aubergine tonal values. Exact text \"Cobiro\" to the right, near-black balanced geometric sans serif.",
+      "input_files": [
+        "references/T08.png"
+      ],
+      "output_file": "generated/T08.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "8d9e9d9255d86d5373f1b1efee88e352a9f085bec8d392cfe33853ed379831b5",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：四个立方模块围成右侧开口 C，Cobiro 名称完整；多色面改为同一茄紫色相，模块结构和留白可辨。"
+      }
+    },
+    {
+      "id": "T09",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "T09",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Reinterpret this individual reference as one minimal art-directed visual study, retaining its identifiable concept and critical shape relationships. Do not claim an official redesign or exact restoration. Use a landscape 3:2 warm-white canvas, centered horizontal logo lockup, generous margins and balanced clear space. Near-black typography plus a single restrained accent hue, tonal values allowed. Flat matte graphic shapes, precise edges, deliberate optical kerning. No rainbow palette, fluorescent colors, chrome, candy gradients, elaborate objects, long text, watermark, labels, border or secondary examples. Reference role: FlowSource uses four broad elliptical ribbon turns alternating left and right around a shared vertical axis, giving a continuous rotating flow. Preserve four alternating lobes and the slender central joining axis. Replace the multicolor palette with calm petrol-blue tonal values, clear flat layered shapes. Exact text \"FlowSource\" to the right in near-black, capital F and S.",
+      "input_files": [
+        "references/T09.png"
+      ],
+      "output_file": "generated/T09.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "469d5975773388fe3303bb4a4e11d42e890a9599fb215fa89842986f94aa5d3b",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：四个左右交替的椭圆带片围绕竖轴构成旋转关系，FlowSource 拼写完整；彩虹色改为蓝色层次，横向组合清楚。"
+      }
+    },
+    {
+      "id": "T10",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "T10",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Reinterpret this individual reference as one minimal art-directed visual study, retaining its identifiable concept and critical shape relationships. Do not claim an official redesign or exact restoration. Use a landscape 3:2 warm-white canvas, centered horizontal logo lockup, generous margins and balanced clear space. Near-black typography plus a single restrained accent hue, tonal values allowed. Flat matte graphic shapes, precise edges, deliberate optical kerning. No rainbow palette, fluorescent colors, chrome, candy gradients, elaborate objects, long text, watermark, labels, border or secondary examples. Reference role: BlueBoard uses a upright rectangular spine with two right-hand circular lobes, reading as capital B; a diagonal split traverses the mark. Retain exactly two circular lobes, the left straight spine and diagonal division. Use muted slate-blue tonal planes. Exact text \"BlueBoard\" in near-black on the right, capital B twice, with careful spacing.",
+      "input_files": [
+        "references/T10.png"
+      ],
+      "output_file": "generated/T10.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "f1291e7462932aa658e15e9f8fcc3eb6d39f63467b9357726419d5e2cd8dfe8a",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：直立矩形、上下两圆及斜向分区仍构成 B，BlueBoard 拼写正确；低饱和蓝灰与近黑字标、留白一致。"
+      }
+    }
+  ]
+}

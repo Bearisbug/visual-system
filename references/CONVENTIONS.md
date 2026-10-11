@@ -6,6 +6,7 @@
 
 - `SKILL.md`：适用范围与阶段路由，不复制规则正文。
 - `00-catalog.md`：每卡一行，ID、触发和唯一文件锚点。
+- `runtime.md`：按产物选择运行能力与跨 Agent 接续。
 - `design.md`：输入、来源、构思、反馈与材质；`assets.md`：字体、母版、导出与交付；`system.md`：品牌语言、设计系统 token、图标与应用；`handoff.md`：开发视觉交接。
 - `flow-*.md`：顺序流程，通过 ID 引用规则，不另定义同一要求。
 - `specimen-spec.md`：外部的标准组件样例页规格，完整深度的 tokens 须满足它；规则卡引用它，不在其中定义规则。

@@ -1,7 +1,7 @@
 ---
 id: geometric-negative-space
 name: 几何负空间
-version: 0.1.0
+version: 0.2.0
 status: provisional
 scope: 由块面切口、孔隙和共用边界建立识别的平面标志
 source_collection: Logggos 负空间分类中的十个具名品牌
@@ -13,9 +13,11 @@ source_collection: Logggos 负空间分类中的十个具名品牌
 
 把空白作为可设计的形状，同时检查外轮廓与内部缺口。负空间需要承担结构或语义，不能只为增加一个藏图谜题。
 
-![十例参考总览](references/overview.png)
+![几何负空间 · AI 重新演绎](generated/N01.png)
 
-查看 [十例清晰参考](EXAMPLES.md)、[来源与清晰度记录](sources.json)和 [Prompt 模板](PROMPTS.md)。名称是本库的描述性分类，不代表全部作者作品采用统一方法。
+本包的[当前示例](EXAMPLES.md)按[艺术方向](../ART-DIRECTION.md)展示；完整实际 Prompt 与逐例目检见[生成清单](generated.json)。下面涉及原作的观察与事实以[来源档案](REFERENCES.md)为依据，AI 改动不能反写为原作参数。
+
+查看 [十例 AI 示例](EXAMPLES.md)、[来源与清晰度记录](sources.json)和 [Prompt 模板](PROMPTS.md)。名称是本库的描述性分类，不代表全部作者作品采用统一方法。
 
 ## 可见特征与执行方法
 
@@ -53,3 +55,7 @@ source_collection: Logggos 负空间分类中的十个具名品牌
 本包保留来源服务器实际返回的图片文件；矢量来源另渲染 PNG，位图来源保留完整画布。默认展示裁去多余白边的单例图，并提供完整源图入口。入选图按当前参考用途清晰可辨，未使用 AI 清晰化；文件尺寸、校验和及派生关系见来源记录。
 
 状态为 provisional：完成参考采集、逐例观察与文档检查；Prompt 是研究者编写，未执行新品牌生成、迁移评审或正式资产生产。第三方作品仅作为研究参考，其收录不等于拥有转授权或新品牌使用权。
+
+## 生成示例的验证边界
+
+本包每个既有样本对应一张 imagegen 重新演绎，默认展示见 [EXAMPLES](EXAMPLES.md)。本次核对的是单张视觉研究图的主体、构图、文字与表现；具体变化及目检范围以 [generated.json](generated.json) 为准。重绘原样例不是新品牌迁移测试，因此保持 `provisional`；精确几何、真实字体、正式资产与应用集成按新任务另验。

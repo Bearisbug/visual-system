@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "style_id": "editorial-typographic-systems",
+  "coverage": "all_source_samples",
+  "examples": [
+    {
+      "id": "ET01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "ET01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand / editorial illustration.\nAsset type: one finished minimalist design study for a visual-system style library, landscape 3:2 canvas.\nPrimary request: regenerate the supplied concept illustration as an exceptionally restrained, art-directed editorial illustration. This is an AI reinterpretation for study, not an official brand asset. Keep its recognizable concept: a four-ball Newton cradle with one ball displaced, thin black structural frame and suspended circular balls, conveying influence moving through a system.\nReference image role: structural and hand-drawn linework reference. Preserve the number and arrangement of the principal parts and the visual meaning, while refining spacing and reducing visual weight. Do not merely paste or resize the input.\nStyle/medium: fresh hand-drawn ink rendering, gently irregular crisp charcoal lines, delicate matte off-white balls, almost imperceptible paper texture. Sophisticated editorial simplicity, warm and quiet, precise composition with human line character.\nComposition: a single illustration, centered slightly below the visual center with generous clean negative space, balanced scale occupying roughly half the frame, no border, no collage, no presentation mockup, no extra decorative objects.\nColor palette: warm ivory paper #F2F0E8, near-black charcoal #252725, one very small muted terracotta emphasis #B66D55 at the collision, off-white ball surfaces. Color is subordinate to the concept.\nText: no text, no labels, no logo, no watermark.\nAvoid: glossy plastic, metallic sheen, 3D extrusion, rainbow gradients, glow, ornamental borders, heavy grain, cartoon faces, elaborate shadows, dense technical detail. Output exactly one finished image.",
+      "input_files": [
+        "references/ET01-influence.png"
+      ],
+      "output_file": "generated/ET01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "2efb6f6bcaf0504c4d3e69f512271fcb2f7a9cc59b2cecf529fa41c32b91f244",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看完整生成图；核对四球、悬线、框架、动作与留白。",
+        "notes": "四球与左侧抬起关系保留；框架、细线和克制陶土强调可辨，暖白背景统一。纸纹比源图更明显，属于AI表现变化，不代表原作。"
+      }
+    },
+    {
+      "id": "ET02",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "ET02",
+      "tool": "image_gen.imagegen",
+      "prompt": "Generate exactly one finished design study, landscape 3:2. This is an AI reinterpretation of a source case for a visual-system library, not an official redesign. Regenerate rather than pasting the source. Art direction: exceptionally restrained editorial design, clear concept, refined proportions, warm ivory #F2F0E8 background, charcoal #252725, at most one muted accent, wide meaningful negative space. No gloss, neon, chrome, rainbow gradients, heavy shadows, decorative borders, dense collage, tiny unreadable UI text or watermarks. Use a flat artwork view, not a photographed billboard/mockup.\nReference role: editorial typography and grid relationship. Make one spacious Perplexity-inspired publication title sheet using the supplied typographic grid as the conceptual source. Main typography: elegant thin humanist sans serif, careful line lengths. Text verbatim: \"Unlocking the\" on line one, \"Power of Knowledge\" on line two; a much smaller \"perplexity\" near lower left. Only these words. Keep a few faint gray grid lines and a single muted teal rectangular highlight in the lower right, leaving the title area almost empty. Warm ivory replaces the full teal ground. Preserve the idea of knowledge organized in a precise grid; avoid filling the entire sheet with boxes.",
+      "input_files": [
+        "references/ET02-grid.jpg"
+      ],
+      "output_file": "generated/ET02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "84b11820ffc4a765b3baf6175fa184948737b87dfff1ee8e3ba47bfdf5335c5d",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看生成图全幅，核对主要概念、主体关系、文字和留白。",
+        "notes": "标题两行与 perplexity 字样可读且匹配要求；网格减至疏线，浅青单点强调。生成字形及颜色不能当作原字体或品牌规范。"
+      }
+    },
+    {
+      "id": "ET03",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "ET03",
+      "tool": "image_gen.imagegen",
+      "prompt": "Generate exactly one finished design study, landscape 3:2. This is an AI reinterpretation of a source case for a visual-system library, not an official redesign. Regenerate rather than pasting the source. Art direction: exceptionally restrained editorial design, clear concept, refined proportions, warm ivory #F2F0E8 background, charcoal #252725, at most one muted accent, wide meaningful negative space. No gloss, neon, chrome, rainbow gradients, heavy shadows, decorative borders, dense collage, tiny unreadable UI text or watermarks. Use a flat artwork view, not a photographed billboard/mockup.\nReference role: the illustration on the Notion billboard, not the surrounding city photograph. Make a refined standalone editorial line drawing of the two back-to-back seated coworkers whose dark hair joins into one shared thought-cloud, retaining their laptops and the basic shared-memory relationship. Simplify the shared cloud to contain just three meaningful small symbols: one document, one checkmark, one simple graph. The two coworkers and their shared cloud remain the single conceptual subject. Graceful black hand-drawn contour lines, expressive economical anatomy, dark flat cloud, a single muted terracotta document as accent. More empty space than ink. No city, no billboard, no buildings, no ad copy, no brand mark and no text. Do not copy the source's multicolor confetti.",
+      "input_files": [
+        "references/ET03-hero.png"
+      ],
+      "output_file": "generated/ET03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "f4ba79f1abcec346e07691bf0fa8bcb52717c6172c00a7f025193574de460553",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看生成图全幅，核对主要概念、主体关系、文字和留白。",
+        "notes": "两名背向同事、共用思考云和三种内容符号清楚；多彩原广告收敛为墨线与陶土文档，移除真实广告场景。人物线条、内容数量为重绘选择。"
+      }
+    },
+    {
+      "id": "ET04",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "ET04",
+      "tool": "image_gen.imagegen",
+      "prompt": "Generate exactly one finished design study, landscape 3:2. This is an AI reinterpretation of a source case for a visual-system library, not an official redesign. Regenerate rather than pasting the source. Art direction: exceptionally restrained editorial design, clear concept, refined proportions, warm ivory #F2F0E8 background, charcoal #252725, at most one muted accent, wide meaningful negative space. No gloss, neon, chrome, rainbow gradients, heavy shadows, decorative borders, dense collage, tiny unreadable UI text or watermarks. Use a flat artwork view, not a photographed billboard/mockup.\nReference role: the Intercom editorial layout and connection illustration, not the two tilted browser windows. Create one flat, elegant editorial title sheet. Left third: small sans-serif \"Intercom\"; below it a beautifully balanced large dark serif title exactly \"Connect the dots.\" with generous line spacing. Right side: one economical hand-drawn open hand inside a simple outline speech bubble, connected by a loose thin orbital line to three small symbols: a document, a play triangle, and one heart. Ink outlines and one muted cobalt blue accent on the main speech bubble only. Keep the number of elements low and the paths readable. No browser chrome, no email fields, no buttons, no other text, no gradients or doodle confetti. The feeling is a thoughtful art publisher, not a startup template.",
+      "input_files": [
+        "references/ET04-illustration.jpg"
+      ],
+      "output_file": "generated/ET04.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "bf829d8de939514b611532dd92e8a1747cb617a3c244b12418f2b862c236ba1f",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看生成图全幅，核对主要概念、主体关系、文字和留白。",
+        "notes": "Intercom 与 Connect the dots. 可读；衬线标题和手势图分工明确，三节点连接完整。蓝色比预期略明亮，面积局部且无光效，仍在克制范围。"
+      }
+    }
+  ]
+}

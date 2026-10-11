@@ -1,5 +1,7 @@
 # Jeroen van Eerden · 几何字母与组合 Prompt
 
+当前库内例图的完整实际 Prompt、输入和输出以 [generated.json](generated.json) 为准，图像见 [EXAMPLES](EXAMPLES.md)。以下是供新任务使用的模板；按[艺术方向](../ART-DIRECTION.md)选择克制表现，用户已定品牌优先。模板的迁移状态与样例重绘分别记录。
+
 先按 [STYLE.md](STYLE.md) 判断适用范围。以下是研究者编写的自然语言模板，未实测，非作者原始提示词。提交前替换所有字段；已有简报与用户选定方向优先。参考作者姓名只用于出处，不代替可观察的视觉描述。
 
 ## 新构思探索

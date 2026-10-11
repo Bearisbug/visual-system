@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "style_id": "parametric-science-visuals",
+  "coverage": "all_source_samples",
+  "examples": [
+    {
+      "id": "PS01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "PS01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create exactly one polished minimalist visual-system study, landscape 3:2 canvas. Regenerate the provided reference as an AI reinterpretation for a research library, not an official brand redesign. Refined museum-poster restraint, precise edges, wide breathing room, warm ivory #F2F0E8 background. A single coherent subject, no frame, no scenery, no mockup, no watermark. Avoid chrome, neon, rainbow, glow, plastic gloss, ornate detailing, busy geometry and hard shadows.\nReference role: the curving saddle-like mathematical surface and its asymmetric empty spaces. Reinterpret this as one complete sculptural matte pale-taupe surface floating quietly in the middle of the ivory field, an open gently twisted sheet with one flowing neck and two broad wings, graceful curvature and a clean silhouette. Show the whole shape, not a close crop. Approximately half the canvas should remain completely empty around it. Barely perceptible soft directional lighting describes the surface with broad values, not mirror reflections. Preserve the reference's relationship between sweeping surface and concave opening; no torus, no generic infinity symbol, no particles. No text or logos. This is a conceptual shape study, not measured engineering data.",
+      "input_files": [
+        "references/PS01-secondmind-surface.jpg"
+      ],
+      "output_file": "generated/PS01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "8ac087cb81758a7e4fed064534236fad444597ebb90bd50a167d648ed07d6bdb",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看全幅，核对轮廓、负空间、光照和实际文字。",
+        "notes": "完整哑光浅陶土曲面与凹形开口清楚，淡光塑造体积且没有装饰光效。源图是裁切，本图完整外轮廓含AI推演；仅作曲面方法研究。"
+      }
+    },
+    {
+      "id": "PS02",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "PS02",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create exactly one polished minimalist visual-system study, landscape 3:2 canvas. Regenerate the provided reference as an AI reinterpretation for a research library, not an official brand redesign. Refined museum-poster restraint, precise edges, wide breathing room, warm ivory #F2F0E8 background. A single coherent subject, no frame, no scenery, no mockup, no watermark. Avoid chrome, neon, rainbow, glow, plastic gloss, ornate detailing, busy geometry and hard shadows.\nReference role: the continuous S-like boundary between two regions. Make a refined abstract boundary-field composition: a single flowing S contour traverses the central third of the artwork, separating a warm pale clay-taupe region from ivory. Use a very shallow matte relief and soft grazing light so the edge has quiet depth, while the areas remain mostly flat. Do not create a separate object, loop, ball or ribbon. The upper and lower ends of the continuous edge can leave the frame, as in the reference; do not fill the page with multiple waves. Muted warm neutral values, immense calm space, no salmon neon, no glow. No text, no logo. Not a chart or scientific result.",
+      "input_files": [
+        "references/PS02-covariant-boundary.jpg"
+      ],
+      "output_file": "generated/PS02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "a5b8405d7c3946586235da5bcec9e5b385f28fe464153a813634cd21133b8181",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看全幅，核对轮廓、负空间、光照和实际文字。",
+        "notes": "单一连续S形边界与浅浮雕关系可辨，强珊瑚色改为浅陶土与暖白；色阶细腻。是静态艺术边界图，不是数据图或可执行参数模型。"
+      }
+    }
+  ]
+}

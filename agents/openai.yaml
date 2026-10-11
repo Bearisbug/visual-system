@@ -1,4 +1,4 @@
 interface:
-  display_name: "品牌设计"
-  short_description: "从 Logo、风格与字体到品牌语言、可编辑物料和开发视觉交接"
-  default_prompt: "使用 $visual-system 根据已有简报或成果，完成本次约定的 Logo、品牌语言、应用物料或开发视觉交接，并验证实际输出。"
+  display_name: "视觉系统"
+  short_description: "从 Logo、风格与字体到自家产品的界面设计系统、品牌物料和开发视觉交接"
+  default_prompt: "使用 $visual-system 根据已有简报或成果，完成本次约定的 Logo、品牌语言、自家产品的界面设计系统、品牌物料或开发视觉交接，并验证实际输出。"

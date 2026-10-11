@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "style_id": "geometric-negative-space",
+  "coverage": "all_source_samples",
+  "examples": [
+    {
+      "id": "N01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "N01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation study of the attached Apres reference, not an official brand asset. Preserve the four substantial curved black blades around the four-point concave white centre, and their slightly turned quadrilateral outer edges. A compact symbol beside the word Apres in refined bold humanist lettering. Make it a restrained, art-directed identity specimen with a single visual protagonist and generous whitespace. Landscape 3:2 composition, warm ivory background, flat vector-like forms with precise clean edges, matte near-black ink and at most one restrained accent. No gradients, texture, bevels, shadows, metallic gloss, borders, watermark, captions, labels, extra objects or invented copy. Retain the reference's core concept and key shape relations; refine spacing and presentation. Render the specified brand name exactly, no other text.",
+      "input_files": [
+        "references/N01.png"
+      ],
+      "output_file": "generated/N01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "2f8475720fe73612b56f3585316d40a8adc5117445f11c9dc9caa82522cc93e6",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "已逐图查看输入与输出：四块弧面和中央四角凹白保留，Apres 拼写正确；暖白底、大留白、黑色平面展示。"
+      }
+    },
+    {
+      "id": "N02",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "N02",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation study of the attached Vertiv reference, not an official brand asset. Preserve the dark circular form with a broad sharp white downward V cut and open lower tip; circular edges contrast with the chevron. Put the word VERTIV alongside in precise bold uppercase sans serif. Make it a restrained, art-directed identity specimen with a single visual protagonist and generous whitespace. Landscape 3:2 composition, warm ivory background, flat vector-like forms with precise clean edges, matte near-black ink and at most one restrained accent. No gradients, texture, bevels, shadows, metallic gloss, borders, watermark, captions, labels, extra objects or invented copy. Retain the reference's core concept and key shape relations; refine spacing and presentation. Render the specified brand name exactly, no other text.",
+      "input_files": [
+        "references/N02.png"
+      ],
+      "output_file": "generated/N02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "19a36193f961d5fcfabe7e404a16a2b72297d31c6c4f8442b0b83cc0e52e8340",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "已逐图查看：圆体内 V 切口和下方缺口清楚，VERTIV 拼写正确，留白与平面墨色统一。"
+      }
+    },
+    {
+      "id": "N03",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "N03",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation study of the attached Ternary reference, not an official brand asset. Preserve the distinct arrangement: a large three-quarter circular volume at upper left, a smaller quarter-circle volume at lower right, and square negative-space notch below the centre. Use a restrained desaturated blue symbol and the lowercase word ternary in near-black. Make it a restrained, art-directed identity specimen with a single visual protagonist and generous whitespace. Landscape 3:2 composition, warm ivory background, flat vector-like forms with precise clean edges, matte near-black ink and at most one restrained accent. No gradients, texture, bevels, shadows, metallic gloss, borders, watermark, captions, labels, extra objects or invented copy. Retain the reference's core concept and key shape relations; refine spacing and presentation. Render the specified brand name exactly, no other text.",
+      "input_files": [
+        "references/N03.png"
+      ],
+      "output_file": "generated/N03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "43ac8cfbbd1035a5ed8bbc20baba7efc3423fe3fd8c1c5bcc4ceae9a79220912",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "已逐图查看：大圆弧、小四分之一圆与下方方缺口关系保持；ternary 拼写正确；蓝色已收敛。"
+      }
+    },
+    {
+      "id": "N04",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "N04",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation study of the attached Derprosa reference, not an official brand asset. Preserve the rectangle joined to right semicircle as a D-shaped outer boundary, with the white left-pointing triangular wedge dividing the left rectangle from the right half. Near-black symbol with the word Derprosa, quiet humanist sans serif. Make it a restrained, art-directed identity specimen with a single visual protagonist and generous whitespace. Landscape 3:2 composition, warm ivory background, flat vector-like forms with precise clean edges, matte near-black ink and at most one restrained accent. No gradients, texture, bevels, shadows, metallic gloss, borders, watermark, captions, labels, extra objects or invented copy. Retain the reference's core concept and key shape relations; refine spacing and presentation. Render the specified brand name exactly, no other text.",
+      "input_files": [
+        "references/N04.png"
+      ],
+      "output_file": "generated/N04.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "1debfc3bfa6e14464361b381aa8ee502a5da57f39a9747d0cc891ed99d6e5d8f",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "已逐图查看：D 外形、左指三角负空间完整，Derprosa 拼写正确；无冗余装饰。"
+      }
+    },
+    {
+      "id": "N05",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "N05",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation study of the attached Cottage M reference, not an official brand asset. Preserve the architectural M-like silhouette with slanted roof, two upright legs enclosing the rectangular doorway, and detached short upright block on the left. Below use only Cottage M in an elegant crisp serif, optically balanced. Keep the actual silhouette relationships visible. Make it a restrained, art-directed identity specimen with a single visual protagonist and generous whitespace. Landscape 3:2 composition, warm ivory background, flat vector-like forms with precise clean edges, matte near-black ink and at most one restrained accent. No gradients, texture, bevels, shadows, metallic gloss, borders, watermark, captions, labels, extra objects or invented copy. Retain the reference's core concept and key shape relations; refine spacing and presentation. Render the specified brand name exactly, no other text.",
+      "input_files": [
+        "references/N05.png"
+      ],
+      "output_file": "generated/N05.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "4cff1769f828e81a682bbc22d1e8845c854241585e98c9e238e6821f5bae65f6",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "已逐图查看：斜屋顶、双竖腿、门洞和左侧独立短柱齐全，Cottage M 字样正确；竖式组合在横画布中留白充分。"
+      }
+    },
+    {
+      "id": "N06",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "N06",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation study of the attached Flipboard reference, not an official brand asset. Retain the square tile with white stepped F-shaped cutout. Use muted brick-red on the tile and near-black condensed bold uppercase FLIPBOARD beside it; preserve exact orthogonal stepping. Make a restrained art-directed identity specimen with generous whitespace. Landscape 3:2 composition, warm ivory background, flat vector-like forms with clean precise edges and matte near-black ink, at most one restrained accent. No gradients, texture, bevels, shadows, metallic gloss, borders, watermark, captions, labels, extra objects or invented copy. Preserve the reference's core concept and key shape relations; refine spacing and presentation. Only specified brand text if any.",
+      "input_files": [
+        "references/N06.png"
+      ],
+      "output_file": "generated/N06.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "ff31da303984f458792df40d2cb904c582ef49daac10921cc9e823445e5068f0",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "方形内 F 形白色阶梯清楚，FLIPBOARD 文字完整；红色降低饱和，黑字暖白底，留白充分。"
+      }
+    },
+    {
+      "id": "N07",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "N07",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation study of the attached Enter Arkitektur reference, not an official brand asset. Isolate the reference's single black architectural symbol, with a pitched house silhouette, broad triangular up-arrow negative space and two downward rectangular slots leaving three black piers. No text. Preserve the thick perimeter and coherent integrated structure. Make a restrained art-directed identity specimen with generous whitespace. Landscape 3:2 composition, warm ivory background, flat vector-like forms with clean precise edges and matte near-black ink, at most one restrained accent. No gradients, texture, bevels, shadows, metallic gloss, borders, watermark, captions, labels, extra objects or invented copy. Preserve the reference's core concept and key shape relations; refine spacing and presentation. Only specified brand text if any.",
+      "input_files": [
+        "references/N07.png"
+      ],
+      "output_file": "generated/N07.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "1292c245bda7c03cce587d23c186e2bdfcb855dac4166d8bb43a70e232eacae2",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "斜屋顶、上指白色负空间和双竖槽保留；纯符号展示，主体完整无新增文字。"
+      }
+    },
+    {
+      "id": "N08",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "N08",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation study of the attached Flatfile reference, not an official brand asset. Retain the four rounded outer corner blocks with diagonal inner cuts creating the central pinwheel-shaped white gap. Use muted indigo for the compact symbol and near-black elegant serif Flatfile beside it. Make a restrained art-directed identity specimen with generous whitespace. Landscape 3:2 composition, warm ivory background, flat vector-like forms with clean precise edges and matte near-black ink, at most one restrained accent. No gradients, texture, bevels, shadows, metallic gloss, borders, watermark, captions, labels, extra objects or invented copy. Preserve the reference's core concept and key shape relations; refine spacing and presentation. Only specified brand text if any.",
+      "input_files": [
+        "references/N08.png"
+      ],
+      "output_file": "generated/N08.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "e9d7cc0affd96103a62c498730f52e1aa3e51ca066758f77575dac7c70d193cb",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "四块面、内斜切口和旋转中央留白可辨，Flatfile 拼写正确，蓝紫强调色与暖白底协调。"
+      }
+    },
+    {
+      "id": "N09",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "N09",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation study of the attached Trustly reference, not an official brand asset. Retain the strong geometric T symbol with the white right-pointing triangular arrow cut through the middle. Use dark restrained forest green for the symbol and near-black bold Trustly beside it, preserving the distinctive angled top of the lowercase t. Make a restrained art-directed identity specimen with generous whitespace. Landscape 3:2 composition, warm ivory background, flat vector-like forms with clean precise edges and matte near-black ink, at most one restrained accent. No gradients, texture, bevels, shadows, metallic gloss, borders, watermark, captions, labels, extra objects or invented copy. Preserve the reference's core concept and key shape relations; refine spacing and presentation. Only specified brand text if any.",
+      "input_files": [
+        "references/N09.png"
+      ],
+      "output_file": "generated/N09.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "4967bd503866b0f80fc3369267848847b63df5fd0ee1fbb1666f5bbffaa6365e",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "T 形块与右指箭头完整，Trustly 拼写正确；绿色收敛为深绿，平面清楚。"
+      }
+    },
+    {
+      "id": "N10",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "N10",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation study of the attached Immuta reference, not an official brand asset. Retain the dark rectangular symbol enclosing a thin off-centre vertical white slit near the right edge; no left slit or extra marks. Use the exact uppercase word IMMUTA in well-spaced bold sans serif beside it. Make a restrained art-directed identity specimen with generous whitespace. Landscape 3:2 composition, warm ivory background, flat vector-like forms with clean precise edges and matte near-black ink, at most one restrained accent. No gradients, texture, bevels, shadows, metallic gloss, borders, watermark, captions, labels, extra objects or invented copy. Preserve the reference's core concept and key shape relations; refine spacing and presentation. Only specified brand text if any.",
+      "input_files": [
+        "references/N10.png"
+      ],
+      "output_file": "generated/N10.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "97e524bd37720149a3c3b516d038ad85822244ab107af9010602989ba55789d4",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "矩形和偏右白槽完整；与来源一致，图形承担 I 的读法，右侧是 MMUTA；保持组合读取而非补造独立 I。"
+      }
+    }
+  ]
+}

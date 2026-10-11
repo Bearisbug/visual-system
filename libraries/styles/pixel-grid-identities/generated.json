@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "style_id": "pixel-grid-identities",
+  "coverage": "all_source_samples",
+  "examples": [
+    {
+      "id": "PG01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "PG01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create exactly one polished minimalist visual-system study, landscape 3:2 canvas. Regenerate the provided reference as an AI reinterpretation for a research library, not an official brand redesign. Refined museum-poster restraint, precise edges, wide breathing room, warm ivory #F2F0E8 background. A single coherent subject, no frame, no scenery, no mockup, no watermark. Avoid chrome, neon, rainbow, glow, plastic gloss, ornate detailing, busy geometry and hard shadows.\nReference role: Mistral's grid-built mark and smooth wordmark. Preserve the recognizable pixel M silhouette, its equal-square grid, stepped upper corners and bottom feet; the source symbol is the structure to follow. Render it as a crisp flat muted terracotta mark with at most one darker terracotta strip, no rainbow bands, no bevels. Place it to the left of the exact text \"Mistral\" in beautifully balanced charcoal sans-serif, matching the source's simple horizontal lockup. Center the whole lockup with generous margins; give mark and word their source-like relative scale and comfortable gap. Typography should stay smooth, not pixelated. No other text, no added decorations.",
+      "input_files": [
+        "references/PG01-lockup.webp"
+      ],
+      "output_file": "generated/PG01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "16e703e749aa1a7c0e1149373850a0b746dc38311ae0c421e71bdee7d85c308a",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看全幅，核对轮廓、负空间、光照和实际文字。",
+        "notes": "像素M的阶梯、底脚与双孔仍可读，Mistral文字准确；双色陶土取代源色带。字样和几何只作AI视觉研究，未作官方或精确矢量复刻。"
+      }
+    },
+    {
+      "id": "PG02",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "PG02",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one quiet minimalist grid composition for a visual-system study, landscape 3:2. The supplied image is a reference for stepped horizontal bands, not an emblem to reproduce. Redesign the composition using three restrained horizontal bands, each broken into three large rectangular steps of equal unit height. Let the bands rise gently from left to right like an abstract staircase. Keep them confined to the middle third of a warm ivory canvas with generous empty space above and below. Charcoal #252725 and one muted blue-gray #7D9BA1 only, flat ink, no gradients, no gloss, no 3D. The image should feel like a beautifully proportioned contemporary art-print study of rhythm and intervals. Do not include any central rotating symbol, crossed arms, logos or letterforms. No text, labels, frame or watermark. Exactly one cohesive composition, crisp clean edges.",
+      "input_files": [
+        "references/PG02-pattern.webp"
+      ],
+      "output_file": "generated/PG02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "e234bc5de2a2abacabbe2857db77bbd3f4211d77f70722abdd811038e7e8f76c",
+      "review": {
+        "status": "pass",
+        "scope": "实际查看全幅，核对三组等高矩形、阶梯上升、配色与空白。",
+        "notes": "采用同源条带图案重新构图：三组错位阶梯清楚，墨色与蓝灰统一。不是原MediaViz符号复刻，主体改为该项目已有的条带语法。"
+      }
+    }
+  ]
+}

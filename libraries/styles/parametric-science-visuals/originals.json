@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "style_id": "parametric-science-visuals",
+  "examples": [
+    {
+      "id": "PS-O01",
+      "kind": "original_study",
+      "title": "Taper · 资源分配谷",
+      "brief": "虚构推理服务 Taper 需要表达把高峰请求分配到可承载路径的能力，本图仅为静态概念研究。",
+      "method": "将五片厚薄一致的平行曲面组织为逐步变宽的通道，用开口宽度与截面坡度表达资源疏导。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: stylized-concept. Asset type: one original static brand concept study for a fictional technology product, for a visual-system research library. Create one image on a landscape 3:2 canvas, 1536 by 1024 composition. Purely invented art direction, no reference image, no existing brand marks. One coherent sculptural or planar subject with at least forty percent quiet negative space; refined contemporary art-catalog restraint. A pale neutral background, matte surfaces, broad soft lighting only where needed to explain curvature. Precise clean boundaries. No text, letters, numbers, axes, legend, UI, watermark, border, busy particles, glowing effects, chrome, rainbow, plastic gloss or dramatic shadows. This is a static conceptual artwork, not measured scientific data, not an algorithm output, and not evidence of a working parametric system. Fictional product idea: Taper, an inference-capacity scheduler balancing uneven demand. Subject: a compact bank of exactly five upright parallel clay-like fins, each formed as a simple smooth rising then falling curved wall; together their inner edges create one widening valley that opens toward the viewer. The fins are visually separate, evenly spaced at their bases, and subtly vary their crest heights in one direction. Three-quarter elevated view so the valley and the five section profiles are unambiguous. Pale cool gray-blue matte ceramic against nearly white. Low, broad form, no enclosing ring, no object above it. A single sculpture with generous empty margins, and a quiet soft contact shadow.",
+      "input_files": [],
+      "output_file": "generated/PS-O01.png",
+      "review": {
+        "status": "pass",
+        "scope": "逐张使用 view_image 查看全幅，检查构思差异、主体与负空间、边缘、哑光表现及实际文字；仅验证静态概念研究图。",
+        "notes": "五片递增高度的平行截面形成清楚的通道节奏，淡蓝灰哑光与留白克制；生成结果用并列通道表达疏导，未声称精确容量映射。"
+      },
+      "width": 1536,
+      "height": 1024,
+      "sha256": "feae805261d7ee26be143809de53ce1bbdf6871b6aa86ab2012bdb37e2499952"
+    },
+    {
+      "id": "PS-O02",
+      "kind": "original_study",
+      "title": "Confluence · 证据汇合面",
+      "brief": "虚构研究助手 Confluence 需要表达把三条来源线索汇成可读结论的能力，本图仅为静态概念研究。",
+      "method": "用三片宽而浅的扇形凹面在中央连接成一个不对称的汇合区域，通过面与凹槽的连续性表达证据合流。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: stylized-concept. Asset type: one original static brand concept study for a fictional technology product, for a visual-system research library. Create one image on a landscape 3:2 canvas, 1536 by 1024 composition. Purely invented art direction, no reference image, no existing brand marks. One coherent sculptural or planar subject with at least forty percent quiet negative space; refined contemporary art-catalog restraint. A pale neutral background, matte surfaces, broad soft lighting only where needed to explain curvature. Precise clean boundaries. No text, letters, numbers, axes, legend, UI, watermark, border, busy particles, glowing effects, chrome, rainbow, plastic gloss or dramatic shadows. This is a static conceptual artwork, not measured scientific data, not an algorithm output, and not evidence of a working parametric system. Fictional product idea: Confluence, a research assistant joining independent strands of evidence. Subject: a single low abstract landform made of three broad shallow concave fan-shaped surfaces meeting at an off-center junction, like three ceramic river deltas becoming one smooth rounded basin. The fan-shaped lobes are unequal in length, one pointing up-left, one right and one down-left; the entire outer silhouette is open and asymmetric, not a triangular logo. Only two thin shallow grooves explain how the surfaces meet, no miniature channels or decorations. Elevated almost top-down view, muted warm-gray matte porcelain, pale warm-white background. Full outline visible and surrounded by empty space.",
+      "input_files": [],
+      "output_file": "generated/PS-O02.png",
+      "review": {
+        "status": "pass",
+        "scope": "逐张使用 view_image 查看全幅，检查构思差异、主体与负空间、边缘、哑光表现及实际文字；仅验证静态概念研究图。",
+        "notes": "三块不等长浅凹面在偏心节点汇合，轮廓完整、沟缝和浅体积清楚；是证据合流的抽象静态意象。"
+      },
+      "width": 1536,
+      "height": 1024,
+      "sha256": "75b2e67a863a05094c2e3ad533dff9ab03a51a09e32e29d0b7aee616dd639ebd"
+    },
+    {
+      "id": "PS-O03",
+      "kind": "original_study",
+      "title": "Veilspace · 隔离边界",
+      "brief": "虚构隐私计算服务 Veilspace 需要表达共享空间中的独立计算边界，本图仅为静态概念研究。",
+      "method": "用两道不相接的起伏隔墙围出狭长留白，并以错开的入口表现受控通行与相互隔离。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: stylized-concept. Asset type: one original static brand concept study for a fictional technology product, for a visual-system research library. Create one image on a landscape 3:2 canvas, 1536 by 1024 composition. Purely invented art direction, no reference image, no existing brand marks. One coherent sculptural or planar subject with at least forty percent quiet negative space; refined contemporary art-catalog restraint. A pale neutral background, matte surfaces, broad soft lighting only where needed to explain curvature. Precise clean boundaries. No text, letters, numbers, axes, legend, UI, watermark, border, busy particles, glowing effects, chrome, rainbow, plastic gloss or dramatic shadows. This is a static conceptual artwork, not measured scientific data, not an algorithm output, and not evidence of a working parametric system. Fictional product idea: Veilspace, private computation that shares infrastructure while maintaining separation. Subject: exactly two freestanding thin undulating walls, each shaped as one long shallow crescent with gently varied height. They face one another without touching, producing a long narrow lens-shaped empty corridor in between; offset ends leave two visibly staggered entry openings. No central object, no padlock, no shield, no enclosed ring. Oblique top view clarifies the separation between walls. Charcoal-gray matte exterior, subtly lighter interior faces, all in one quiet neutral material. Warm off-white background, small gentle grounding shadow, open space around every side.",
+      "input_files": [],
+      "output_file": "generated/PS-O03.png",
+      "review": {
+        "status": "pass",
+        "scope": "逐张使用 view_image 查看全幅，检查构思差异、主体与负空间、边缘、哑光表现及实际文字；仅验证静态概念研究图。",
+        "notes": "两道独立弧墙与错位端口清楚，中央留白完整，没有锁、盾牌或第三方标志；分离关系来自结构而非颜色。"
+      },
+      "width": 1536,
+      "height": 1024,
+      "sha256": "c6163cd8f48195b01eda1a7c50c1a171efbde17ea9be28ff68be4d7aac9f38d8"
+    },
+    {
+      "id": "PS-O04",
+      "kind": "original_study",
+      "title": "Nearpath · 语义邻域",
+      "brief": "虚构语义检索工具 Nearpath 需要表达相隔概念之间可发现的邻近关系，本图仅为静态概念研究。",
+      "method": "将两组疏密不同的等高边界并为一个偏心双盆地，用中间的平缓鞍部组织概念邻域。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: stylized-concept. Asset type: one original static brand concept study for a fictional technology product, for a visual-system research library. Create one image on a landscape 3:2 canvas, 1536 by 1024 composition. Purely invented art direction, no reference image, no existing brand marks. One coherent sculptural or planar subject with at least forty percent quiet negative space; refined contemporary art-catalog restraint. A pale neutral background, matte surfaces, broad soft lighting only where needed to explain curvature. Precise clean boundaries. No text, letters, numbers, axes, legend, UI, watermark, border, busy particles, glowing effects, chrome, rainbow, plastic gloss or dramatic shadows. This is a static conceptual artwork, not measured scientific data, not an algorithm output, and not evidence of a working parametric system. Fictional product idea: Nearpath, semantic search revealing proximity between seemingly distant ideas. Subject: one planar topographic contour artwork on a flat ivory field. Roughly twelve crisp widely spaced fine charcoal contour lines wrap two unequal soft basins and gradually merge through a low connecting saddle. The overall composition is an off-center horizontal kidney-like field; contour lines must remain clean, separated and calm, with no axes, point markers, numerals or map features. The lines form a designed decorative field rather than geographic or quantitative data. Near top-down and nearly flat, no 3D object, no gradients. The field occupies the middle half of the page, with extensive blank margins.",
+      "input_files": [],
+      "output_file": "generated/PS-O04.png",
+      "review": {
+        "status": "pass",
+        "scope": "逐张使用 view_image 查看全幅，检查构思差异、主体与负空间、边缘、哑光表现及实际文字；仅验证静态概念研究图。",
+        "notes": "大小不同的两组闭合曲线通过中间边界连接，平面构图和留白清楚；右侧少量细线局部柔化，只适合作为全幅静态概念图，不是矢量或测量等高线。"
+      },
+      "width": 1536,
+      "height": 1024,
+      "sha256": "d8180747ec100b86000cf63d59a111c1726f0f729698825d7554e32c42088209"
+    },
+    {
+      "id": "PS-O05",
+      "kind": "original_study",
+      "title": "Traceplane · 版本截面",
+      "brief": "虚构模型版本工具 Traceplane 需要表达多次修订仍可比较的结构关系，本图仅为静态概念研究。",
+      "method": "把七层圆角截面错位层叠，并令同一缺口逐层平移，使差异与共同基准同时可见。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: stylized-concept. Asset type: one original static brand concept study for a fictional technology product, for a visual-system research library. Create one image on a landscape 3:2 canvas, 1536 by 1024 composition. Purely invented art direction, no reference image, no existing brand marks. One coherent sculptural or planar subject with at least forty percent quiet negative space; refined contemporary art-catalog restraint. A pale neutral background, matte surfaces, broad soft lighting only where needed to explain curvature. Precise clean boundaries. No text, letters, numbers, axes, legend, UI, watermark, border, busy particles, glowing effects, chrome, rainbow, plastic gloss or dramatic shadows. This is a static conceptual artwork, not measured scientific data, not an algorithm output, and not evidence of a working parametric system. Fictional product idea: Traceplane, comparing revisions of machine-learning models. Subject: exactly seven very thin matte paper-like cross-section plates stacked horizontally with air gaps, forming one compact hovering sculpture. Each plate has the same softly rounded rectangular outer boundary, but one broad semicircular notch on its right edge shifts gradually from front to back across the seven layers. The offsets in that notch create a clean diagonal internal void. The plates themselves remain aligned at the left edge, not scattered, not a book, not a fan of cards. Three-quarter side view makes all seven layers and the changing void visible. Warm light stone-gray layers, dark thin occlusion gaps, pure ivory background, soft diffuse light, generous margins.",
+      "input_files": [],
+      "output_file": "generated/PS-O05.png",
+      "review": {
+        "status": "pass",
+        "scope": "逐张使用 view_image 查看全幅，检查构思差异、主体与负空间、边缘、哑光表现及实际文字；仅验证静态概念研究图。",
+        "notes": "七层截面及逐层后移的右侧缺口可辨，左侧共同基准稳定；阴影用于分离层面，没有伪数据标注。"
+      },
+      "width": 1536,
+      "height": 1024,
+      "sha256": "74cdc45b3432e4e3fbaa000989fc5392339319593171543a5bf1f30316a4ed4f"
+    },
+    {
+      "id": "PS-O06",
+      "kind": "original_study",
+      "title": "Pulsewell · 弹性容量",
+      "brief": "虚构弹性基础设施 Pulsewell 需要表达系统吸收短时压力后恢复的能力，本图仅为静态概念研究。",
+      "method": "以一个边缘平整的薄膜连接偏心凹陷与局部隆起，用张力过渡表达容量吸收和回弹。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: stylized-concept. Asset type: one original static brand concept study for a fictional technology product, for a visual-system research library. Create one image on a landscape 3:2 canvas, 1536 by 1024 composition. Purely invented art direction, no reference image, no existing brand marks. One coherent sculptural or planar subject with at least forty percent quiet negative space; refined contemporary art-catalog restraint. A pale neutral background, matte surfaces, broad soft lighting only where needed to explain curvature. Precise clean boundaries. No text, letters, numbers, axes, legend, UI, watermark, border, busy particles, glowing effects, chrome, rainbow, plastic gloss or dramatic shadows. This is a static conceptual artwork, not measured scientific data, not an algorithm output, and not evidence of a working parametric system. Fictional product idea: Pulsewell, elastic infrastructure that absorbs bursts of demand. Subject: one square thin matte membrane held visually flat at its four gently rounded corners, with one broad off-center depression and one smaller adjacent smooth upward bulge. The membrane is a continuous surface with no cuts, no holes and no folded-over part. A smooth tension transition links the dip and mound; keep it restrained, not multiple waves. Slight elevated oblique view, whole square outline visible, quiet warm gray matte material and a subtle sage cast only in the deepest shading. Light neutral background, wide empty space, no literal mount, frame, cloth weave or engineering apparatus.",
+      "input_files": [],
+      "output_file": "generated/PS-O06.png",
+      "review": {
+        "status": "pass",
+        "scope": "逐张使用 view_image 查看全幅，检查构思差异、主体与负空间、边缘、哑光表现及实际文字；仅验证静态概念研究图。",
+        "notes": "完整连续薄膜中的偏心凹陷与邻近隆起可辨，浅灰哑光和软光说明曲率；无破洞或量化坐标，仅表达弹性概念。"
+      },
+      "width": 1536,
+      "height": 1024,
+      "sha256": "aff615e2422959f380cb15ae8f301bd1fc0984d680080f283bb688badd442ab0"
+    },
+    {
+      "id": "PS-O07",
+      "kind": "original_study",
+      "title": "Clarify · 数据净化筛",
+      "brief": "虚构数据整理服务 Clarify 需要表达从杂乱输入中形成一致出口的过程，本图仅为静态概念研究。",
+      "method": "用一块低矮多孔实体承接不等宽入口，并在另一侧收束为三条等距狭缝，以孔隙关系表达整流。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: stylized-concept. Asset type: one original static brand concept study for a fictional technology product, for a visual-system research library. Create one image on a landscape 3:2 canvas, 1536 by 1024 composition. Purely invented art direction, no reference image, no existing brand marks. One coherent sculptural or planar subject with at least forty percent quiet negative space; refined contemporary art-catalog restraint. A pale neutral background, matte surfaces, broad soft lighting only where needed to explain curvature. Precise clean boundaries. No text, letters, numbers, axes, legend, UI, watermark, border, busy particles, glowing effects, chrome, rainbow, plastic gloss or dramatic shadows. This is a static conceptual artwork, not measured scientific data, not an algorithm output, and not evidence of a working parametric system. Fictional product idea: Clarify, a data-preparation service making inconsistent inputs coherent. Subject: one low elongated rectangular matte sculptural block with softly rounded corners, resembling a carefully designed porous architectural model. On the left half of its visible top surface are four large irregular rounded openings of distinctly different sizes, while on the right edge emerge exactly three equal-width vertical narrow slots aligned in a disciplined rhythm. The connecting interior is suggested only by quiet shadows, no pipes or particles. Three-quarter elevated perspective, precise crafted form, off-white block on very pale gray ground, enough neutral contrast to distinguish every hole. Minimal, calm, one object and abundant empty margins. No data claims.",
+      "input_files": [],
+      "output_file": "generated/PS-O07.png",
+      "review": {
+        "status": "pass",
+        "scope": "逐张使用 view_image 查看全幅，检查构思差异、主体与负空间、边缘、哑光表现及实际文字；仅验证静态概念研究图。",
+        "notes": "四个不同大小的圆滑开孔和右侧三条等距狭缝清楚，单一低矮实体与留白稳定；内部连通仅为概念意向，未验证实际流动。"
+      },
+      "width": 1536,
+      "height": 1024,
+      "sha256": "e6d773f21dbd43d48859adfbfb05ab07e4c1d30ef745d27fef1547847bb5e77c"
+    },
+    {
+      "id": "PS-O08",
+      "kind": "original_study",
+      "title": "Relaymind · 人机交接",
+      "brief": "虚构协作助手 Relaymind 需要表达自动处理与人工判断之间清楚的交接位置，本图仅为静态概念研究。",
+      "method": "用两片相向的悬挑曲面在中央保留一道错位窄缝，通过接近但不相接的端面表达责任交接。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: stylized-concept. Asset type: one original static brand concept study for a fictional technology product, for a visual-system research library. Create one image on a landscape 3:2 canvas, 1536 by 1024 composition. Purely invented art direction, no reference image, no existing brand marks. One coherent sculptural or planar subject with at least forty percent quiet negative space; refined contemporary art-catalog restraint. A pale neutral background, matte surfaces, broad soft lighting only where needed to explain curvature. Precise clean boundaries. No text, letters, numbers, axes, legend, UI, watermark, border, busy particles, glowing effects, chrome, rainbow, plastic gloss or dramatic shadows. This is a static conceptual artwork, not measured scientific data, not an algorithm output, and not evidence of a working parametric system. Fictional product idea: Relaymind, handing work cleanly between automation and human judgment. Subject: exactly two broad simple cantilevered curved surfaces, one gently rising from the left and one descending from the right. Their flat cut ends approach the center but never touch: leave a narrow diagonal stepped gap between them, clearly visible as empty background. The two forms have unequal lengths and different curvatures so this is a relationship rather than mirrored symmetry. They remain low and sculptural with thicker stable outer bases, like a restrained abstract bridge deliberately separated at its midpoint. Muted charcoal-gray matte left surface and pale warm-gray matte right surface; no gradients crossing the gap. Wide landscape composition, elevated oblique view, all outlines visible, ivory background and very soft minimal contact shadows. No arrows, hands, robots or infinity shape.",
+      "input_files": [],
+      "output_file": "generated/PS-O08.png",
+      "review": {
+        "status": "pass",
+        "scope": "逐张使用 view_image 查看全幅，检查构思差异、主体与负空间、边缘、哑光表现及实际文字；仅验证静态概念研究图。",
+        "notes": "两片不同长度曲面在中央保持清楚的错位间隙，深浅中性色辅助区分交接双方；没有额外符号或镜面高光。"
+      },
+      "width": 1536,
+      "height": 1024,
+      "sha256": "2df003c6cf07490200588f60465fa6f2a34eac6f8330ac6e3b8d4216218e504c"
+    }
+  ]
+}

@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
-import { requireValue as assert, nonempty, positive, localFile, readJSON, unique, verifyHash, checkImage, fontSignature, report, capture, finish, toolAvailable } from './lib/validation.mjs';
+import { requireValue as assert, nonempty, positive, localFile, readJSON, unique, sha256, verifyHash, checkImage, fontSignature, report, capture, finish, toolAvailable } from './lib/validation.mjs';
 
 const args = process.argv.slice(2);
 if (args.includes('--help')) {
@@ -142,6 +142,8 @@ function asset(dir, relative, hash, width, height, contentType) {
 const stylesRoot = path.join(root, 'libraries/styles');
 const packs = capture(result, 'style inventory', () => fs.readdirSync(stylesRoot).filter(slug => fs.existsSync(path.join(stylesRoot, slug, 'STYLE.md')))) || [];
 const manifests = new Map();
+const generatedManifests = new Map();
+const originalManifests = new Map();
 for (const slug of packs) capture(result, `style ${slug}`, () => {
   const dir = path.join(stylesRoot, slug);
   for (const file of ['STYLE.md', 'EXAMPLES.md', 'PROMPTS.md', 'sources.json']) localFile(root, `${slug}/${file}`, { base: stylesRoot });
@@ -210,17 +212,168 @@ for (const slug of packs) capture(result, `style ${slug}`, () => {
   result.counts.source_assets = (result.counts.source_assets || 0) + assets.size;
   result.counts.samples = (result.counts.samples || 0) + samples.size;
 });
+// Source manifests keep their v1 meaning. Reinterpretations are separately
+// recorded and cannot replace the files in a source sample's provenance chain.
+for (const slug of packs) {
+  const dir = path.join(stylesRoot, slug);
+  const file = path.join(dir, 'generated.json');
+  if (!fs.existsSync(file)) continue;
+  capture(result, `generated examples ${slug}`, () => {
+    const source = manifests.get(slug);
+    assert(source, 'GENERATED_SOURCE', `Generated examples require a valid source manifest: ${slug}`);
+    const j = readJSON(file);
+    assert(j.schema_version === 1 && ['all_source_samples', 'partial_with_blockers'].includes(j.coverage), 'GENERATED_SCHEMA', `Generated examples require schema_version 1 and a supported coverage value: ${slug}`);
+    assert(j.style_id === slug, 'GENERATED_STYLE', `Generated style ID disagrees with directory: ${slug}`);
+    const samples = new Map(source.samples.map(sample => [sample.id, sample]));
+    const assets = new Map(source.assets.map(item => [item.id, item]));
+    const examples = unique(j.examples, `${slug} generated examples`);
+    const blocked = unique(j.blocked ?? [], `${slug} blocked examples`);
+    assert(j.coverage === 'partial_with_blockers' ? blocked.size > 0 : blocked.size === 0, 'GENERATED_BLOCKERS', `partial_with_blockers requires blockers; all_source_samples cannot contain blockers: ${slug}`);
+    const covered = unique([...j.examples, ...(j.blocked ?? [])], `${slug} generated and blocked examples`);
+    assert(covered.size === samples.size && [...samples.keys()].every(id => covered.has(id)), 'GENERATED_COVERAGE', `Generated and blocked examples must cover every source sample exactly once using the same IDs: ${slug}`);
+    const canonical = relative => fs.realpathSync(localFile(dir, relative));
+    const sourceChain = (sample, id) => {
+      const supporting = sample.supporting_asset_ids || [];
+      assert(Array.isArray(supporting) && supporting.every(key => assets.has(key)), 'GENERATED_SOURCE', `Unknown supporting source asset: ${slug}/${id}`);
+      const chain = [sample.asset_id, ...supporting].flatMap(key => {
+        const item = assets.get(key);
+        return [item.original_file, item.preview_file];
+      });
+      chain.push(sample.detail_file, sample.enhancement?.output_file);
+      return new Set(chain.filter(Boolean).map(canonical));
+    };
+    const sourcePaths = new Set([
+      ...source.assets.flatMap(item => [item.original_file, item.preview_file]),
+      ...source.samples.flatMap(sample => [sample.detail_file, sample.enhancement?.output_file]),
+      ...(source.reference_groups || []).map(group => group.overview_file),
+      source.overview?.file
+    ].filter(Boolean).map(canonical));
+    const outputPaths = new Set();
+    for (const e of j.examples) {
+      assert(e.kind === 'ai_reinterpretation', 'GENERATED_KIND', `Generated example must be labelled ai_reinterpretation: ${slug}/${e.id}`);
+      assert(e.source_sample_id === e.id && samples.has(e.source_sample_id), 'GENERATED_MAPPING', `Generated example must map to the source sample with the same ID: ${slug}/${e.id}`);
+      assert(nonempty(e.tool) && nonempty(e.prompt) && positive(e.width) && positive(e.height), 'GENERATED_FIELDS', `Generated example requires tool, full prompt and output dimensions: ${slug}/${e.id}`);
+      assert(e.review?.status === 'pass' && nonempty(e.review.scope) && nonempty(e.review.notes), 'GENERATED_REVIEW', `Generated example requires a passed review with scope and notes: ${slug}/${e.id}`);
+      const referenceMode = e.image_reference_mode ?? 'supplied';
+      assert(['supplied', 'observed_only'].includes(referenceMode), 'GENERATED_INPUT_MODE', `Unknown image reference mode: ${slug}/${e.id}`);
+      assert(Array.isArray(e.input_files) && e.input_files.every(nonempty), 'GENERATED_INPUTS', `Generated example requires input_files array: ${slug}/${e.id}`);
+      if (referenceMode === 'observed_only') {
+        assert(e.input_files.length === 0 && Array.isArray(e.reference_files) && e.reference_files.length > 0 && e.reference_files.every(nonempty), 'GENERATED_INPUTS', `Observed-only generation requires empty supplied inputs and nonempty viewed references: ${slug}/${e.id}`);
+      } else {
+        assert(e.input_files.length > 0 && e.reference_files === undefined, 'GENERATED_INPUTS', `Supplied generation requires nonempty input_files; use observed_only for viewed-only references: ${slug}/${e.id}`);
+      }
+      const sample = samples.get(e.source_sample_id);
+      const allowed = sourceChain(sample, e.id);
+      const inputs = (referenceMode === 'observed_only' ? e.reference_files : e.input_files).map(canonical);
+      assert(new Set(inputs).size === inputs.length && inputs.every(input => allowed.has(input)), 'GENERATED_INPUT_PROVENANCE', `Inputs must be distinct files from this sample's primary/supporting source chain: ${slug}/${e.id}`);
+      if (e.prompt_file !== undefined) localFile(dir, e.prompt_file);
+      const output = canonical(e.output_file);
+      assert(!sourcePaths.has(output) && !outputPaths.has(output), 'GENERATED_OUTPUT_PROVENANCE', `Generated output must be separate from all source files and other generated examples: ${slug}/${e.id}`);
+      outputPaths.add(output);
+      asset(dir, e.output_file, e.sha256, e.width, e.height);
+    }
+    for (const b of blocked.values()) {
+      assert(b.source_sample_id === b.id && samples.has(b.source_sample_id), 'GENERATED_MAPPING', `Blocked example must map to the source sample with the same ID: ${slug}/${b.id}`);
+      assert(b.status === 'blocked' && nonempty(b.tool) && nonempty(b.reason), 'GENERATED_BLOCKED_FIELDS', `Blocked example requires blocked status, tool and reason: ${slug}/${b.id}`);
+      assert(!['output_file', 'sha256', 'review'].some(key => key in b), 'GENERATED_BLOCKED_OUTPUT', `Blocked example cannot claim an output, hash or review: ${slug}/${b.id}`);
+      assert(Array.isArray(b.attempts) && b.attempts.length > 0, 'GENERATED_BLOCKED_ATTEMPTS', `Blocked example requires actual attempt records: ${slug}/${b.id}`);
+      const allowed = sourceChain(samples.get(b.source_sample_id), b.id);
+      for (const attempt of b.attempts) {
+        assert(attempt && nonempty(attempt.prompt) && nonempty(attempt.error) && nonempty(attempt.request_id), 'GENERATED_BLOCKED_ATTEMPTS', `Blocked attempt requires full prompt, error and request_id: ${slug}/${b.id}`);
+        assert(!['output_file', 'sha256', 'review'].some(key => key in attempt), 'GENERATED_BLOCKED_OUTPUT', `Blocked attempt cannot claim an output, hash or review: ${slug}/${b.id}`);
+        assert(Array.isArray(attempt.input_files) && attempt.input_files.every(nonempty), 'GENERATED_INPUTS', `Blocked attempt requires input_files array; text-only attempts use an empty array: ${slug}/${b.id}`);
+        const inputs = attempt.input_files.map(canonical);
+        assert(new Set(inputs).size === inputs.length && inputs.every(input => allowed.has(input)), 'GENERATED_INPUT_PROVENANCE', `Blocked attempt inputs must belong to this sample's source chain: ${slug}/${b.id}`);
+      }
+    }
+    generatedManifests.set(slug, j);
+    result.counts.generated_examples = (result.counts.generated_examples || 0) + examples.size;
+    result.counts.blocked_examples = (result.counts.blocked_examples || 0) + blocked.size;
+    if (blocked.size) result.warnings.push(`${slug}: ${blocked.size} example(s) remain blocked; mechanical PASS does not mean generation is complete.`);
+  });
+}
+// Original studies have independent briefs and IDs; they do not fill gaps in
+// the source-to-reinterpretation coverage contract above.
+const originalOutputIdentities = new Set();
+const originalOutputHashes = new Set();
+const fileIdentity = file => { const stat = fs.statSync(file); return `${stat.dev}:${stat.ino}`; };
+const sourceClaim = key => /^(?:source|sources)(?:_|$)/.test(key) || ['sample_id', 'asset_id', 'supporting_asset_ids', 'designer', 'author', 'author_url', 'page_url', 'asset_url', 'product_page_url', 'original_file', 'original_sha256', 'preview_file', 'preview_sha256', 'detail_file', 'display_file', 'enhancement', 'ai_enhanced', 'image_reference_mode', 'reference_files'].includes(key);
+const hasSourceClaim = value => value && typeof value === 'object' && Object.entries(value).some(([key, child]) => sourceClaim(key) || hasSourceClaim(child));
+const reservedImageIdentities = new Set([...imagePaths].map(fileIdentity));
+const reservedImageHashes = new Set([...imagePaths].map(sha256));
+for (const slug of packs) {
+  const dir = path.join(stylesRoot, slug);
+  const file = path.join(dir, 'originals.json');
+  if (!fs.existsSync(file)) continue;
+  capture(result, `original studies ${slug}`, () => {
+    const source = manifests.get(slug);
+    assert(source, 'ORIGINAL_SOURCE', `Original studies require a valid style source manifest: ${slug}`);
+    const j = readJSON(file);
+    assert(j && typeof j === 'object' && !Array.isArray(j) && j.schema_version === 1, 'ORIGINAL_SCHEMA', `Original studies require schema_version 1: ${slug}`);
+    assert(j.style_id === slug, 'ORIGINAL_STYLE', `Original study style ID disagrees with directory: ${slug}`);
+    assert(!hasSourceClaim(j), 'ORIGINAL_SOURCE_FIELDS', `Original studies cannot claim third-party source metadata: ${slug}`);
+    assert(Array.isArray(j.examples), 'SCHEMA_ARRAY', `Original studies examples must be an array: ${slug}`);
+    assert(j.examples.every(e => e && typeof e === 'object' && !Array.isArray(e)), 'ORIGINAL_FIELDS', `Original study entries must be objects: ${slug}`);
+    const examples = unique(j.examples, `${slug} original studies`);
+    assert(examples.size > 0, 'ORIGINAL_EMPTY', `Original studies must contain at least one example: ${slug}`);
+    const generated = generatedManifests.get(slug);
+    const reservedIds = new Set([...source.samples, ...(generated?.examples || []), ...(generated?.blocked || [])].map(e => e.id));
+    const outputIdentities = new Set();
+    const outputHashes = new Set();
+    for (const e of examples.values()) {
+      assert(!reservedIds.has(e.id), 'ORIGINAL_ID', `Original study ID conflicts with a source, generated or blocked example: ${slug}/${e.id}`);
+      assert(e.kind === 'original_study', 'ORIGINAL_KIND', `Original study must be labelled original_study: ${slug}/${e.id}`);
+      assert(['title', 'brief', 'method', 'tool', 'prompt'].every(key => nonempty(e[key])) && positive(e.width) && positive(e.height), 'ORIGINAL_FIELDS', `Original study requires title, brief, method, tool, full prompt and output dimensions: ${slug}/${e.id}`);
+      assert(Array.isArray(e.input_files) && e.input_files.length === 0, 'ORIGINAL_INPUTS', `Original studies must declare empty input_files for text-only creation: ${slug}/${e.id}`);
+      assert(e.review?.status === 'pass' && nonempty(e.review.scope) && nonempty(e.review.notes), 'ORIGINAL_REVIEW', `Original study requires a passed review with scope and notes: ${slug}/${e.id}`);
+      const output = fs.realpathSync(localFile(dir, e.output_file));
+      const identity = fileIdentity(output);
+      const hash = sha256(output);
+      assert(!reservedImageIdentities.has(identity) && !originalOutputIdentities.has(identity) && !outputIdentities.has(identity), 'ORIGINAL_OUTPUT_PROVENANCE', `Original output must be independent of all source, generated and other original files: ${slug}/${e.id}`);
+      assert(!reservedImageHashes.has(hash) && !originalOutputHashes.has(hash) && !outputHashes.has(hash), 'ORIGINAL_OUTPUT_PROVENANCE', `Original output cannot copy the bytes of a source, generated or other original image: ${slug}/${e.id}`);
+      outputIdentities.add(identity);
+      outputHashes.add(hash);
+      asset(dir, e.output_file, e.sha256, e.width, e.height);
+    }
+    for (const identity of outputIdentities) originalOutputIdentities.add(identity);
+    for (const hash of outputHashes) originalOutputHashes.add(hash);
+    originalManifests.set(slug, j);
+    result.counts.original_examples = (result.counts.original_examples || 0) + examples.size;
+  });
+}
+result.counts.original_examples ??= 0;
+result.counts.display_examples = (result.counts.generated_examples || 0) + result.counts.original_examples;
 capture(result, 'style overview', () => {
   const j = readJSON(localFile(root, 'OVERVIEW.sources.json', { base: stylesRoot }));
+  const version = j.schema_version === undefined ? 1 : j.schema_version;
+  assert(version === 1 || version === 2, 'OVERVIEW_SCHEMA', 'Style overview supports schema_version 1 or 2');
   const members = unique(j.members, 'Style overview', 'style_id');
   assert(members.size === packs.length && packs.every(slug => members.has(slug)), 'OVERVIEW_MEMBERS', 'Overview must map every indexed style once');
   for (const m of j.members) {
-    const j2 = readJSON(localFile(root, m.sources_file, { base: stylesRoot }));
-    assert(j2.style_id === m.style_id, 'OVERVIEW_SOURCE', `Overview source mismatch: ${m.style_id}`);
-    const s = j2.samples.find(sample => sample.id === m.sample_id);
-    assert(s, 'OVERVIEW_SAMPLE', `Overview sample missing: ${m.style_id}/${m.sample_id}`);
-    const a = j2.assets.find(item => item.id === s.asset_id);
-    assert(m.file === `${m.style_id}/${s.display_file || s.detail_file || a.preview_file}` && m.ai_enhanced === Boolean(s.enhancement), 'OVERVIEW_DISPLAY', `Overview display/AI label mismatch: ${m.style_id}`);
+    if (version === 2) {
+      assert(['ai_reinterpretation', 'original_study'].includes(m.kind) && !hasSourceClaim(m), 'OVERVIEW_KIND', `Overview v2 members must identify their example kind without source/clarity fields: ${m.style_id}`);
+      let manifest;
+      if (m.kind === 'original_study') {
+        assert(!('generated_file' in m), 'OVERVIEW_KIND', `Original study overview member cannot contain generated_file: ${m.style_id}`);
+        assert(m.originals_file === `${m.style_id}/originals.json` && originalManifests.has(m.style_id), 'OVERVIEW_ORIGINAL', `Overview must reference this style's validated original study manifest: ${m.style_id}`);
+        manifest = originalManifests.get(m.style_id);
+      } else {
+        assert(!('originals_file' in m), 'OVERVIEW_KIND', `Reinterpretation overview member cannot contain originals_file: ${m.style_id}`);
+        assert(m.generated_file === `${m.style_id}/generated.json` && generatedManifests.has(m.style_id), 'OVERVIEW_GENERATED', `Overview must reference this style's validated generated manifest: ${m.style_id}`);
+        manifest = generatedManifests.get(m.style_id);
+      }
+      const e = manifest.examples.find(example => example.id === m.example_id);
+      assert(e, 'OVERVIEW_EXAMPLE', `Overview example missing: ${m.style_id}/${m.example_id}`);
+      assert(m.file === `${m.style_id}/${e.output_file}` && m.sha256 === e.sha256, 'OVERVIEW_DISPLAY', `Overview example file/hash mismatch: ${m.style_id}`);
+    } else {
+      assert(!['kind', 'generated_file', 'originals_file', 'example_id'].some(key => key in m), 'OVERVIEW_KIND', `Overview v1 only describes original/clarity source chains: ${m.style_id}`);
+      const j2 = readJSON(localFile(root, m.sources_file, { base: stylesRoot }));
+      assert(j2.style_id === m.style_id, 'OVERVIEW_SOURCE', `Overview source mismatch: ${m.style_id}`);
+      const s = j2.samples.find(sample => sample.id === m.sample_id);
+      assert(s, 'OVERVIEW_SAMPLE', `Overview sample missing: ${m.style_id}/${m.sample_id}`);
+      const a = j2.assets.find(item => item.id === s.asset_id);
+      assert(m.file === `${m.style_id}/${s.display_file || s.detail_file || a.preview_file}` && m.ai_enhanced === Boolean(s.enhancement), 'OVERVIEW_DISPLAY', `Overview display/AI label mismatch: ${m.style_id}`);
+    }
     asset(stylesRoot, m.file, m.sha256);
   }
   asset(stylesRoot, j.output_file, j.sha256, j.width, j.height);

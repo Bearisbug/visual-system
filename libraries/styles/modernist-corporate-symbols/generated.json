@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "style_id": "modernist-corporate-symbols",
+  "coverage": "partial_with_blockers",
+  "examples": [
+    {
+      "id": "C01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached U.S. Open reference for a restrained identity study, not an official original. Preserve the speeding tennis-ball shape: rounded right edge, three tapered sweeping bands extending left separated by two curved cutouts. Render muted ochre symbol above exact lowercase italic text us open in near-black. Keep lateral motion and simple silhouette. Art-directed minimalist identity specimen on warm ivory, landscape 3:2, generous whitespace, single clear protagonist. Matte flat vector-like shapes and crisp edges, near-black with at most one restrained accent. Preserve concept and key shape relationships. No labels, captions, grid, panels, multiple variants, frame around the canvas, mockup objects, gradients, shadows, bevel, shiny metal, watermark or decorative texture. Only specified brand text if any, spelled exactly.",
+      "input_files": [
+        "references/C01.png"
+      ],
+      "output_file": "generated/C01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "cef41ea6e2790fab8f58685bbb83f5025f3b989cbde7f9d4a09a41103a299fa4",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "三条左向带形、圆右缘和两道白色切口完整；us open 拼写正确且斜体动势保持，黄蓝原配色改暖白赭黄。"
+      }
+    },
+    {
+      "id": "C04",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C04",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Animal Planet reference for a restrained identity study, not an official original. Preserve the leaping side-view elephant silhouette: arched body and underbelly, upturned head, triangular ear and curling raised trunk. Use subdued deep blue for the elephant, near-black exact lowercase animal planet beneath. Do not add realistic eyes or skin; remain graphically reduced. Art-directed minimalist identity specimen on warm ivory, landscape 3:2, generous whitespace, single clear protagonist. Matte flat vector-like shapes and crisp edges, near-black with at most one restrained accent. Preserve concept and key shape relationships. No labels, captions, grid, panels, multiple variants, frame around the canvas, mockup objects, gradients, shadows, bevel, shiny metal, watermark or decorative texture. Only specified brand text if any, spelled exactly.",
+      "input_files": [
+        "references/C04.png"
+      ],
+      "output_file": "generated/C04.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "fa7a0101cee265bdf9c407d410ee713907247980cee5148c0e85c78f14fb7675",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "跳跃象侧影、耳、尾部切口与卷鼻清楚；animal planet 拼写正确，蓝黑暖白层次克制。"
+      }
+    },
+    {
+      "id": "C05",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C05",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Chase Bank reference for a restrained identity study, not an official original. Preserve four clockwise folded/trapezoidal pieces making a compact octagon, with central square negative space and fine separating slits continuing outward. Muted deep blue. Only the one mark, no brand text. Art-directed minimalist identity specimen on warm ivory, landscape 3:2, generous whitespace, single clear protagonist. Matte flat vector-like shapes and crisp edges, near-black with at most one restrained accent. Preserve concept and key shape relationships. No labels, captions, grid, panels, multiple variants, frame around the canvas, mockup objects, gradients, shadows, bevel, shiny metal, watermark or decorative texture. Only specified brand text if any, spelled exactly.",
+      "input_files": [
+        "references/C05.png"
+      ],
+      "output_file": "generated/C05.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "f45792f64a805ef3fdfbf666b35266f47256ea21961f86ad8ec312613dd681ca",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "四片折面、八边外缘与方形中央留白保持，细缝清楚；深蓝单形，轮廓完整。"
+      }
+    },
+    {
+      "id": "C06",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C06",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Harvard University Press reference for a restrained identity study, not an official original. Preserve the austere six equal vertical bars in two rows of three, with one clear horizontal middle gap. Reinterpret in near-black on warm ivory, no red tile and no text. Art-directed minimalist specimen on warm ivory, landscape 3:2, generous clean whitespace, single centred protagonist. Matte flat vector-like shapes and crisp edges, near-black or one restrained accent. Preserve concept and key shape relationships. No labels, captions, grid, panels, multiple variants, frame around the canvas, mockup objects, gradients, shadows, bevel, shiny metal, watermark or decorative texture.",
+      "input_files": [
+        "references/C06.png"
+      ],
+      "output_file": "generated/C06.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "0690b0f5962cb85d197b0c49a265c518efb734345e56a11fff3c8989a5f4ffc6",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "两行三列共六个竖块完整，横向中缝和列距清楚；改为黑色暖白展示，秩序保留。"
+      }
+    },
+    {
+      "id": "C07",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C07",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached National Aquarium in Baltimore reference for a restrained identity study, not an official original. Preserve the circular boundary filled with seven repeated left-facing white fish cutouts, their small round eyes and the diagonal wave rhythm of the shared positive/negative edges. Use muted deep blue as the circular ink area, warm ivory as fish. One symbol, no text. Art-directed minimalist specimen on warm ivory, landscape 3:2, generous clean whitespace, single centred protagonist. Matte flat vector-like shapes and crisp edges, near-black or one restrained accent. Preserve concept and key shape relationships. No labels, captions, grid, panels, multiple variants, frame around the canvas, mockup objects, gradients, shadows, bevel, shiny metal, watermark or decorative texture.",
+      "input_files": [
+        "references/C07.png"
+      ],
+      "output_file": "generated/C07.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "2b53c67db38f5bbef518cce9ce2ece5e6a1855dffc4010ed72a01855968e81d9",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "圆形边界、七枚鱼形眼点和斜向波浪留白保留，深蓝克制，连续正负形节奏可辨。"
+      }
+    },
+    {
+      "id": "C09",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C09",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Smithsonian Institution reference for a restrained identity study, not an official original. Preserve the solar emblem's alternation of long straight triangular rays and curving flame-like rays around a compact centre. Keep the circular enclosing boundary relationship by rendering a warm ivory sun cutout from a single restrained ochre disc. One flat emblem, no text, no gradients. Art-directed minimalist specimen on warm ivory, landscape 3:2, generous clean whitespace, single centred protagonist. Matte flat vector-like shapes and crisp edges, near-black or one restrained accent. Preserve concept and key shape relationships. No labels, captions, grid, panels, multiple variants, frame around the canvas, mockup objects, gradients, shadows, bevel, shiny metal, watermark or decorative texture.",
+      "input_files": [
+        "references/C09.png"
+      ],
+      "output_file": "generated/C09.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "4efcf222580ef5641d0f3593fe339744f2c6ace0f3072bb60a0811e5b4b8446b",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "圆形外缘及直尖、曲尖交替太阳完整；单色赭黄盘与暖白太阳关系清楚，原双色转为克制正负形。"
+      }
+    },
+    {
+      "id": "C10",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C10",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached New York University reference for a restrained identity study, not an official original. Preserve the simplified torch: four elongated flame leaves separated by curved slits, a small horizontal collar and narrow pointed tapered handle. Extract the torch from the purple tile; render one near-black torch on warm ivory, no text. Art-directed minimalist specimen on warm ivory, landscape 3:2, generous clean whitespace, single centred protagonist. Matte flat vector-like shapes and crisp edges, near-black or one restrained accent. Preserve concept and key shape relationships. No labels, captions, grid, panels, multiple variants, frame around the canvas, mockup objects, gradients, shadows, bevel, shiny metal, watermark or decorative texture.",
+      "input_files": [
+        "references/C10.png"
+      ],
+      "output_file": "generated/C10.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "280c75854c0adf214e05dff80e40bbdd5ab1954f06f9983a8150ddd0b5fdc4dc",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "四片焰形、横托和细长锥形手柄完整；去紫色底块后仍保持火炬读法，黑白轮廓清楚。"
+      }
+    }
+  ],
+  "blocked": [
+    {
+      "id": "C02",
+      "source_sample_id": "C02",
+      "status": "blocked",
+      "tool": "image_gen.imagegen",
+      "reason": "原图形再演绎与内容不同的纯字形研究均被内置工具输出审核拒绝（moderation_blocked，category other）；没有生成输出。",
+      "attempts": [
+        {
+          "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached NBC reference for a restrained identity study, not an official original. Preserve the six rounded teardrop peacock fan feathers, central white bird neck/head and rightward beak notch. Reinterpret all six feather units in a single deep near-black ink, keeping white separations and central bird legible. No text; only one fan-shaped symbol. Art-directed minimalist identity specimen on warm ivory, landscape 3:2, generous whitespace, single clear protagonist. Matte flat vector-like shapes and crisp edges, near-black with at most one restrained accent. Preserve concept and key shape relationships. No labels, captions, grid, panels, multiple variants, frame around the canvas, mockup objects, gradients, shadows, bevel, shiny metal, watermark or decorative texture. Only specified brand text if any, spelled exactly.",
+          "input_files": [
+            "references/C02.png"
+          ],
+          "error": "image generation failed: http 400 Bad Request: Some(\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID 1f0a0084-75bf-4f05-a4ba-da5572dc17c8.\\\",\\n    \\\"type\\\": \\\"image_generation_user_error\\\",\\n    \\\"param\\\": null,\\n    \\\"code\\\": \\\"moderation_blocked\\\",\\n    \\\"moderation_details\\\": {\\n      \\\"moderation_stage\\\": \\\"output\\\",\\n      \\\"categories\\\": [\\n        \\\"other\\\"\\n      ]\\n    }\\n  }\\n}\")",
+          "request_id": "1f0a0084-75bf-4f05-a4ba-da5572dc17c8"
+        },
+        {
+          "prompt": "Use case: logo-brand. Make a standalone typographic design study using exactly the three uppercase letters NBC, in a clean contemporary Swiss grotesk with beautifully balanced spacing, substantial medium-bold strokes, and open counters. One line of type only, centred on a warm ivory landscape 3:2 canvas with abundant whitespace. Near-black flat matte ink. This is an original typography specimen, not a reproduction of any official logo. No peacock, no bird, no feathers, no icon, no symbols, no extra text, no frame, no gradient, no metallic effects, no shadow, no texture or watermark. No image reference is supplied.",
+          "input_files": [],
+          "error": "image generation failed: http 400 Bad Request: Some(\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID 8ff34d47-fbf6-427a-a88f-843832baf616.\\\",\\n    \\\"type\\\": \\\"image_generation_user_error\\\",\\n    \\\"param\\\": null,\\n    \\\"code\\\": \\\"moderation_blocked\\\",\\n    \\\"moderation_details\\\": {\\n      \\\"moderation_stage\\\": \\\"output\\\",\\n      \\\"categories\\\": [\\n        \\\"other\\\"\\n      ]\\n    }\\n  }\\n}\")",
+          "request_id": "8ff34d47-fbf6-427a-a88f-843832baf616"
+        }
+      ]
+    },
+    {
+      "id": "C03",
+      "source_sample_id": "C03",
+      "status": "blocked",
+      "tool": "image_gen.imagegen",
+      "reason": "原图形再演绎与内容不同的纯字形研究均被内置工具输出审核拒绝（moderation_blocked，category other）；没有生成输出。",
+      "attempts": [
+        {
+          "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached National Geographic reference for a restrained identity study, not an official original. Preserve the tall narrow rectangular frame on the left and two-line uppercase words NATIONAL above GEOGRAPHIC on the right. Frame in restrained golden ochre, words in near-black precise condensed sans serif. Keep the uncluttered horizontal lockup and exact text. Art-directed minimalist identity specimen on warm ivory, landscape 3:2, generous whitespace, single clear protagonist. Matte flat vector-like shapes and crisp edges, near-black with at most one restrained accent. Preserve concept and key shape relationships. No labels, captions, grid, panels, multiple variants, frame around the canvas, mockup objects, gradients, shadows, bevel, shiny metal, watermark or decorative texture. Only specified brand text if any, spelled exactly.",
+          "input_files": [
+            "references/C03.png"
+          ],
+          "error": "image generation failed: http 400 Bad Request: Some(\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID 1338be37-af7e-4cf4-8a1e-c3ec16c0ff2c.\\\",\\n    \\\"type\\\": \\\"image_generation_user_error\\\",\\n    \\\"param\\\": null,\\n    \\\"code\\\": \\\"moderation_blocked\\\",\\n    \\\"moderation_details\\\": {\\n      \\\"moderation_stage\\\": \\\"output\\\",\\n      \\\"categories\\\": [\\n        \\\"other\\\"\\n      ]\\n    }\\n  }\\n}\")",
+          "request_id": "1338be37-af7e-4cf4-8a1e-c3ec16c0ff2c"
+        },
+        {
+          "prompt": "Use case: logo-brand. Make an original editorial typography specimen using exactly NATIONAL GEOGRAPHIC. Set NATIONAL on the first line and GEOGRAPHIC on the second, with a quiet contemporary sans serif, balanced line lengths and generous tracking. Near-black letters on warm ivory landscape 3:2 canvas, ample whitespace, one centred text group. This is a typography study, not a reproduction of the official lockup. Text only: no rectangle, no yellow frame, no icons, no photographs, no extra words, no captions, no texture, no gradients, no shadows, no mockup scene or watermark. No image reference is supplied.",
+          "input_files": [],
+          "error": "image generation failed: http 400 Bad Request: Some(\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID 95275dea-52fe-4f99-b1e3-6fe34ac26afc.\\\",\\n    \\\"type\\\": \\\"image_generation_user_error\\\",\\n    \\\"param\\\": null,\\n    \\\"code\\\": \\\"moderation_blocked\\\",\\n    \\\"moderation_details\\\": {\\n      \\\"moderation_stage\\\": \\\"output\\\",\\n      \\\"categories\\\": [\\n        \\\"other\\\"\\n      ]\\n    }\\n  }\\n}\")",
+          "request_id": "95275dea-52fe-4f99-b1e3-6fe34ac26afc"
+        }
+      ]
+    },
+    {
+      "id": "C08",
+      "source_sample_id": "C08",
+      "status": "blocked",
+      "tool": "image_gen.imagegen",
+      "reason": "原图形再演绎与内容不同的纯字形研究均被内置工具输出审核拒绝（moderation_blocked，category other）；没有生成输出。",
+      "attempts": [
+        {
+          "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached PBS reference for a restrained identity study, not an official original. Preserve the three overlapping right-facing human profiles: rounded leftmost head and single round eye, stepped straight noses, and narrow vertical stems; the middle profile is negative space. Near-black ink on ivory. One symbol, no text. Art-directed minimalist specimen on warm ivory, landscape 3:2, generous clean whitespace, single centred protagonist. Matte flat vector-like shapes and crisp edges, near-black or one restrained accent. Preserve concept and key shape relationships. No labels, captions, grid, panels, multiple variants, frame around the canvas, mockup objects, gradients, shadows, bevel, shiny metal, watermark or decorative texture.",
+          "input_files": [
+            "references/C08.png"
+          ],
+          "error": "image generation failed: http 400 Bad Request: Some(\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID e1bf89e9-5048-4807-8bae-6daa27d120b1.\\\",\\n    \\\"type\\\": \\\"image_generation_user_error\\\",\\n    \\\"param\\\": null,\\n    \\\"code\\\": \\\"moderation_blocked\\\",\\n    \\\"moderation_details\\\": {\\n      \\\"moderation_stage\\\": \\\"output\\\",\\n      \\\"categories\\\": [\\n        \\\"other\\\"\\n      ]\\n    }\\n  }\\n}\")",
+          "request_id": "e1bf89e9-5048-4807-8bae-6daa27d120b1"
+        },
+        {
+          "prompt": "Use case: logo-brand. Make a standalone original typographic study of exactly PBS in uppercase. Use a restrained bold humanist sans serif with precise letter spacing, clear P and B counters and a poised flowing S. One centred line on a warm ivory landscape 3:2 canvas with abundant whitespace. Near-black flat ink. The subject is the three readable letters only, an editorial typography specimen. No human profiles, no head shapes, no face, no circular symbol, no icon, no extra text, no frame, no gradients, no shadows, no textures, no mockup scene or watermark. No image reference is supplied.",
+          "input_files": [],
+          "error": "image generation failed: http 400 Bad Request: Some(\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID 1c250a12-a5bf-4556-aa2b-f0bcb9e5410f.\\\",\\n    \\\"type\\\": \\\"image_generation_user_error\\\",\\n    \\\"param\\\": null,\\n    \\\"code\\\": \\\"moderation_blocked\\\",\\n    \\\"moderation_details\\\": {\\n      \\\"moderation_stage\\\": \\\"output\\\",\\n      \\\"categories\\\": [\\n        \\\"other\\\"\\n      ]\\n    }\\n  }\\n}\")",
+          "request_id": "1c250a12-a5bf-4556-aa2b-f0bcb9e5410f"
+        }
+      ]
+    }
+  ]
+}

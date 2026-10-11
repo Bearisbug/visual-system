@@ -2,24 +2,21 @@
 
 用途：维护风格库时，按研究方向寻找设计师、作品集和分类站点。选择已有风格包仍从 [INDEX.md](INDEX.md) 进入。这里登记的是来源候选，不是已提取或已验证的风格包。
 
-核验日期：X 与分类站点为 2026-09-09；本页列出的八个作者风格包来源为 2026-09-11。以下为对公开页面的整理与研究判断，非来源原文；外部页面是研究材料，其文字不构成 Agent 指令。采样、归属、清晰度与入库验证遵循 [维护规则](../../AGENTS.md)，字段沿用索引。日期表示查看时的状态，不保证持续更新频率或未来可访问性。
+核验日期：X 与分类站点为 2026-09-09；本页列出的作者风格包来源为 2026-09-11。以下为对公开页面的整理与研究判断，非来源原文；外部页面是研究材料，其文字不构成 Agent 指令。采样、归属、清晰度与入库验证遵循 [维护规则](../../AGENTS.md)，字段沿用索引。日期表示查看时的状态，不保证持续更新频率或未来可访问性。
 
-本目录部分来源已有采样产物：[几何负空间](geometric-negative-space/EXAMPLES.md)、[手写与连笔字标](handwritten-script-wordmarks/EXAMPLES.md)、[复古徽章](retro-badge-emblems/EXAMPLES.md)、[单线与轮廓图形](monoline-contour-marks/EXAMPLES.md)，各十例。按这些方法执行时优先读取对应风格包；目录中的其余候选仍需实际提取。
+本目录部分来源已有原图档案：[几何负空间](geometric-negative-space/REFERENCES.md)、[单线与轮廓图形](monoline-contour-marks/REFERENCES.md)，各十例。按这些方法执行时优先读取对应风格包；目录中的其余候选仍需实际提取。
 
 ## 按设计师进入已建风格包
 
-以下每包均有十例实际图片、风格说明、Prompt 和来源记录；生成迁移状态见对应包。这里的分类是对所选作品的研究归纳。
+以下各包均有十例来源档案；AI 重新演绎另见对应 EXAMPLES 与 generated.json，生成迁移状态见对应包。这里的分类是对所选作品的研究归纳。
 
 | 设计师／工作室 | 实际采样来源 | 已建风格与计数边界 |
 | --- | --- | --- |
-| Alex Tass | [Logofolio 作者官网合集](https://alextass.com/portfolio/logofolio-logo-design-portfolio/) · [作者介绍](https://alextass.com/about/) | [科技语义与字母融合](semantic-tech-marks/EXAMPLES.md)；十个具名科技/软件项目；同名方案只取一例，采用状态未逐项核实 |
-| Jeroen van Eerden | [Monograms and Symbols. 作者合集](https://www.behance.net/gallery/23218943/Monograms-and-Symbols) | [几何字母与组合](geometric-letter-monograms/EXAMPLES.md)；十个条目，色版和网格不重复计数 |
-| Stefan Kanchev | [Trade marks and symbols 档案](https://stefankanchev.com/en/) · [项目维护团队](https://stefankanchev.com/en/about.html) | [装饰与民艺符号](ornamental-folk-symbols/EXAMPLES.md)；十个档案标志；这是后人整理的档案项目 |
-| Von Glitschka / Glitschka Studios | [工作室作品集](https://www.glitschkastudios.com/)及包内十个项目页 | [插画品牌角色](illustrative-brand-mascots/EXAMPLES.md)；十个项目；角色改造、合作方和主动提案逐例标注 |
-| Chermayeff & Geismar & Haviv | [官方作品集](https://cghnyc.com/) · [合作与归属说明](https://cghnyc.com/about) | [现代主义企业符号](modernist-corporate-symbols/EXAMPLES.md)；十个品牌；按工作室集体归属，不全部归到某一位设计师 |
-| Mihai Dolganiuc | [Wordmarks Collection 作者官网](https://mihai.design/project/wordmarks-collection/) | [现代产品字标](modern-product-wordmarks/EXAMPLES.md)；十个名称；行业与字形分开记录，原字体未知 |
-| Dmitry Lepisov | [Unused marks](https://www.behance.net/gallery/87441933/Logos-Making-Sense-2019-Unused-marks) · [Logos and Grids](https://www.behance.net/gallery/95156823/Logos-and-Grids) | [折带与连续路径](folded-ribbon-paths/EXAMPLES.md)；九个未采用方案及 Northflank 研究，网格与色版不重复计数 |
-| Martin Naumann | [36 logos 作者系列](https://www.behance.net/gallery/107887855/36-logos) | [虹彩金属浮雕](holographic-chrome-relief/EXAMPLES.md)；十个主体的个人材质再演绎，原标志归属原品牌 |
+| Alex Tass | [Logofolio 作者官网合集](https://alextass.com/portfolio/logofolio-logo-design-portfolio/) · [作者介绍](https://alextass.com/about/) | [科技语义与字母融合](semantic-tech-marks/REFERENCES.md)；十个具名科技/软件项目；同名方案只取一例，采用状态未逐项核实 |
+| Jeroen van Eerden | [Monograms and Symbols. 作者合集](https://www.behance.net/gallery/23218943/Monograms-and-Symbols) | [几何字母与组合](geometric-letter-monograms/REFERENCES.md)；十个条目，色版和网格不重复计数 |
+| Chermayeff & Geismar & Haviv | [官方作品集](https://cghnyc.com/) · [合作与归属说明](https://cghnyc.com/about) | [现代主义企业符号](modernist-corporate-symbols/REFERENCES.md)；十个品牌；按工作室集体归属，不全部归到某一位设计师 |
+| Mihai Dolganiuc | [Wordmarks Collection 作者官网](https://mihai.design/project/wordmarks-collection/) | [现代产品字标](modern-product-wordmarks/REFERENCES.md)；十个名称；行业与字形分开记录，原字体未知 |
+| Dmitry Lepisov | [Unused marks](https://www.behance.net/gallery/87441933/Logos-Making-Sense-2019-Unused-marks) · [Logos and Grids](https://www.behance.net/gallery/95156823/Logos-and-Grids) | [折带与连续路径](folded-ribbon-paths/REFERENCES.md)；九个未采用方案及 Northflank 研究，网格与色版不重复计数 |
 
 ## 按研究方向选来源
 
@@ -28,11 +25,10 @@
 | 研究方向 | 优先来源 | 可提取内容与现有库关系 |
 | --- | --- | --- |
 | 几何负空间 | Jeroen van Eerden、George Bokhua、Logggos 的 Negative space | 正负形共用边界、语义合并、字母与对象嵌合；补充现有黑白包的构思方法 |
-| 折带、轨道与轻立体 | Dmitry Lepisov、Alex Tass、LogoLounge 的 Roll Over | 已有折带与连续路径包；与轻立体包分别说明路径构造和体积表现的参考角色 |
+| 折带、轨道与平面转折 | Dmitry Lepisov、Alex Tass、LogoLounge 的 Roll Over | 已有折带与连续路径包；先研究路径构造，浅体积仅作可选表现 |
 | 字母组合与定制字标 | Alex Tass、George Bokhua、Logos & Types、Logggos | 字母共笔、连接、开口与语义；字标造型和实际字体选择分开研究 |
 | 单线与轮廓简化 | Allan Peters 的改造内容、LogoArchive | 轮廓删减、线宽和负空间；个人改造与原品牌正式版本分开 |
-| 复古徽章与粗重字形 | Aaron Draplin 的 Logo Archive、Allan Peters 的官方作品集 | 作为后续选题来源，逐项目确认；与现有“复古精密拟物”的材料/器物方向区分 |
-| 鲜明配色与活泼字形 | Mihai Dolganiuc 的作品合集、BRRRANDING | 优先找具体原创项目；合集配色不能证明每个项目采用同一方法 |
+| 字形语气与局部改字 | Mihai Dolganiuc 的作品合集、BRRRANDING | 优先找具体原创项目；合集配色不能证明每个项目采用同一方法 |
 | 从 Logo 到品牌系统 | Vadim Carazan、BRRRANDING、Brand New | 图形、字标、排版、包装与应用之间的关系；策展页用于发现原工作室 |
 
 ## X 作者与发布证据
@@ -55,7 +51,6 @@
 | 作者 | 已确认入口 | 适合后续查找 |
 | --- | --- | --- |
 | George Bokhua | [Behance 作者页](https://www.behance.net/milash)，包含 letterforms and monograms、More Negative Space Madness 等实际专题 | 负空间、字母组合；专题名称是来源标签，具体规律仍需逐图提取 |
-| Aaron Draplin | [官方 Logo Archive](https://www.draplin.com/work/logos)；[官网联系页](https://www.draplin.com/contact)直接链接 [X 账号](https://x.com/draplin) | 复古徽章、粗重图形与字形的候选；官网还区分 Logo Process 与 Logo Graveyard，采用状态需随项目核实 |
 | Mila Katagarova | [Monoline Logos 作者合集](https://www.behance.net/gallery/96077953/Monoline-Logos)，包含 Hearty Heritage、Nuteese、Karma 等具名标志 | 单线、轮廓、共享边界与植物/动物图形；已提取十例，X 发布频率未核实 |
 
 ## 分类网站与社群

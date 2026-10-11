@@ -1,0 +1,805 @@
+{
+  "schema_version": 1,
+  "style_id": "monochrome-product-marks",
+  "coverage": "all_source_samples",
+  "examples": [
+    {
+      "id": "A01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "A01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a refined AI reinterpretation of the provided Theine icon reference for a curated minimal design study. Preserve its essential subject: a low, thick-walled dark cup seen slightly from above, elliptical open rim and a single handle on the right, pale interior. Make the cup a crisp sculptural silhouette with only shallow matte charcoal volume and soft restrained grey shading, less glossy than the reference. Remove the surrounding app tile. Landscape 3:2 canvas, warm-white flat background, centered single cup occupying about 45% of width, generous calm negative space. No text, no border, no extra objects, no steam, no chrome, no glow, no gradients across the backdrop. This is a new visual study based on the source concept, not an official brand asset.",
+      "input_files": [
+        "references/catalog-theine.png"
+      ],
+      "output_file": "generated/A01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "f4c3ae1f21ad7e5d9cc6f8dc26577ff702418ce762fe398cff61270a7f1ad2a0",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "杯口厚壁、右侧杯把和浅色内壁清楚；高光收敛为哑光灰阶，主体完整。"
+      }
+    },
+    {
+      "id": "A02",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "A02",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Reinterpret the provided mononote reference for an elegant minimal visual study. Preserve the dark rounded-square note sheet and the single lower-right corner folding inward to reveal a pale reverse. The curl is the entire concept; smooth outer edges, clear diagonal fold, one uninterrupted dark note face. Reduce depth to a restrained matte paper relief with crisp silhouette. Remove the outer app tile. Center the note on warm white. Landscape 3:2, single complete subject about 45% of canvas height, generous negative space, warm-white flat background. Restrained art-direction and precise geometry. No text, captions, border, decorations, chrome, glow, candy gradients or large shadows. This is AI reinterpretation of the reference concept, not an official asset.",
+      "input_files": [
+        "references/catalog-mononote.png"
+      ],
+      "output_file": "generated/A02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "ed605889c7b63810de7a3a82c152b7445c53673dd6c37b7c5404fee31ea20b06",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "保留单一黑便签与右下浅色卷角；纸张浅体积、连续边缘和宽留白清楚。"
+      }
+    },
+    {
+      "id": "A03",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "A03",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Reinterpret the provided screenfast reference for an elegant minimal visual study. Preserve a tall charcoal rounded rectangular clock slab, a pale circular hand pivot, one long tapered hand pointing straight up and a shorter hand down-right. Keep the reading visually near four o'clock. Simplify the glossy original into flat charcoal and ivory with only a very shallow matte relief. No numerals, ticks or outer app tile. Landscape 3:2, single complete subject about 45% of canvas height, generous negative space, warm-white flat background. Restrained art-direction and precise geometry. No text, captions, border, decorations, chrome, glow, candy gradients or large shadows. This is AI reinterpretation of the reference concept, not an official asset.",
+      "input_files": [
+        "references/catalog-screenfast.png"
+      ],
+      "output_file": "generated/A03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "6f64c6c553c56d19c1c817b145125e38cc20343f31c94bad186f55c9153b50f9",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "竖向底板、中心圆轴、上向长针和右下短针均保留，浅浮雕对比可辨。"
+      }
+    },
+    {
+      "id": "A04",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "A04",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make a minimal, artfully composed AI reinterpretation of the provided lettera-markdown reference. Keep the specific lowercase single-storey a made from a curling ribbon: large lower loop, open upper hook, right downstroke and short soft terminal. Preserve one closed lower counter. Use charcoal on the main ribbon, ivory on the upper turned reverse, in very shallow matte sculptural relief. Remove the app tile; avoid glossy tubular plastic. Landscape 3:2, centered complete subject about 48% canvas height, generous negative space and refined proportions. No words, captions, watermark, border, decorations, chrome, glow or colorful gradients. This is a design study, not an official asset.",
+      "input_files": [
+        "references/catalog-lettera-markdown.png"
+      ],
+      "output_file": "generated/A04.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "471c0ee53caa5dd2612db974dffd28d25f61864999e0ba14f763c2d8c497c714",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "保留小写 a 的下环、开放上钩与右侧收笔；黑白带面翻转清楚，没有转成普通圆环。"
+      }
+    },
+    {
+      "id": "A05",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "A05",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make a minimal, artfully composed AI reinterpretation of the provided center reference. Keep a complete thick circular ring with a darker upper-left arc and lighter remaining arc; rounded ends at the visible tonal transition, clear empty circular center. Use a very dark charcoal flat field for contrast and ivory/light grey ring with subtle matte depth. Remove the rounded app tile and glossy bevel; the ring alone is the protagonist. Landscape 3:2, centered complete subject about 48% canvas height, generous negative space and refined proportions. No words, captions, watermark, border, decorations, chrome, glow or colorful gradients. This is a design study, not an official asset.",
+      "input_files": [
+        "references/catalog-center.png"
+      ],
+      "output_file": "generated/A05.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "1b5d1a630a7d97f755966a302298a254933ab32ef358b00fc2218ae07a932763",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "完整分段圆环、左上暗弧与明亮主弧可辨；平面深底和克制明暗保留原构思。"
+      }
+    },
+    {
+      "id": "A06",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "A06",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make a minimal, artfully composed AI reinterpretation of the provided emphasis reference. Keep exactly three dark pointed elliptical leaves: one upright above, two angled outward below, arranged as the same compact sprout shape. Keep the tiny gaps and simple curved silhouettes. Use matte near-black filled shapes with the faintest sculptural edge, warm white backdrop. Remove the app tile. No leaf veins or added stem. Landscape 3:2, centered complete subject about 48% canvas height, generous negative space and refined proportions. No words, captions, watermark, border, decorations, chrome, glow or colorful gradients. This is a design study, not an official asset.",
+      "input_files": [
+        "references/catalog-emphasis.png"
+      ],
+      "output_file": "generated/A06.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "61e3c952e5c04990ed9331650f9dc2bae8a90e17bf28c84112724a8aa206a740",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "三枚尖椭圆叶形数量正确，上下位置和间隙清楚；体积弱化为轻微边缘。"
+      }
+    },
+    {
+      "id": "A07",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "A07",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a restrained artistic AI reinterpretation of the provided min-habit reference. Preserve the near-black rounded bent stroke shaped like a low flowing lowercase m with two humps and a short downward right terminal; retain one separate small black circular dot just above the right end. The line has gentle hand-shaped rhythm, not a perfect sine wave. Very shallow matte depth only, no outer app tile. Landscape 3:2 canvas, warm-white flat backdrop, one complete centered subject about 48% canvas height with generous negative space. Crisp silhouette, quiet grey/charcoal/ivory only. No added words, label, watermark, frame, decoration, glow, mirror highlights or colorful gradients. Reference concept study, not official artwork.",
+      "input_files": [
+        "references/catalog-min-habit.png"
+      ],
+      "output_file": "generated/A07.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "5954166c5b69ea41fd28b5a941c7689dd4fdb32717c610f7c98f526da7d12929",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "保留两次起伏的圆端弯线、右端下折与独立圆点；线走势没有变成同心环或直角符号。"
+      }
+    },
+    {
+      "id": "A08",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "A08",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a restrained artistic AI reinterpretation of the provided particle-news reference. Preserve a pale circular disk with dark round perforations and the prominent central four-lobed diagonal connection: four round wells joined through narrow diagonal channels meeting in the middle. Keep the surrounding radial holes legible and separate. Simplify the material to matte ivory relief over a charcoal circle; no chrome or mechanical accessories. Retain the circular perforated-plate concept without the square app tile. Landscape 3:2 canvas, warm-white flat backdrop, one complete centered subject about 48% canvas height with generous negative space. Crisp silhouette, quiet grey/charcoal/ivory only. No added words, label, watermark, frame, decoration, glow, mirror highlights or colorful gradients. Reference concept study, not official artwork.",
+      "input_files": [
+        "references/catalog-particle-news.png"
+      ],
+      "output_file": "generated/A08.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "2b94fcf38294b3da181ac20da9eba0e8b3459ef064f0a7823e8675c88a9d001c",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "浅色打孔圆盘、中心四瓣斜向连通与周边独立孔洞清楚；圆盘外缘改为深色承托，未当作精确孔径复制。"
+      }
+    },
+    {
+      "id": "A09",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "A09",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a restrained artistic AI reinterpretation of the provided opal reference. Preserve one closed sculptural ring with a gently irregular rounded triangular inner opening and a rounded outer contour, varying band width. Use deep charcoal matte surface on warm white, with slight soft planar shading for volume, not chrome. Keep it a single continuous irregular ring, not a regular torus and not a letter. Remove the app tile. Landscape 3:2 canvas, warm-white flat backdrop, one complete centered subject about 48% canvas height with generous negative space. Crisp silhouette, quiet grey/charcoal/ivory only. No added words, label, watermark, frame, decoration, glow, mirror highlights or colorful gradients. Reference concept study, not official artwork.",
+      "input_files": [
+        "references/catalog-opal.png"
+      ],
+      "output_file": "generated/A09.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "65fc9ecc1579148f49ecaefcc3b7d22c449c50c007a9827180282a37dd1bc164",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "保留不规则内孔与宽窄变化的连续外环；灰黑哑光替代镜面，轮廓仍有雕塑感。"
+      }
+    },
+    {
+      "id": "A10",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "A10",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Produce one artistic minimal AI reinterpretation of the provided bartender reference for a curated monochrome visual library. Preserve the tuxedo concept as a clean graphic torso emblem: dark bow tie at top, white shirt center, exactly three black circular buttons in a vertical line, dark waistcoat panels forming a deep V. No head, arms or human body; no stitching or fabric realism. Simplify the source into flat ivory and charcoal forms with only faint matte relief; full subject isolated on warm white. Landscape 3:2, balanced complete subject, generous calm negative space. Charcoal and ivory only. No words, caption, label, frame, glow, chrome, colored gradients or additional props. This is a source-based visual study, not a production logo.",
+      "input_files": [
+        "references/catalog-bartender.png"
+      ],
+      "output_file": "generated/A10.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "dff8f15c72ad3b51485824b3d0a93a560dd5dbdc40abc6e3d11f619e0a4ee634",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "领结、白衬衣、深 V 背心与三个纽扣均保留；缝线与复杂布料纹理已去除，职业器物概念清楚。"
+      }
+    },
+    {
+      "id": "A11",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "A11",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Produce one artistic minimal AI reinterpretation of the provided onigiri reference for a curated monochrome visual library. Preserve a single small dark rounded triangular pebble with an upright rounded apex, broad slightly flattened bottom, soft smooth corners. Remove both nested white app tiles. The near-black triangular object is only 30% canvas height on a warm-white field, gently raised matte form with no glossy edge. Do not add rice, seaweed, face, lettering or accessories. Landscape 3:2, balanced complete subject, generous calm negative space. Charcoal and ivory only. No words, caption, label, frame, glow, chrome, colored gradients or additional props. This is a source-based visual study, not a production logo.",
+      "input_files": [
+        "references/catalog-onigiri.png"
+      ],
+      "output_file": "generated/A11.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "ae36e874eb84f5d1ff950ec8ae98559d794b9384549ffc296cd848aff2835ebb",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "单一圆角三角体，顶部与底边关系保留；占幅较小，留白充分，没有添加饭团或脸部。"
+      }
+    },
+    {
+      "id": "A12",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "A12",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Produce one artistic minimal AI reinterpretation of the provided sabbath reference for a curated monochrome visual library. Preserve exactly six dark teardrop petals arranged radially, rounded ends outwards and points facing inward, around a clear six-pointed star-shaped empty center. Keep every petal separate with ample even gaps. Almost-flat matte charcoal silhouettes, remove app tile and strong shadow. Warm-white background. Landscape 3:2, balanced complete subject, generous calm negative space. Charcoal and ivory only. No words, caption, label, frame, glow, chrome, colored gradients or additional props. This is a source-based visual study, not a production logo.",
+      "input_files": [
+        "references/catalog-sabbath.png"
+      ],
+      "output_file": "generated/A12.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "0af5b39c09c3abd4334a773006d5bf61d5a7e1f2aee8cb73903b573ebbb510d3",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "六瓣数量正确，尖端向内，中央星形空隙清楚；扁平化后仍保持放射节奏。"
+      }
+    },
+    {
+      "id": "B01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "B01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Produce a clean minimal AI reinterpretation of the provided the-radio reference for a refined monochrome visual library. Keep a horizontal array of thin grey vertical tuning ticks with an occasional longer tick, crossed by one much thicker near-black vertical tuner pointer in the middle. The pointer extends beyond the height of the ticks. Retain the exact small text 'FM' below-right in a refined neutral sans serif. Reduce the display into a compact centered composition with large surrounding blank area; no app tile, no numbers and no radio hardware. Landscape 3:2 canvas, single flat graphic arrangement, excellent spacing, crisp edge quality, generous negative space. No added caption, label, watermark, frame, drop shadow, glow or decorative texture. This is a source-concept study.",
+      "input_files": [
+        "references/catalog-the-radio.png"
+      ],
+      "output_file": "generated/B01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "b9dd73d68ac1176f6fdbd18ceb712db7fd3422920dfe04ed5efebfb16d2422f5",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "主指针明显强于灰色刻度，FM 字样正确，横向调频关系完整；去除外框后仍可辨。"
+      }
+    },
+    {
+      "id": "B02",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "B02",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Produce a clean minimal AI reinterpretation of the provided quick-journal reference for a refined monochrome visual library. Keep a pair of dark opening curly quotation marks above three muted-grey rounded horizontal paragraph strokes of unequal length. Their left edges align. Preserve the quiet editorial metaphor and the quote-to-paragraph hierarchy. Remove the app tile; near-black quotation marks with light warm grey lines on a warm-white field. No actual prose, no letter shapes beyond the paired quotation marks. Landscape 3:2 canvas, single flat graphic arrangement, excellent spacing, crisp edge quality, generous negative space. No added caption, label, watermark, frame, drop shadow, glow or decorative texture. This is a source-concept study.",
+      "input_files": [
+        "references/catalog-quick-journal.png"
+      ],
+      "output_file": "generated/B02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "51f19304a6630293004453147f1e69645983468af2be3f31951f8f2b5e37d27e",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "双开引号与三条不等长圆端段落线保留，左侧对齐，图形层级和留白清楚。"
+      }
+    },
+    {
+      "id": "B03",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "B03",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make one restrained minimal AI reinterpretation of the provided calc reference. Keep four arithmetic glyphs in a compact two by two square, located in the lower-right quadrant of the otherwise quiet canvas: minus upper-left, multiplication cross upper-right, plus lower-left, equals lower-right. The reference visibly uses equals, so do not replace it with division. Rounded uniform near-black strokes, ample space between signs. Large blank area above and to the left. Warm-white background, no app tile. Landscape 3:2, crisp flat geometry, carefully balanced proportions, generous negative space. No added brand wording, caption, label, border, watermark, glow, texture or 3D rendering. Source-based visual concept study, not official artwork.",
+      "input_files": [
+        "references/catalog-calc.png"
+      ],
+      "output_file": "generated/B03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "1586201a5a61c97dd0d1c1997b45be60a783af887b31ad5a53b1c19be9e417db",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "按实图保留减、乘、加、等号的 2×2 顺序与右下偏置；源文档的加减乘除描述与原图不符，生成以图中等号为准。"
+      }
+    },
+    {
+      "id": "B04",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "B04",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make one restrained minimal AI reinterpretation of the provided not-evil-sudoku reference. Keep the bold near-black rounded square frame with exactly two vertical and two horizontal dividing bars, producing a clean 3 by 3 empty grid. Same substantial stroke weight, soft outer corners, clear nine open cells. Center the single grid at about 48% canvas height on warm white. Remove the surrounding app tile and cast shadow; no numbers, marks or extra subdivisions. Landscape 3:2, crisp flat geometry, carefully balanced proportions, generous negative space. No added brand wording, caption, label, border, watermark, glow, texture or 3D rendering. Source-based visual concept study, not official artwork.",
+      "input_files": [
+        "references/catalog-not-evil-sudoku.png"
+      ],
+      "output_file": "generated/B04.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "93d31fdab86ca3e860111ff76a88c2595a61941f186e2333c7dc91b15612f2f6",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "外圆角方框及两纵两横分隔保留，九个空白宫格清楚，无额外数字。"
+      }
+    },
+    {
+      "id": "B05",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "B05",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a carefully composed minimal AI reinterpretation of the provided the-life-calendar reference. Preserve exactly nine equal circles in a regular 3 by 3 grid. Top row all three ivory; middle row first two ivory and last one muted dark grey; bottom row all three muted dark grey. Flat charcoal background makes the 5 completed and 4 remaining states visible. Center the array at 45% canvas height. Remove app tile; no numerals, connectors or text. Landscape 3:2. Crisp proportions, balanced whitespace, limited ivory/grey/charcoal palette. No added caption, label, watermark, border, decorative texture, glow or polished plastic. Reference-concept visual study only.",
+      "input_files": [
+        "references/catalog-the-life-calendar.png"
+      ],
+      "output_file": "generated/B05.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "012cd789ae8e108a7e85f441354b8912749a746fc77ce3438a3d6e13ef909fb0",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "九个圆点、三行三列与五亮四暗状态顺序正确；深色底上剩余四点仍可见。"
+      }
+    },
+    {
+      "id": "B06",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "B06",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a carefully composed minimal AI reinterpretation of the provided corner-time reference. Preserve the screen-corner time concept: one compact rounded rectangle, upper dark charcoal band about one third height, pale warm grey lower area left empty. Exact text '09:41' in clean ivory sans serif, aligned near the upper-right inside the dark band. Keep the label prominent yet quiet and the body blank. Center the object on warm white at about half canvas height. Use flat shape and only faint edge depth; no extra UI. Landscape 3:2. Crisp proportions, balanced whitespace, limited ivory/grey/charcoal palette. No added caption, label, watermark, border, decorative texture, glow or polished plastic. Reference-concept visual study only.",
+      "input_files": [
+        "references/catalog-corner-time.png"
+      ],
+      "output_file": "generated/B06.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "b775c13edd7c8532df6a7a5404c3bad65ef3622a6ee8a0d33d48fd941c72040e",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "09:41 字样和右上位置正确，上深下浅的屏幕区域分工保留，未添加虚构 UI。"
+      }
+    },
+    {
+      "id": "B07",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "B07",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Produce a refined minimal AI reinterpretation of the provided fliqlo reference. Preserve the two large condensed rounded sans-serif digits '00', ivory on charcoal, with a single thin dark horizontal split seam across the exact middle of both digits suggesting a flip clock. Keep the counters open and the digit shapes simple. Use a charcoal flat landscape field rather than a rounded app tile, center the digits at 50% canvas height. No colon, additional digits, AM/PM or clock housing. Landscape 3:2, generous whitespace, complete subject, artistic care in proportion and type. No extra label, captions, watermark, decoration, shadow, texture, glow or gradient effects. This is a reference-concept study, not an official asset.",
+      "input_files": [
+        "references/catalog-fliqlo.png"
+      ],
+      "output_file": "generated/B07.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "69c26652430a3baf9c36f2e5759c632197b9e30e50826069f9b59e725587ad3b",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "两个 0、开放字腔和横向中缝保留；数字完整可读，深底留白清楚。"
+      }
+    },
+    {
+      "id": "B08",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "B08",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Produce a refined minimal AI reinterpretation of the provided notion-calendar reference. Preserve two offset calendar sheets with a dark heavy outline, the rear sheet shifted up-left and the front sheet slightly angled, containing the exact large serif digits '31'. Keep the bold upper header band and clear white face. Simplify into crisp charcoal and ivory flat shapes, no app tile, no extra calendar dates. Center at about 50% canvas height on warm-white. Landscape 3:2, generous whitespace, complete subject, artistic care in proportion and type. No extra label, captions, watermark, decoration, shadow, texture, glow or gradient effects. This is a reference-concept study, not an official asset.",
+      "input_files": [
+        "references/catalog-notion-calendar.png"
+      ],
+      "output_file": "generated/B08.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "330a72b9a96a59a6d02b8216b61b3befa1e037e95067beba59faa6ff44b9870d",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "31 拼写正确，双页向左上错位、前页粗页眉与黑白轮廓完整，没有额外日期。"
+      }
+    },
+    {
+      "id": "B09",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "B09",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Reinterpret the provided lazy-weather reference as one elegant minimal visual study. Keep exactly two narrow monoline arrows side by side: left arrow points up, right arrow points down, equal total height and equal rounded stroke width. Center them as a compact balanced pair on a flat charcoal field with broad surrounding space. Ivory lines only. Remove the surrounding app tile and all other elements. Landscape 3:2 canvas. Crisp flat geometry, deliberate spacing, complete subject at about 40% canvas height. No wording, label, watermark, border, decoration, glow, texture or large shadows. AI concept reinterpretation, not an official brand asset.",
+      "input_files": [
+        "references/catalog-lazy-weather.png"
+      ],
+      "output_file": "generated/B09.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "6428c839de7d401bea2b1b3a6a572b75167a76771a466244f591970436636e3f",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "左上右下两箭头方向正确，线宽与端点一致，独立间隙清楚。"
+      }
+    },
+    {
+      "id": "B10",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "B10",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Reinterpret the provided hidden-bar reference as one elegant minimal visual study. Preserve the distinctive left vertical rounded bar and separate right-pointing chevron made from a folded wide ribbon. Upper diagonal medium charcoal, lower diagonal near-black, with a small curved overlap transition at the right tip. Keep clear white gaps between bar and chevron. Flat warm-white field, no app tile; simplify the fold to two matte tones, no glossy volume. Landscape 3:2 canvas. Crisp flat geometry, deliberate spacing, complete subject at about 40% canvas height. No wording, label, watermark, border, decoration, glow, texture or large shadows. AI concept reinterpretation, not an official brand asset.",
+      "input_files": [
+        "references/catalog-hidden-bar.png"
+      ],
+      "output_file": "generated/B10.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "00678546a749fd489d95241f3d25a053f18c8134c2cd6d4efd8f336ae3b79ad3",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "左侧竖条与右侧折角分离；右尖端内的深浅折面仍可辨，未变成普通播放三角。"
+      }
+    },
+    {
+      "id": "C01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a minimal artistic AI reinterpretation of the provided instapaper typographic mark. Keep one large uppercase serif 'I' in near-black: solid vertical stem, wide horizontal top and bottom serifs with elegant bracketed transitions. Preserve the quiet bookish typographic character. Remove the pale article collage behind it and remove the app tile, leaving a flat warm-white field. Center the I at roughly 48% canvas height. No second letter or extra text. Landscape 3:2 with generous calm negative space. Flat ink-like mark, sharp optical balance, restrained typographic quality. No labels, captions, watermark, border, shadows, glow, textures or 3D effects. This is a source-based lettering study, not an exact font reconstruction.",
+      "input_files": [
+        "references/catalog-instapaper.png"
+      ],
+      "output_file": "generated/C01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "8363fdf1ed5a2b32120acaf6e5298273bf3f7ff0b757c8ba4b0618a41b1cc18d",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "大写衬线 I、宽上下衬线和粗主干保留；背景文章纹理已精简，字母成为清楚主角。"
+      }
+    },
+    {
+      "id": "C02",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C02",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a minimal artistic AI reinterpretation of the provided wikitok typographic mark. Keep one uppercase serif 'W' with the reference's broad elegant proportions, alternating thick and thin diagonal strokes and crisp fine top serifs. Ivory letter on a flat charcoal field, centered at about 45% canvas height. Preserve the subtle intersecting diagonal construction as visible in the reference. No app tile, words, secondary letters or ornament. Landscape 3:2 with generous calm negative space. Flat ink-like mark, sharp optical balance, restrained typographic quality. No labels, captions, watermark, border, shadows, glow, textures or 3D effects. This is a source-based lettering study, not an exact font reconstruction.",
+      "input_files": [
+        "references/catalog-wikitok.png"
+      ],
+      "output_file": "generated/C02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "b0a86e8c7aebd2bc36f704d9797925e869b40f2ee5826b07e548125a271b21a2",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "白色大写 W、交叉斜笔与顶部衬线清楚，字面宽度和深底留白形成安静对比。"
+      }
+    },
+    {
+      "id": "C03",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C03",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make a refined minimal AI reinterpretation of the provided google-arts-culture typographic reference. Preserve the geometric ampersand '&': a smaller open circular upper curl, a broad lower round loop, and a bold diagonal stroke ending down-right. The circular-to-diagonal junction and open counters are the core. Ivory ampersand on a flat charcoal field, remove the rounded app tile. Center at 48% canvas height. Do not substitute a conventional script ampersand. Landscape 3:2, one complete typographic composition with broad negative space, crisp flat ink-like edges. No caption, label, watermark, border, texture, shadows, glow or 3D effects. This is an artistic source-concept study, not exact vector reconstruction.",
+      "input_files": [
+        "references/catalog-google-arts-culture.png"
+      ],
+      "output_file": "generated/C03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "07788c471e4276d7c333571ba36f2b8f002c484ffd19ceea0a371fa05d7d873c",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "保留上小环、下大环与右下斜笔的几何 &，开口和交接清楚，未变为普通手写连字。"
+      }
+    },
+    {
+      "id": "C04",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C04",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make a refined minimal AI reinterpretation of the provided menu typographic reference. Preserve the exact word 'MENU' broken into two lines: 'ME' above 'NU'. Bold near-black sans-serif capitals of equal cap height, arranged into a compact square, wide sturdy strokes and controlled spacing. Keep the square-bottomed U visible in the reference. Flat warm-white field; remove app tile. No extra letters or symbols. Landscape 3:2, one complete typographic composition with broad negative space, crisp flat ink-like edges. No caption, label, watermark, border, texture, shadows, glow or 3D effects. This is an artistic source-concept study, not exact vector reconstruction.",
+      "input_files": [
+        "references/catalog-menu.png"
+      ],
+      "output_file": "generated/C04.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "4cf29dbd68b9559a05fc618f0e07bc573a7e3941189b20154745bc77b85c9b16",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "MENU 保持 ME/NU 两行，四字完整，方底 U 与粗无衬线结构保留。"
+      }
+    },
+    {
+      "id": "C05",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C05",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a tasteful minimal AI reinterpretation of the provided stoic reference. Keep the exact minimal text 's.' as the reference's smooth large sans-serif s and a separate round full stop aligned at its bottom-right. Near-black letter and dot with only very shallow matte relief, warm-white field, no glossy extrusion or surrounding app tile. Preserve the sweeping upper and lower bowl proportions and space before the dot. Center the full pair. Landscape 3:2, generous calm negative space, carefully controlled letterform edges. No captions, labels, watermark, border, glow, decorative texture or large shadow. This is a typographic concept study, not an exact editable font master.",
+      "input_files": [
+        "references/catalog-stoic.png"
+      ],
+      "output_file": "generated/C05.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "838fd11c78b6da4c5f221d18a0331e32d5ca9d59cad88d393998a7c1b4a49dbc",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "S 形曲线与右下独立圆句点保留，深色轻体积收敛，字形与点的间隔清楚。"
+      }
+    },
+    {
+      "id": "C06",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C06",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a tasteful minimal AI reinterpretation of the provided vocabulary reference. Keep one small lowercase serif 'v', solid near-black with thick diagonals, broad wedge-like upper serifs and slightly flat lower join. Preserve its compact, quiet proportions; it occupies just 26% of canvas height at the center of a warm ivory flat field. No app tile, no extra letter or wording, no visual effects. Landscape 3:2, generous calm negative space, carefully controlled letterform edges. No captions, labels, watermark, border, glow, decorative texture or large shadow. This is a typographic concept study, not an exact editable font master.",
+      "input_files": [
+        "references/catalog-vocabulary.png"
+      ],
+      "output_file": "generated/C06.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "fb84c29e9754a85de1e2be76d7ea37f4ec8cf8414c245a6a76d648757077a56e",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "小型衬线 v 保留粗斜笔、宽上衬线和平底交接，暖白画布留白充分。"
+      }
+    },
+    {
+      "id": "C07",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C07",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one landscape 3:2 minimalist product-mark visual research image, an AI reinterpretation based on the attached reference, not official artwork or a clarity restoration. Individually preserve the recognizable concept of this specific sample. A single centered black outlined book-like cube: perspective shows the slim white top plane and a solid dark left side, large front white square bears ONE bold black serif capital N. Retain this typographic cube concept and subtly tilted front face. Flat near-black ink, restrained rounded outer corners, consistent strong outline, warm off-white empty background. No additional words. The entire composition is flat, crisp and optically balanced, with a single mark occupying about forty percent of the canvas width. Artistic restraint and precise spacing. No photographic stage, texture, glow, chromatic effect, chrome, glossy depth, complicated shadow, label, caption or watermark.",
+      "input_files": [
+        "references/catalog-notion.png"
+      ],
+      "output_file": "generated/C07.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "926000c763a45ab22768b2cecfc43784be2f71645b8afdb89ec07a94ca91176c",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "已逐张查看实际输出：黑色厚轮廓保留立方体的顶面、深色左侧及正面衬线 N；暖白留白清楚，主体完整，未增加其它字样。"
+      }
+    },
+    {
+      "id": "C08",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C08",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one landscape 3:2 minimalist product-mark visual research image, an AI reinterpretation based on the attached reference, not official artwork or a clarity restoration. Individually preserve the recognizable concept of this specific sample. A single refined typographic mark on a flat charcoal background. Exact readable text on two left-aligned lines: Dumb then Phone. White heavy contemporary sans-serif with generous clean shaping. Add a small white ring as a raised circular detail immediately to the upper-right of the e in Phone, exactly as the source concept. Preserve this two-line wordmark; do not change or add text. Calm broad surrounding margins, not an app tile, no perimeter rounded-square border. The entire composition is flat, crisp and optically balanced, with a single mark occupying about forty percent of the canvas width. Artistic restraint and precise spacing. No photographic stage, texture, glow, chromatic effect, chrome, glossy depth, complicated shadow, label, caption or watermark.",
+      "input_files": [
+        "references/catalog-dumb-phone.png"
+      ],
+      "output_file": "generated/C08.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "843e719294e1d3c16c947247d9f0c88f762272108c6218e3de263c4cc67cbfa7",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "已逐张查看实际输出：Dumb / Phone 两行粗白字拼写准确，左缘对齐，Phone 右上小圆环清楚；深灰底保留充足留白，未添加外围图标框。"
+      }
+    },
+    {
+      "id": "C09",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C09",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one landscape 3:2 minimalist product-mark visual research image, an AI reinterpretation of the attached specific reference, not official artwork or a clarity restoration. Retain the paired closing curly quotation marks from the reference: two identical white comma-like sculptural quote strokes, each round and full at the upper part then curving into a tapered tail downward-left. Position the modest-sized pair together at the center, about 20 percent canvas width in total. Use an almost flat ivory surface with the faintest soft matte curvature, on a uniform near-black background. They must read as one paired quotation mark, not eyes, horns, leaves or separate floating droplets. No app-tile container. Calm designed spacing and broad empty margins. A single complete visual subject only. No photographic stage, visible texture, glow, chromatic effect, chrome, glossy depth, complicated shadow, text, label, caption or watermark.",
+      "input_files": [
+        "references/catalog-motivation.png"
+      ],
+      "output_file": "generated/C09.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "8314c9aa9c06e7c55d563b4bfd258e81ee0e5ce7fbe300a80090bf018aa26f73",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "已逐张查看实际输出：两个浅白色弯引号并列，头部饱满、尾部向左下收细；深黑底和较小占比保持安静留白，浅哑光体积未遮蔽标点轮廓。"
+      }
+    },
+    {
+      "id": "C10",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "C10",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one landscape 3:2 minimalist product-mark visual research image, an AI reinterpretation of the attached specific reference, not official artwork or a clarity restoration. Retain the connected five-node capital M concept. Exactly five filled white round nodes: lower-left endpoint, upper-left peak, central valley, upper-right peak, lower-right endpoint. Join them in that order by four white straight thick strokes. The two outer legs lean slightly outward toward the baseline. Clean symmetric graph construction with smooth circle-to-line joins, flat white on uniform charcoal. Remove the background text and glow visible in the reference. Center one connected M mark occupying about forty percent canvas width. Calm designed spacing and broad empty margins. A single complete visual subject only. No photographic stage, visible texture, glow, chromatic effect, chrome, glossy depth, complicated shadow, text, label, caption or watermark.",
+      "input_files": [
+        "references/catalog-matter.png"
+      ],
+      "output_file": "generated/C10.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "ebcea88b3883dff1aabc88a524b465fb0eca8fa9e0b57194ad1141e6eaf2b0d4",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "已逐张查看实际输出：五个白圆节点由四条粗线依序连成 M，中央谷点与两端圆点清楚；结构对称，已移除原参考的弱背景文字和发光。"
+      }
+    },
+    {
+      "id": "D01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "D01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one landscape 3:2 minimalist product-mark visual research image. This is an AI reinterpretation of the attached specific reference, not official artwork or a clarity restoration. Retain the tiny, offset lower-right three-pillar equalizer concept of this exact reference. On a uniform deep charcoal canvas, position a modest three-bar mark near 70 percent canvas width and 68 percent canvas height, with extensive empty space. Three slim upright rectangular pillars share one baseline and equal widths, with small clean gaps: left is medium height and filled white; middle is shortest and filled white; RIGHT IS TALLEST WITH A THIN WHITE OUTLINE AND DARK INTERIOR, preserving the distinctive actual source. Tiny softened corners. The whole three-bar group occupies only about 12 percent canvas width. No app tile border. A single complete visual subject, clean spacing, large margins, flat graphic presentation. No photographic stage, visible texture, glow, chromatic effect, chrome, glossy depth, shadows, text, label, caption or watermark.",
+      "input_files": [
+        "references/catalog-neuecast.png"
+      ],
+      "output_file": "generated/D01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "e4dfef8a32dec39227d0fbf23e28fa17b1dd51dca7793b2101669d2d5fb76908",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "已逐张查看实际输出：三柱共底且偏置于画面右下，左柱中高、中柱最短、右柱最高；按实际源图保留前两柱实白与第三柱白描边深色内芯，留白占主导。"
+      }
+    },
+    {
+      "id": "D02",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "D02",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one landscape 3:2 minimalist product-mark visual research image. This is an AI reinterpretation of the attached specific reference, not official artwork or a clarity restoration. Retain one near-circular cloud of many evenly sized solid black dots. The dots sit in a subtly staggered, gently offset formation, with curved perimeter and breathable consistent gaps. Visually about sixty dots, not a square grid and not a gray halftone. Preserve a calm circular cluster silhouette and lively small placement differences from the source; do not add lines connecting dots. Warm white background, centered cluster occupying about 40 percent canvas width. Flat ink circles, no icon tile or surrounding outline. A single complete visual subject, clean spacing, large margins, flat graphic presentation. No photographic stage, visible texture, glow, chromatic effect, chrome, glossy depth, shadows, text, label, caption or watermark.",
+      "input_files": [
+        "references/catalog-slate.png"
+      ],
+      "output_file": "generated/D02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "08d81192b00cd9636feec8e30b99156b140d21378e4c37ab051ee747ca5406b7",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "已逐张查看实际输出：等大小黑色圆点错列聚成近圆形，外缘自然收拢，点间保留间隙；暖白画布只呈现单个完整点团。"
+      }
+    },
+    {
+      "id": "D03",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "D03",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one landscape 3:2 minimalist product-mark visual research image. This is an AI reinterpretation of the attached specific reference, not official artwork or a clarity restoration. Preserve the four-quadrant compact black botanical/geometric mark in the source: THREE rounded leaf-like quadrants plus ONE round disk. Top-left quadrant has a crisp square upper-left outer tip and rounded bottom-right volume; top-right is its mirror with upper-right outer tip; bottom-left is a lower-left pointed rounded leaf; bottom-right is a perfect circle. All four are approximately equally sized and arranged as a neat 2 by 2 square footprint. Preserve the small central white triangular negative-space distinction and clear circle. Near-black flat solid silhouettes on warm white. Center the entire mark at about 35 percent canvas width. No app tile frame. A single complete visual subject, clean spacing, large margins, flat graphic presentation. No photographic stage, texture, glow, chromatic effect, chrome, glossy depth, shadows, text, label, caption or watermark.",
+      "input_files": [
+        "references/catalog-mist.png"
+      ],
+      "output_file": "generated/D03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "ceeaf03c2ee00b4cb47226d11ba69e6df496f4d7e578bc05841de0d44ee77650",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "已逐张查看实际输出：三个外角尖、内侧圆润的黑色瓣形与右下圆形保持四象限组合；中心白色楔形间隙清楚，圆形与瓣形差异可辨，整体完整且周围留白充足。"
+      }
+    },
+    {
+      "id": "D04",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "D04",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one landscape 3:2 minimalist product-mark visual research image. This is an AI reinterpretation of the attached specific reference, not official artwork or a clarity restoration. Preserve the source's unusual single solid black central junction made by four asymmetrically offset bent arms, with four sweeping concave rounded inner corners and a squarish full black center. A top vertical arm approaches on the center's RIGHT side; a right horizontal arm leaves along the center's LOWER side; a bottom vertical arm leaves on the center's LEFT side; a left horizontal arm joins along the center's UPPER side. The whole black contour has quarter-turn rotational rhythm. This is a single connected filled shape, NOT an outlined box, NOT four separate corner brackets, NOT a plus sign. Use the exact reference image to retain its central topology. Present this mark as a finite complete isolated motif, its four straight arm ends stop within a balanced square footprint rather than going to the canvas edge. Flat near-black ink on warm white, centered footprint about 45 percent canvas width. No enclosing tile border. A single complete visual subject, clean spacing, large margins, flat graphic presentation. No photographic stage, texture, glow, chromatic effect, chrome, glossy depth, shadows, text, label, caption or watermark.",
+      "input_files": [
+        "references/catalog-box-breathe.png"
+      ],
+      "output_file": "generated/D04.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "1f442536523f75eafd84027b3ac3b89f995b0ea6aa202c25d8e9b2e97ea5340e",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "已逐张查看实际输出：四个错位黑臂连成单一实心中心，四处内凹圆角与旋转关系保留；四个末端完整停在画布内，未误成空心框或普通十字。"
+      }
+    },
+    {
+      "id": "D05",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "D05",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one landscape 3:2 minimalist product-mark visual research image. This is an AI reinterpretation of the attached specific reference, not official artwork or a clarity restoration. Retain a quiet circular motif consisting of four overlapping near-circular black outline loops with subtly different centers and contours. Their small offsets make changing gaps and a few touches between loops, leaving a broad fully empty white middle. They must not become perfect concentric circles, a spiral, a scribble ball or a mechanical target. Smooth thin ink strokes with gentle organic variation matching the source's deliberate rhythm, no sketch fuzz or scratchy texture. The single loop cluster centered at about forty percent canvas width, warm white background, no app tile border. A single complete visual subject, refined spacing, large margins, flat graphic presentation. No photographic stage, texture, glow, chromatic effect, chrome, glossy depth, shadows, text, label, caption or watermark.",
+      "input_files": [
+        "references/catalog-thrum.png"
+      ],
+      "output_file": "generated/D05.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "afe6b9f933cf80c850d3c7a362bdf953bec1e7d9f32e9f2965528da2af0ba0db",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "已逐张查看实际输出：多条细黑圆环轻微错位、局部贴近，环间距离随周向变化；中央留白完整，未变成规则同心靶或密集涂鸦，保留重复与偏差的节奏。"
+      }
+    },
+    {
+      "id": "D06",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "D06",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one landscape 3:2 minimalist product-mark visual research image. This is an AI reinterpretation of the attached specific reference, not official artwork or a clarity restoration. Retain exactly NINE small ivory four-ray symbols arranged as a spacious perfectly regular 3 by 3 grid on a flat dark charcoal field. Orientation follows a checkerboard: top row PLUS, diagonal X, PLUS; middle row diagonal X, PLUS, diagonal X; bottom row PLUS, diagonal X, PLUS. Each of the nine symbols consists of FOUR SEPARATE SHORT ROUND-CAPPED DASHES, with a small clear DARK GAP at its center, so none of the rays touches. Stroke thickness, length, and spacing should be optically consistent. Present the grid as one compact visual mark about forty percent canvas width. Preserve the alternating rhythm and central gaps. No app tile container. A single complete visual subject, refined spacing, large margins, flat graphic presentation. No photographic stage, texture, glow, chromatic effect, chrome, glossy depth, shadows, text, label, caption or watermark.",
+      "input_files": [
+        "references/catalog-kipkam.png"
+      ],
+      "output_file": "generated/D06.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "035370294e03bcce82d5be4903d37fbf36f7d01bbc67bf1ad3e248be2c3c4f0f",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "已逐张查看实际输出：九个浅色符号组成 3×3 方阵，正十字与斜十字按棋盘交替；每符号四段圆头短线在中心断开，数目、方向和间距关系清楚。"
+      }
+    },
+    {
+      "id": "D07",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "D07",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one landscape 3:2 minimalist product-mark visual research image. This is an AI reinterpretation of the attached specific reference, not official artwork or a clarity restoration. Retain exactly ONE small ivory horizontal dash on a uniform near-black canvas. The dash is a clean short bar with fully rounded ends, horizontally centered and placed just slightly below the vertical midpoint, at roughly 55 percent canvas height. Width around one quarter of the entire canvas, height about one tenth of its own width. The radical reduction, placement and vast empty dark space ARE the design concept. Do not invent a second element, border, circle, tile, word or decorative light. Flat solid ivory bar only. A single complete visual subject with refined optical proportions. No photographic stage, texture, glow, chromatic effect, chrome, glossy depth, shadows, text, label, caption or watermark.",
+      "input_files": [
+        "references/catalog-blank-spaces.png"
+      ],
+      "output_file": "generated/D07.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "9e2a7591e96ce7268088fa5fd5677a2d7b2ccc777939eada7057d180dd7c10e4",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "已逐张查看实际输出：深黑画布仅保留一根浅白圆头横线，水平居中、留白广阔；边缘清楚，未增加文字、边框或其它元素。"
+      }
+    },
+    {
+      "id": "D08",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "D08",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one landscape 3:2 minimalist product-mark visual research image. This is an AI reinterpretation of the attached specific reference, not official artwork or a clarity restoration. Retain exactly ONE near-black solid circle placed in the lower-right quadrant of an empty warm-white canvas. It is a deliberate substantial disk, not a tiny period: about twenty-seven percent of landscape canvas width. Its center is around seventy percent of canvas width and seventy percent of canvas height, with enough lower and right white margin to keep it complete. Crisp circular edge, flat ink fill. The off-center disk and large upper-left negative space ARE the design. Do not invent any border, icon tile, lettering, shadow, three-dimensional sphere or second element. A single complete visual subject with refined optical proportions. No photographic stage, texture, glow, chromatic effect, chrome, glossy depth, shadows, text, label, caption or watermark.",
+      "input_files": [
+        "references/catalog-oppie.png"
+      ],
+      "output_file": "generated/D08.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "d913ef0dbaf25b4cb3fc67f23a5f629b6667df0f3a919302f4e919b5b3fff7ea",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "已逐张查看实际输出：浅色画布右下保留单枚完整近黑实心圆，左上大片留白强化偏置；圆形未裁断，也未添加阴影或球体高光。"
+      }
+    },
+    {
+      "id": "D09",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "D09",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one landscape 3:2 minimalist product-mark visual research image. This is an AI reinterpretation of the attached specific reference, not official artwork or a clarity restoration. Retain the concentric disk and ring relationship of the source: one solid near-black circular disk at center, surrounded by a clear warm-white annular gap, then a separate near-black outer circular ring. The white gap and black ring are close in width; central filled disk has diameter roughly seventy percent of total motif diameter. All contours perfectly circular and concentric. Center one complete flat mark at about 38 percent canvas width on a warm-white background, with ample margin. No app tile perimeter, no extra outline beyond the single black ring. A single complete visual subject, refined spacing, large margins, flat graphic presentation. No photographic stage, texture, glow, chromatic effect, chrome, glossy depth, shadows, text, label, caption or watermark.",
+      "input_files": [
+        "references/catalog-synctasks.png"
+      ],
+      "output_file": "generated/D09.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "f978eb1d62f89dc587779b84614ab7e57e1f6444dc2fd5f4e6063193bdab2fe1",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "已逐张查看实际输出：实心黑圆、连续白环隙和外侧黑环关系完整，三层轮廓同心，环隙未粘连；画布留白清楚且没有额外图标外框。"
+      }
+    },
+    {
+      "id": "D10",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "D10",
+      "tool": "image_gen.imagegen",
+      "prompt": "Create one landscape 3:2 minimalist product-mark visual research image. This is an AI reinterpretation of the attached specific reference, not official artwork or a clarity restoration. Retain the exact distinctive topology of the Endel reference: an ivory circular outline encloses one continuous wavy ivory divider. The divider begins from the circle's LEFT edge as a short horizontal line slightly ABOVE center, curls upward into a tall rounded teardrop bend near upper center, sweeps diagonally down-left through center, curls around into a rounded teardrop bend near lower center, then rises and turns right into a horizontal line ending at the circle's RIGHT edge slightly BELOW center. The two rounded bends oppose one another; preserve the reference's sinuous elongated S-like central form and its dark internal spaces. This is not a conventional yin-yang icon: no detached dots or extra circles. Use the attached original as the guide to the connected curve. All ivory lines have consistent moderate thickness and smooth joins, a complete circle around them. Center the one complete mark at about forty percent canvas width on uniform near-black. Remove the exterior rounded-square app tile. A single complete visual subject, refined spacing, large margins, flat graphic presentation. No photographic stage, texture, glow, chromatic effect, chrome, glossy depth, shadows, text, label, caption or watermark.",
+      "input_files": [
+        "references/catalog-endel.png"
+      ],
+      "output_file": "generated/D10.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "a1ae5ce85686727cf541c5b6c7b7cb0caf418502904d5b4cf41bd14c5c08e534",
+      "review": {
+        "status": "pass",
+        "scope": "逐张查看实际输入与内置工具完整生成图；核对主体、结构、可见文字、留白与材质。未验证精确几何、矢量、字体、目标小尺寸或商业可用性。",
+        "notes": "已逐张查看实际输出：白色外圆完整，内部连续曲线由左侧横线进入上部回弯、斜穿中央到下部回弯，再接右侧横线；两处暗色内区和弯曲拓扑保留，未误成普通阴阳图。"
+      }
+    }
+  ]
+}

@@ -95,13 +95,16 @@ function skill(dir) {
   write(styles, 'OVERVIEW.sources.json', overview);
   return { source, overview, pack, styles, hash };
 }
-function testSkill(name, expected, mutate = () => {}) {
+function testSkill(name, expected, mutate = () => {}, after = () => true) {
   const dir = path.join(temp, name); fs.mkdirSync(dir);
   const data = skill(dir); mutate(data, dir);
   write(data.pack, 'sources.json', data.source); write(data.styles, 'OVERVIEW.sources.json', data.overview);
+  if (data.generated) write(data.pack, 'generated.json', data.generated);
+  if (data.originals) write(data.pack, 'originals.json', data.originals);
   const { exit_code, report } = invoke('check-skill.mjs', ['--root',dir]);
   const codes = report.errors.map(error => error.code);
-  results.push({ case:name, expected, actual:report.result, detected_codes:codes, pass: expected === 'PASS' ? exit_code === 0 && report.result === 'PASS' : exit_code === 1 && codes.includes(expected) });
+  const pass = (expected === 'PASS' ? exit_code === 0 && report.result === 'PASS' : exit_code === 1 && codes.includes(expected)) && after(report);
+  results.push({ case:name, expected, actual:report.result, detected_codes:codes, pass });
 }
 try {
   testRelease('release-standard-optical-material', 'PASS');
@@ -216,6 +219,250 @@ try {
   testSkill('skill-source-format-mismatch','FORMAT_MISMATCH', data => { data.source.assets[0].original_content_type='image/jpeg'; });
   testSkill('skill-source-dimensions-missing','SOURCE_IMAGE_FIELDS', data => { delete data.source.assets[0].width;delete data.source.assets[0].height; });
   testSkill('skill-source-sha-mismatch','HASH_MISMATCH', data => { data.source.assets[0].original_sha256='0'.repeat(64); });
+
+  const addReinterpretation = data => {
+    // A copied white square exercises metadata only, never image-generation quality.
+    fs.copyFileSync(path.join(data.pack,'original.png'),path.join(data.pack,'reinterpretation.png'));
+    data.generated = {
+      schema_version:1, style_id:'fixture', coverage:'all_source_samples',
+      examples:[{id:'sample-1',kind:'ai_reinterpretation',source_sample_id:'sample-1',tool:'mechanical-fixture',prompt:'Synthetic fixture prompt; this file is not an actual generation.',input_files:['preview.png'],output_file:'reinterpretation.png',width:32,height:32,sha256:data.hash,review:{status:'pass',scope:'Mechanical fixture only.',notes:'No actual image generation or visual review is claimed.'}}]
+    };
+    data.overview.schema_version = 2;
+    data.overview.members = [{style_id:'fixture',kind:'ai_reinterpretation',generated_file:'fixture/generated.json',example_id:'sample-1',file:'fixture/reinterpretation.png',sha256:data.hash}];
+  };
+  const testGenerated = (name, expected, mutate = () => {}) => testSkill(name, expected, (data,dir) => { addReinterpretation(data); mutate(data,dir); });
+  testGenerated('skill-generated-one-to-one','PASS');
+  const observedOnly = data => { Object.assign(data.generated.examples[0], {image_reference_mode:'observed_only',input_files:[],reference_files:['preview.png']}); };
+  testGenerated('skill-generated-observed-only','PASS', observedOnly);
+  testGenerated('skill-generated-unknown-input-mode','GENERATED_INPUT_MODE', data => { data.generated.examples[0].image_reference_mode='guessed'; });
+  testGenerated('skill-generated-observed-only-missing-reference','GENERATED_INPUTS', data => { observedOnly(data);delete data.generated.examples[0].reference_files; });
+  testGenerated('skill-generated-observed-only-with-supplied-input','GENERATED_INPUTS', data => { observedOnly(data);data.generated.examples[0].input_files=['preview.png']; });
+  testGenerated('skill-generated-observed-only-empty-reference','GENERATED_INPUTS', data => { observedOnly(data);data.generated.examples[0].reference_files=[]; });
+  testGenerated('skill-generated-observed-only-cross-sample','GENERATED_INPUT_PROVENANCE', data => { observedOnly(data);fs.copyFileSync(path.join(data.pack,'original.png'),path.join(data.pack,'other.png'));data.generated.examples[0].reference_files=['other.png']; });
+  testGenerated('skill-generated-observed-only-duplicate','GENERATED_INPUT_PROVENANCE', data => { observedOnly(data);data.generated.examples[0].reference_files=['preview.png','./preview.png']; });
+  testGenerated('skill-generated-supplied-with-viewed-references','GENERATED_INPUTS', data => { data.generated.examples[0].reference_files=['preview.png']; });
+  testGenerated('skill-generated-supporting-source','PASS', data => {
+    fs.copyFileSync(path.join(data.pack,'preview.png'),path.join(data.pack,'supporting.png'));
+    data.source.assets.push({...data.source.assets[0],id:'source-2',original_file:'supporting.png',preview_file:'supporting.png'});
+    data.source.samples[0].supporting_asset_ids = ['source-2'];
+    data.generated.examples[0].input_files = ['supporting.png'];
+  });
+  testGenerated('skill-generated-source-enhancement-input','PASS', data => {
+    const overview = structuredClone(data.overview);
+    addEnhancement(data);
+    data.overview = overview;
+    data.generated.examples[0].input_files = ['enhanced.png'];
+  });
+  testGenerated('skill-generated-optional-prompt-file','PASS', data => { data.generated.examples[0].prompt_file='PROMPT.json'; });
+  testGenerated('skill-generated-schema','GENERATED_SCHEMA', data => { data.generated.schema_version=2; });
+  testGenerated('skill-generated-partial-coverage','GENERATED_SCHEMA', data => { data.generated.coverage='selected_samples'; });
+  testGenerated('skill-generated-style-mismatch','GENERATED_STYLE', data => { data.generated.style_id='other'; });
+  testGenerated('skill-generated-missing-example','GENERATED_COVERAGE', data => { data.generated.examples=[]; });
+  testGenerated('skill-generated-extra-example','GENERATED_COVERAGE', data => { data.generated.examples.push({...data.generated.examples[0],id:'unknown'}); });
+  testGenerated('skill-generated-duplicate-id','ID_DUPLICATE', data => { data.generated.examples.push(structuredClone(data.generated.examples[0])); });
+  testGenerated('skill-generated-missing-mapping','GENERATED_MAPPING', data => { delete data.generated.examples[0].source_sample_id; });
+  testGenerated('skill-generated-wrong-mapping','GENERATED_MAPPING', data => { data.generated.examples[0].source_sample_id='missing'; });
+  testGenerated('skill-generated-clarity-is-not-reinterpretation','GENERATED_KIND', data => { data.generated.examples[0].kind='ai_clarity_enhancement'; });
+  testGenerated('skill-generated-original-is-not-reinterpretation','GENERATED_KIND', data => { data.generated.examples[0].kind='original'; });
+  testGenerated('skill-generated-missing-tool','GENERATED_FIELDS', data => { delete data.generated.examples[0].tool; });
+  testGenerated('skill-generated-empty-prompt','GENERATED_FIELDS', data => { data.generated.examples[0].prompt=' '; });
+  testGenerated('skill-generated-prompt-file-needs-full-prompt','GENERATED_FIELDS', data => { data.generated.examples[0].prompt_file='PROMPT.json';delete data.generated.examples[0].prompt; });
+  testGenerated('skill-generated-missing-prompt-file','FILE_MISSING', data => { data.generated.examples[0].prompt_file='missing.json'; });
+  testGenerated('skill-generated-missing-review','GENERATED_REVIEW', data => { delete data.generated.examples[0].review; });
+  testGenerated('skill-generated-unreviewed','GENERATED_REVIEW', data => { data.generated.examples[0].review.status='not_run'; });
+  testGenerated('skill-generated-empty-review-scope','GENERATED_REVIEW', data => { data.generated.examples[0].review.scope=''; });
+  testGenerated('skill-generated-empty-review-notes','GENERATED_REVIEW', data => { data.generated.examples[0].review.notes=''; });
+  testGenerated('skill-generated-missing-inputs','GENERATED_INPUTS', data => { delete data.generated.examples[0].input_files; });
+  testGenerated('skill-generated-empty-inputs','GENERATED_INPUTS', data => { data.generated.examples[0].input_files=[]; });
+  testGenerated('skill-generated-cross-sample-input','GENERATED_INPUT_PROVENANCE', data => {
+    fs.copyFileSync(path.join(data.pack,'preview.png'),path.join(data.pack,'other.png'));
+    data.source.assets.push({...data.source.assets[0],id:'source-2',original_file:'other.png',preview_file:'other.png'});
+    data.generated.examples[0].input_files=['other.png'];
+  });
+  testGenerated('skill-generated-duplicate-input','GENERATED_INPUT_PROVENANCE', data => { data.generated.examples[0].input_files=['preview.png','./preview.png']; });
+  testGenerated('skill-generated-unknown-supporting-asset','GENERATED_SOURCE', data => { data.source.samples[0].supporting_asset_ids=['missing']; });
+  testGenerated('skill-generated-input-escapes-pack','PATH_ESCAPE', data => { data.generated.examples[0].input_files=['../OVERVIEW.png']; });
+  testGenerated('skill-generated-source-file-as-output','GENERATED_OUTPUT_PROVENANCE', data => { data.generated.examples[0].output_file='original.png'; });
+  testGenerated('skill-generated-source-symlink-as-output','GENERATED_OUTPUT_PROVENANCE', data => {
+    fs.symlinkSync('original.png',path.join(data.pack,'source-alias.png'));
+    data.generated.examples[0].output_file='source-alias.png';
+  });
+  testGenerated('skill-generated-output-reused','GENERATED_OUTPUT_PROVENANCE', data => {
+    data.source.samples.push({...data.source.samples[0],id:'sample-2'});
+    data.generated.examples.push({...data.generated.examples[0],id:'sample-2',source_sample_id:'sample-2'});
+  });
+  testGenerated('skill-generated-output-missing','FILE_MISSING', data => { data.generated.examples[0].output_file='missing.png'; });
+  testGenerated('skill-generated-output-escapes-pack','PATH_ESCAPE', data => { data.generated.examples[0].output_file='../OVERVIEW.png'; });
+  testGenerated('skill-generated-sha-mismatch','HASH_MISMATCH', data => { data.generated.examples[0].sha256='0'.repeat(64); });
+  testGenerated('skill-generated-dimensions-mismatch','DIMENSION_MISMATCH', data => { data.generated.examples[0].width=33; });
+  testGenerated('skill-generated-overview-wrong-example','OVERVIEW_EXAMPLE', data => { data.overview.members[0].example_id='missing'; });
+  testGenerated('skill-generated-overview-wrong-manifest','OVERVIEW_GENERATED', data => { data.overview.members[0].generated_file='fixture/sources.json'; });
+  testGenerated('skill-generated-overview-source-file','OVERVIEW_DISPLAY', data => { data.overview.members[0].file='fixture/preview.png'; });
+  testGenerated('skill-generated-overview-wrong-hash','OVERVIEW_DISPLAY', data => { data.overview.members[0].sha256='0'.repeat(64); });
+  testGenerated('skill-generated-overview-wrong-kind','OVERVIEW_KIND', data => { data.overview.members[0].kind='ai_clarity_enhancement'; });
+  testGenerated('skill-generated-overview-clarity-label','OVERVIEW_KIND', data => { data.overview.members[0].ai_enhanced=false; });
+  testGenerated('skill-generated-overview-legacy-fields','OVERVIEW_KIND', data => { data.overview.members[0].sources_file='fixture/sources.json'; });
+  testGenerated('skill-generated-overview-in-v1','OVERVIEW_KIND', data => { data.overview.schema_version=1; });
+  testGenerated('skill-generated-overview-unknown-schema','OVERVIEW_SCHEMA', data => { data.overview.schema_version=3; });
+  const addBlocker = data => {
+    data.source.samples.push({...data.source.samples[0],id:'sample-2'});
+    data.generated.coverage='partial_with_blockers';
+    data.generated.blocked=[{id:'sample-2',source_sample_id:'sample-2',status:'blocked',tool:'mechanical-fixture',reason:'Synthetic blocked attempt; no actual request was made.',attempts:[{prompt:'Fixture reinterpretation request.',input_files:['preview.png'],error:'Synthetic tool rejection.',request_id:'fixture-request-1'},{prompt:'Fixture text-only alternative.',input_files:[],error:'Synthetic tool rejection.',request_id:'fixture-request-2'}]}];
+  };
+  const testBlocked = (name, expected, mutate = () => {}, after) => testSkill(name, expected, (data,dir) => { addReinterpretation(data);addBlocker(data);mutate(data,dir); }, after);
+  testBlocked('skill-generated-partial-with-blockers','PASS', undefined, report => report.counts.generated_examples===1 && report.counts.blocked_examples===1 && report.warnings.some(w=>w.includes('generation is complete')));
+  testGenerated('skill-generated-complete-zero-blockers','PASS', data => { data.generated.blocked=[]; });
+  testBlocked('skill-generated-blocker-supporting-input','PASS', data => {
+    fs.copyFileSync(path.join(data.pack,'preview.png'),path.join(data.pack,'supporting.png'));
+    data.source.assets.push({...data.source.assets[0],id:'source-2',original_file:'supporting.png',preview_file:'supporting.png'});
+    data.source.samples[1].supporting_asset_ids=['source-2'];data.generated.blocked[0].attempts[0].input_files=['supporting.png'];
+  });
+  testBlocked('skill-generated-blocker-missing-array','GENERATED_BLOCKERS', data => { delete data.generated.blocked; });
+  testBlocked('skill-generated-blocker-empty-array','GENERATED_BLOCKERS', data => { data.generated.blocked=[]; });
+  testBlocked('skill-generated-blocker-in-complete-coverage','GENERATED_BLOCKERS', data => { data.generated.coverage='all_source_samples'; });
+  testBlocked('skill-generated-blocker-missing-coverage','GENERATED_COVERAGE', data => { data.source.samples.push({...data.source.samples[0],id:'sample-3'}); });
+  testBlocked('skill-generated-blocker-extra-id','GENERATED_COVERAGE', data => { data.generated.blocked.push({...data.generated.blocked[0],id:'unknown',source_sample_id:'unknown'}); });
+  testBlocked('skill-generated-blocker-duplicate-id','ID_DUPLICATE', data => { data.generated.blocked.push(structuredClone(data.generated.blocked[0])); });
+  testBlocked('skill-generated-blocker-duplicates-output-id','ID_DUPLICATE', data => { data.generated.blocked[0].id='sample-1';data.generated.blocked[0].source_sample_id='sample-1'; });
+  testBlocked('skill-generated-blocker-wrong-source','GENERATED_MAPPING', data => { data.generated.blocked[0].source_sample_id='sample-1'; });
+  testBlocked('skill-generated-blocker-wrong-status','GENERATED_BLOCKED_FIELDS', data => { data.generated.blocked[0].status='pass'; });
+  testBlocked('skill-generated-blocker-empty-reason','GENERATED_BLOCKED_FIELDS', data => { data.generated.blocked[0].reason=' '; });
+  testBlocked('skill-generated-blocker-missing-tool','GENERATED_BLOCKED_FIELDS', data => { delete data.generated.blocked[0].tool; });
+  for (const [key,value] of [['output_file','reinterpretation.png'],['sha256','0'.repeat(64)],['review',{status:'pass'}]]) {
+    testBlocked(`skill-generated-blocker-fake-${key}`,'GENERATED_BLOCKED_OUTPUT', data => { data.generated.blocked[0][key]=value; });
+  }
+  testBlocked('skill-generated-blocker-attempt-fake-output','GENERATED_BLOCKED_OUTPUT', data => { data.generated.blocked[0].attempts[0].output_file='reinterpretation.png'; });
+  testBlocked('skill-generated-blocker-missing-attempts','GENERATED_BLOCKED_ATTEMPTS', data => { delete data.generated.blocked[0].attempts; });
+  testBlocked('skill-generated-blocker-empty-attempts','GENERATED_BLOCKED_ATTEMPTS', data => { data.generated.blocked[0].attempts=[]; });
+  for (const key of ['prompt','error','request_id']) testBlocked(`skill-generated-blocker-missing-${key}`,'GENERATED_BLOCKED_ATTEMPTS', data => { delete data.generated.blocked[0].attempts[0][key]; });
+  testBlocked('skill-generated-blocker-missing-input-array','GENERATED_INPUTS', data => { delete data.generated.blocked[0].attempts[0].input_files; });
+  testBlocked('skill-generated-blocker-duplicate-input','GENERATED_INPUT_PROVENANCE', data => { data.generated.blocked[0].attempts[0].input_files=['preview.png','./preview.png']; });
+  testBlocked('skill-generated-blocker-cross-sample-input','GENERATED_INPUT_PROVENANCE', data => {
+    fs.copyFileSync(path.join(data.pack,'preview.png'),path.join(data.pack,'other.png'));
+    data.source.assets.push({...data.source.assets[0],id:'source-2',original_file:'other.png',preview_file:'other.png'});
+    data.generated.blocked[0].attempts[0].input_files=['other.png'];
+  });
+  testBlocked('skill-generated-blocker-input-escape','PATH_ESCAPE', data => { data.generated.blocked[0].attempts[0].input_files=['../OVERVIEW.png']; });
+  testBlocked('skill-generated-blocker-as-overview','OVERVIEW_EXAMPLE', data => { data.overview.members[0].example_id='sample-2'; });
+  testSkill('skill-source-overview-explicit-v1','PASS', data => { data.overview.schema_version=1; });
+  testSkill('skill-source-overview-clarity-label-mismatch','OVERVIEW_DISPLAY', data => { addEnhancement(data);data.overview.members[0].ai_enhanced=false; });
+  testSkill('skill-source-enhancement-rejects-reinterpretation','ENHANCEMENT_SCHEMA', data => { addEnhancement(data);data.source.samples[0].enhancement.kind='ai_reinterpretation'; });
+
+  const originalFile = (pack, file = 'original-study.png', color = '#a87742') => {
+    // Distinct synthetic pixels exercise identity/hash separation, not design quality.
+    run('magick', ['-size','32x32',`xc:${color}`,path.join(pack,file)]);
+    return sha256(path.join(pack,file));
+  };
+  const addOriginal = data => {
+    const hash = originalFile(data.pack);
+    data.originals = {
+      schema_version:1,style_id:'fixture',
+      examples:[{id:'original-1',kind:'original_study',title:'Synthetic original fixture',brief:'Independent fictional product brief.',method:'Distinct synthetic pixels test the metadata contract.',tool:'mechanical-fixture',prompt:'Synthetic fixture prompt; no image generation is claimed.',input_files:[],output_file:'original-study.png',width:32,height:32,sha256:hash,review:{status:'pass',scope:'Mechanical fixture only.',notes:'No actual image generation or visual review is claimed.'}}]
+    };
+    data.overview.schema_version=2;
+    data.overview.members=[{style_id:'fixture',kind:'original_study',originals_file:'fixture/originals.json',example_id:'original-1',file:'fixture/original-study.png',sha256:hash}];
+  };
+  const testOriginal = (name, expected, mutate = () => {}, after) => testSkill(name, expected, (data,dir) => { addOriginal(data);mutate(data,dir); }, after);
+  testOriginal('skill-original-independent-of-source','PASS', undefined, report => report.counts.original_examples===1 && report.counts.display_examples===1);
+  testSkill('skill-without-originals-keeps-legacy-contract','PASS', undefined, report => report.counts.original_examples===0 && report.counts.display_examples===0);
+  testOriginal('skill-original-with-reinterpretation','PASS', data => {
+    const overview=structuredClone(data.overview);addReinterpretation(data);data.overview=overview;
+  }, report => report.counts.original_examples===1 && report.counts.generated_examples===1 && report.counts.display_examples===2);
+  testOriginal('skill-original-with-blocker-keeps-counts-separate','PASS', data => {
+    const overview=structuredClone(data.overview);addReinterpretation(data);addBlocker(data);data.overview=overview;
+  }, report => report.counts.original_examples===1 && report.counts.generated_examples===1 && report.counts.blocked_examples===1 && report.counts.display_examples===2 && report.warnings.some(w=>w.includes('generation is complete')));
+  testOriginal('skill-original-does-not-fill-missing-generated-coverage','GENERATED_COVERAGE', data => { addReinterpretation(data);data.source.samples.push({...data.source.samples[0],id:'sample-2'}); });
+  testOriginal('skill-original-with-generated-overview','PASS', addReinterpretation);
+  testSkill('skill-original-with-v1-source-overview','PASS', data => { const overview=structuredClone(data.overview);addOriginal(data);data.overview=overview; });
+  testOriginal('skill-original-distinct-studies','PASS', data => {
+    const hash=originalFile(data.pack,'second-study.png','#4269a8');
+    data.originals.examples.push({...data.originals.examples[0],id:'original-2',output_file:'second-study.png',sha256:hash});
+  }, report => report.counts.original_examples===2 && report.counts.display_examples===2);
+  testOriginal('skill-original-schema','ORIGINAL_SCHEMA', data => { data.originals.schema_version=2; });
+  testOriginal('skill-original-style-mismatch','ORIGINAL_STYLE', data => { data.originals.style_id='other'; });
+  testOriginal('skill-original-empty','ORIGINAL_EMPTY', data => { data.originals.examples=[]; });
+  testOriginal('skill-original-missing-examples','SCHEMA_ARRAY', data => { delete data.originals.examples; });
+  testOriginal('skill-original-examples-not-array','SCHEMA_ARRAY', data => { data.originals.examples={}; });
+  testOriginal('skill-original-null-entry','ORIGINAL_FIELDS', data => { data.originals.examples=[null]; });
+  testOriginal('skill-original-missing-id','ID_MISSING', data => { delete data.originals.examples[0].id; });
+  testOriginal('skill-original-duplicate-id','ID_DUPLICATE', data => { data.originals.examples.push(structuredClone(data.originals.examples[0])); });
+  testOriginal('skill-original-source-id-collision','ORIGINAL_ID', data => { data.originals.examples[0].id='sample-1'; });
+  testOriginal('skill-original-generated-id-collision','ORIGINAL_ID', data => { addReinterpretation(data);data.originals.examples[0].id='sample-1'; });
+  testOriginal('skill-original-blocked-id-collision','ORIGINAL_ID', data => { addReinterpretation(data);addBlocker(data);data.originals.examples[0].id='sample-2'; });
+  testOriginal('skill-original-wrong-kind','ORIGINAL_KIND', data => { data.originals.examples[0].kind='ai_reinterpretation'; });
+  for(const key of ['title','brief','method','tool','prompt']) testOriginal(`skill-original-empty-${key}`,'ORIGINAL_FIELDS', data => { data.originals.examples[0][key]=' '; });
+  testOriginal('skill-original-missing-dimensions','ORIGINAL_FIELDS', data => { delete data.originals.examples[0].width; });
+  testOriginal('skill-original-invalid-dimensions','ORIGINAL_FIELDS', data => { data.originals.examples[0].height=0; });
+  testOriginal('skill-original-missing-inputs','ORIGINAL_INPUTS', data => { delete data.originals.examples[0].input_files; });
+  testOriginal('skill-original-nonarray-inputs','ORIGINAL_INPUTS', data => { data.originals.examples[0].input_files={}; });
+  testOriginal('skill-original-reference-input-forbidden','ORIGINAL_INPUTS', data => { data.originals.examples[0].input_files=['preview.png']; });
+  for(const key of ['source_sample_id','asset_id','supporting_asset_ids','designer','author','page_url','asset_url','product_page_url','sources_file','source','original_file','preview_file','enhancement','ai_enhanced','reference_files','image_reference_mode']) {
+    testOriginal(`skill-original-forbidden-${key}`,'ORIGINAL_SOURCE_FIELDS', data => { data.originals.examples[0][key]='Synthetic source claim'; });
+  }
+  testOriginal('skill-original-manifest-source-claim','ORIGINAL_SOURCE_FIELDS', data => { data.originals.source_collection='Synthetic third-party attribution'; });
+  testOriginal('skill-original-nested-source-claim','ORIGINAL_SOURCE_FIELDS', data => { data.originals.examples[0].provenance={page_url:'https://example.com/claimed-source'}; });
+  testOriginal('skill-original-nested-array-source-claim','ORIGINAL_SOURCE_FIELDS', data => { data.originals.examples[0].provenance=[{credits:[{designer:'Claimed third-party designer'}]}]; });
+  testOriginal('skill-original-source-terms-in-prose-allowed','PASS', data => { data.originals.examples[0].review.notes='This fixture has no page_url, designer or source_sample_id attribution.'; });
+  testOriginal('skill-original-missing-review','ORIGINAL_REVIEW', data => { delete data.originals.examples[0].review; });
+  testOriginal('skill-original-unreviewed','ORIGINAL_REVIEW', data => { data.originals.examples[0].review.status='not_run'; });
+  for(const key of ['scope','notes']) testOriginal(`skill-original-empty-review-${key}`,'ORIGINAL_REVIEW', data => { data.originals.examples[0].review[key]=' '; });
+  for(const file of ['original.png','preview.png']) testOriginal(`skill-original-reuses-${file}`,'ORIGINAL_OUTPUT_PROVENANCE', data => { data.originals.examples[0].output_file=file; });
+  testOriginal('skill-original-reuses-enhancement','ORIGINAL_OUTPUT_PROVENANCE', data => { addEnhancement(data);data.originals.examples[0].output_file='enhanced.png'; });
+  testOriginal('skill-original-reuses-detail','ORIGINAL_OUTPUT_PROVENANCE', data => {
+    const hash=originalFile(data.pack,'detail.png','#888888');
+    Object.assign(data.source.samples[0],{detail_file:'detail.png',detail_width:32,detail_height:32,detail_sha256:hash});
+    data.originals.examples[0].output_file='detail.png';
+  });
+  testOriginal('skill-original-reuses-generated','ORIGINAL_OUTPUT_PROVENANCE', data => { addReinterpretation(data);data.originals.examples[0].output_file='reinterpretation.png'; });
+  testOriginal('skill-original-symlink-to-source','ORIGINAL_OUTPUT_PROVENANCE', data => { fs.symlinkSync('preview.png',path.join(data.pack,'alias.png'));data.originals.examples[0].output_file='alias.png'; });
+  testOriginal('skill-original-hardlink-to-source','ORIGINAL_OUTPUT_PROVENANCE', data => { fs.linkSync(path.join(data.pack,'preview.png'),path.join(data.pack,'alias.png'));data.originals.examples[0].output_file='alias.png'; });
+  testOriginal('skill-original-copied-source-bytes','ORIGINAL_OUTPUT_PROVENANCE', data => { fs.copyFileSync(path.join(data.pack,'preview.png'),path.join(data.pack,'copied.png'));data.originals.examples[0].output_file='copied.png'; });
+  testOriginal('skill-original-copied-generated-bytes','ORIGINAL_OUTPUT_PROVENANCE', data => {
+    addReinterpretation(data);const hash=originalFile(data.pack,'reinterpretation.png','#445566');data.generated.examples[0].sha256=hash;data.overview.members[0].sha256=hash;
+    fs.copyFileSync(path.join(data.pack,'reinterpretation.png'),path.join(data.pack,'copied.png'));data.originals.examples[0].output_file='copied.png';
+  });
+  testOriginal('skill-original-output-reused','ORIGINAL_OUTPUT_PROVENANCE', data => { data.originals.examples.push({...data.originals.examples[0],id:'original-2'}); });
+  for(const mode of ['symlink','hardlink','copy']) testOriginal(`skill-original-${mode}-of-another-original`,'ORIGINAL_OUTPUT_PROVENANCE', data => {
+    const source=path.join(data.pack,'original-study.png'),target=path.join(data.pack,'second-study.png');
+    if(mode==='symlink')fs.symlinkSync('original-study.png',target);else if(mode==='hardlink')fs.linkSync(source,target);else fs.copyFileSync(source,target);
+    data.originals.examples.push({...data.originals.examples[0],id:'original-2',output_file:'second-study.png'});
+  });
+  testOriginal('skill-original-output-missing','FILE_MISSING', data => { data.originals.examples[0].output_file='missing.png'; });
+  testOriginal('skill-original-output-escape','PATH_ESCAPE', data => { data.originals.examples[0].output_file='../OVERVIEW.png'; });
+  testOriginal('skill-original-output-symlink-escape','PATH_ESCAPE', data => { fs.symlinkSync('../OVERVIEW.png',path.join(data.pack,'escape.png'));data.originals.examples[0].output_file='escape.png'; });
+  testOriginal('skill-original-output-invalid-sha','HASH_INVALID', data => { data.originals.examples[0].sha256=''; });
+  testOriginal('skill-original-output-wrong-sha','HASH_MISMATCH', data => { data.originals.examples[0].sha256='0'.repeat(64); });
+  testOriginal('skill-original-output-wrong-dimensions','DIMENSION_MISMATCH', data => { data.originals.examples[0].width=33; });
+  testOriginal('skill-original-overview-wrong-manifest','OVERVIEW_ORIGINAL', data => { data.overview.members[0].originals_file='fixture/generated.json'; });
+  testOriginal('skill-original-overview-missing-manifest','OVERVIEW_ORIGINAL', data => { delete data.overview.members[0].originals_file; });
+  testOriginal('skill-original-overview-wrong-example','OVERVIEW_EXAMPLE', data => { data.overview.members[0].example_id='sample-1'; });
+  testOriginal('skill-original-overview-wrong-file','OVERVIEW_DISPLAY', data => { data.overview.members[0].file='fixture/preview.png'; });
+  testOriginal('skill-original-overview-wrong-hash','OVERVIEW_DISPLAY', data => { data.overview.members[0].sha256='0'.repeat(64); });
+  for(const key of ['generated_file','sources_file','source_sample_id','sample_id','ai_enhanced']) testOriginal(`skill-original-overview-forbidden-${key}`,'OVERVIEW_KIND', data => { data.overview.members[0][key]='Mixed provenance'; });
+  testOriginal('skill-original-overview-nested-source-claim','OVERVIEW_KIND', data => { data.overview.members[0].provenance={credits:[{designer:'Claimed third-party designer'}]}; });
+  testGenerated('skill-generated-overview-forbids-original-manifest','OVERVIEW_KIND', data => { data.overview.members[0].originals_file='fixture/originals.json'; });
+  for(const key of ['source_sample_id','asset_id','designer','page_url']) testGenerated(`skill-generated-overview-forbidden-${key}`,'OVERVIEW_KIND', data => { data.overview.members[0][key]='Mixed provenance'; });
+  testGenerated('skill-generated-overview-nested-source-claim','OVERVIEW_KIND', data => { data.overview.members[0].provenance={page_url:'https://example.com/claimed-source'}; });
+  testOriginal('skill-original-overview-in-v1','OVERVIEW_KIND', data => { data.overview.schema_version=1; });
+  testSkill('skill-source-overview-forbids-original-manifest','OVERVIEW_KIND', data => { data.overview.members[0].originals_file='fixture/originals.json'; });
+  const addSecondOriginalPack = (data, color = '#4269a8') => {
+    const pack=path.join(data.styles,'other');fs.mkdirSync(pack);
+    for(const file of ['original.png','preview.png','EXAMPLES.md','PROMPTS.md'])fs.copyFileSync(path.join(data.pack,file),path.join(pack,file));
+    write(pack,'STYLE.md','---\nid: other\nname: Other Fixture\nversion: 1\nstatus: provisional\n---\n# Other fixture\n');
+    fs.appendFileSync(path.join(data.styles,'INDEX.md'),'[Other style](other/STYLE.md) [Other examples](other/EXAMPLES.md)\n');
+    write(pack,'sources.json',{...structuredClone(data.source),style_id:'other'});
+    const hash=originalFile(pack,'original-study.png',color);
+    const originals={...structuredClone(data.originals),style_id:'other'};originals.examples[0].sha256=hash;
+    write(pack,'originals.json',originals);
+    data.overview.members.push({style_id:'other',kind:'original_study',originals_file:'other/originals.json',example_id:originals.examples[0].id,file:'other/original-study.png',sha256:hash});
+    return {pack,originals};
+  };
+  testOriginal('skill-original-id-namespaces-per-style','PASS', data => { addSecondOriginalPack(data); }, report => report.counts.original_examples===2 && report.counts.display_examples===2);
+  testOriginal('skill-original-copy-across-styles','ORIGINAL_OUTPUT_PROVENANCE', data => { addSecondOriginalPack(data,'#a87742'); });
+  testOriginal('skill-original-hardlink-across-styles','ORIGINAL_OUTPUT_PROVENANCE', data => {
+    const {pack}=addSecondOriginalPack(data);fs.unlinkSync(path.join(pack,'original-study.png'));fs.linkSync(path.join(data.pack,'original-study.png'),path.join(pack,'original-study.png'));
+  });
+  testOriginal('skill-original-overview-cross-style-manifest','OVERVIEW_ORIGINAL', data => { addSecondOriginalPack(data);data.overview.members[1].originals_file='fixture/originals.json'; });
 
   function applicationFixture(_, dir) {
     const base = path.join(dir, 'libraries/applications');

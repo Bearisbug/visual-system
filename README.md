@@ -15,7 +15,13 @@
 
 `visual-system` guides an AI coding agent through brand work: designing or iterating a logo, extracting a visual method from references, verifying fonts, writing a brand language and guidelines, producing editable brand materials, and handing brand parameters to developers as tokens, font config and component state examples. The agent can start from a new brief or from work that already exists, and runs only the stages you ask for.
 
-The skill text is written in Chinese. You can talk to the agent in any language.
+The skill text is written in Chinese. Use an agent that can read it; the task and output language can follow your request.
+
+## Start with any agent
+
+Open [SKILL.md](SKILL.md) with the agent's file reader, treat its folder as the skill root, and follow the matching task route. A proprietary skill-loading command is not required. For technology, AI and SaaS directions, start with the [style selector](libraries/styles/SELECT.md). It separates identity, communication materials and interface parameters.
+
+The [runtime guide](references/runtime.md) maps deliverables to capabilities. A text-only agent can prepare a brief or direction study; image review, rendering, token checks and platform integration require their actual tools. Record missing checks and hand off the current files and decisions. Adjacent skills such as ui-constraints and code-video are optional task-specific workflows; their absence does not prevent completing the independent brand work. This is a portable instruction contract, not a certification of every agent or platform.
 
 ## What it covers
 
@@ -40,12 +46,14 @@ A formal logo gets an editable master built from real paths. A bitmap embedded i
 
 Mechanical checks, visual review and behavior tests are reported separately. Small sizes, mono and reversed versions, light and dark backgrounds, spelling and real applications are checked on the actual output, and a validator passing is never reported as a visual pass.
 
+Browse the [style casebook](libraries/styles/CASEBOOK.md) for current AI studies. Source archives retain the original identity and application evidence; three blocked examples and one supporting-pattern substitution are explicitly labelled.
+
 ## What's inside
 
 ```text
 SKILL.md                 entry: task routing and working rules
-references/              15 rule cards (BD-*), flows, validation contract
-libraries/styles/        16 style packs, 198 reference samples, per-image sources
+references/              16 rule cards (BD-*), runtime guide, flows, validation contract
+libraries/styles/        12 styles, 152 AI studies (119 reinterpretations + 33 originals), 122 sources, 3 blockers
 libraries/fonts/         Space Grotesk, Noto Sans SC, JetBrains Mono (OFL) + tested pairing
 libraries/prompts/       prompt patterns: new concept, refine, material, wordmark, application
 libraries/applications/  announcement 1200×630, story 1080×1350, cover 1600×900 + renderer
@@ -55,30 +63,26 @@ agents/openai.yaml       display metadata for Codex
 AGENTS.md                maintenance rules for editing the skill itself
 ```
 
-Every style pack has a `STYLE.md`, `EXAMPLES.md`, `PROMPTS.md` and `sources.json`. All 16 are `provisional`: the references have been extracted and checked, but transferring the style to a new brand has not been validated.
+Every pack includes `STYLE.md`, `EXAMPLES.md`, `PROMPTS.md`, `generated.json`, `REFERENCES.md` and `sources.json`; packs with original studies also include `originals.json`. All 12 styles have at least 10 images, totaling 152 AI studies with a [restrained art direction](libraries/styles/ART-DIRECTION.md). Third-party sources, reinterpretations and independent original studies are labelled separately. Packs remain `provisional`: static studies do not establish real brand adoption, complete brand transfer, font use, production geometry or product integration.
 
 | Pack | Method |
 | --- | --- |
-| `semantic-tech-marks` | Alex Tass · letters fused with product meaning, for software and AI brands |
-| `modern-product-wordmarks` | Mihai Dolganiuc · product wordmarks with local letter edits |
-| `folded-ribbon-paths` | Dmitry Lepisov · folded ribbons and continuous paths |
-| `geometric-letter-monograms` | Jeroen van Eerden · geometric letters and monograms |
+| `pixel-grid-identities` | discrete units, pixel families and grid composition; Mistral and MediaViz |
+| `editorial-typographic-systems` | typography roles, content hierarchy and hand-drawn conceptual illustration, studied through Anthropic, Perplexity, Notion and Intercom |
+| `modular-responsive-identities` | fixed identity with composable variations, studied through Cohere and Slack |
+| `parametric-science-visuals` | generated surfaces and boundary fields, studied through Secondmind and Covariant |
+| `semantic-tech-marks` | letters fused with product meaning, for software and AI brands |
+| `modern-product-wordmarks` | product wordmarks with local letter edits |
+| `folded-ribbon-paths` | folded ribbons and continuous paths |
+| `geometric-letter-monograms` | geometric letters and monograms |
 | `geometric-negative-space` | holes, side cuts and shared edges |
 | `monochrome-product-marks` | monochrome product imagery |
-| `soft-dimensional-symbols` | gradients, layers and light volume |
-| `holographic-chrome-relief` | Martin Naumann · holographic chrome, material layer only |
-| `modernist-corporate-symbols` | Chermayeff & Geismar & Haviv · modernist corporate symbols |
-| `handwritten-script-wordmarks` | handwritten and script wordmarks |
+| `modernist-corporate-symbols` | modernist corporate symbols |
 | `monoline-contour-marks` | monoline and contour marks |
-| `retro-skeuomorphic-marks` | retro precision skeuomorphism |
-| `retro-badge-emblems` | retro badges and emblems |
-| `ornamental-folk-symbols` | Stefan Kanchev · ornamental and folk symbols |
-| `illustrative-brand-mascots` | Von Glitschka · illustrated brand mascots |
-| `capsule-eye-bot-avatars` | minimal bot avatars with black capsule eyes |
 
 ## Install
 
-The repository is about 140 MB, mostly reference images and the Noto Sans SC font, so a shallow clone is recommended.
+The repository includes source references, generated studies and font files; a shallow clone is recommended.
 
 Claude Code, available in every project:
 
@@ -96,7 +100,7 @@ Claude Code, one project only: clone into `<project>/.claude/skills/visual-syste
 | uv (Python 3, stdlib only) | the vendored token generator and `check-tokens` |
 | `xmllint` | SVG parsing in checks |
 | ImageMagick 7 (`magick`) | `check.sh --deep` and PNG/alpha checks in release validation |
-| A browser | previewing templates and exporting PNGs; the skill defaults to Microsoft Edge |
+| A browser with the required inspection/export capability | previewing templates and exporting PNGs; use Edge when available, otherwise record the actual browser |
 | An image generation tool (optional) | raster exploration and material studies; vector masters are built directly as SVG |
 
 ## Usage
@@ -126,6 +130,6 @@ Each command prints JSON and exits 0 on a mechanical pass. A pass does not prove
 
 ## License
 
-Original text, scripts, templates and the logo are released under the [MIT License](LICENSE). Bundled fonts (SIL OFL 1.1), the capsule-eye bot prompt (CC BY-NC 4.0) and third-party reference images keep their own terms; see [NOTICE](NOTICE.md). Copyright owners can open an issue to request removal or corrected attribution.
+Original text, scripts, templates and the logo are released under the [MIT License](LICENSE). Bundled fonts (SIL OFL 1.1), third-party references and AI studies incorporating third-party marks are addressed separately; see [NOTICE](NOTICE.md). Copyright owners can open an issue to request removal or corrected attribution.
 
 The logo nests one rounded square three times, as the bowl, the counter and the accent, so a single master holds at every scale.

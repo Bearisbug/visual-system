@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "style_id": "editorial-typographic-systems",
+  "examples": [
+    {
+      "id": "ET-O01",
+      "kind": "original_study",
+      "title": "证据归页",
+      "brief": "为文献溯源工具研究多份资料归入同一可追踪索引的封面。",
+      "method": "用一根穿过纸页角部的线，把分散资料转译成可循迹的联系。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create one original minimalist conceptual editorial illustration for a fictional knowledge/software product, landscape 3:2. Natural charcoal ink contours, a few gentle dry-brush variations, pale warm off-white background, generous breathing space. Deliberate drawing with clear object relationships, not an icon grid. Restrained art-print composition. No written words, letterforms, logos, branding, captions, numerical data, borders or watermark. No neon, metallic gloss, dramatic 3D or busy surface texture. Subject: four loose rectangular paper sheets, lightly offset in a shallow diagonal fan, each with a small punched hole near the upper corner. A single muted terracotta thread visibly passes through the four holes and comes out as one relaxed curve with an open end. Nothing is tied into a decorative bow. Black contours and ivory paper planes; the one red thread gives the eye a clear route across the pages. Three-quarter overhead view, the whole simple group centered with empty surroundings. The thread's traversal and separate paper edges must remain legible.",
+      "input_files": [],
+      "output_file": "generated/ET-O01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "e5f36badbc96a21fa024e01a720e079b9c1b21a13d915d4057fbea1cc15fc189",
+      "review": {
+        "status": "pass",
+        "scope": "实际查看内置工具返回的全幅生成图，检查对象关系、构图、线条、留白与有无错字；未验证目标应用和小尺寸。",
+        "notes": "四张错位纸页和穿孔线迹清楚，单根陶土色线将独立页面连成可追踪关系；没有假文字。线较提示词设想更粗，仍保留清楚主次，未把它当真实引用数据。"
+      }
+    },
+    {
+      "id": "ET-O02",
+      "kind": "original_study",
+      "title": "共同落笔",
+      "brief": "为协作写作工具研究两条思路形成共同成果的封面。",
+      "method": "用两支相向的铅笔与一条共绘曲线表达协作，不使用人物或品牌符号。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create one original minimalist conceptual editorial illustration for a fictional knowledge/software product, landscape 3:2. Natural charcoal ink contours, a few gentle dry-brush variations, pale warm off-white background, generous breathing space. Deliberate drawing with clear object relationships, not an icon grid. Restrained art-print composition. No written words, letterforms, logos, branding, captions, numerical data, borders or watermark. No neon, metallic gloss, dramatic 3D or busy surface texture. Subject: two simplified ink-drawn pencils approach a sheet of paper from the left and right at shallow opposing angles. Their small black tips touch the two ends of a single small incomplete arch drawn in the center, suggesting two contributors completing one continuous idea. The pencil bodies are mostly outlined ivory; just one pencil has a muted sage-green painted end. Clear separation between each pencil, the page, and the drawn arch. Slightly overhead composition, lyrical and quiet, neither mirror-perfect nor diagrammatic. No hands, faces, checkmarks or floating decoration. Render on a completely plain ivory field, with no table, no woodgrain backdrop, no paper fibers and no realistic material rendering. Draw only the two whole pencils, one simple outlined sheet, and their shared arch. Fit both entire pencil bodies inside the frame with clear blank margin on every side. The drawing should use economical black contours and a few flat color planes; this is an airy editorial ink drawing, not a photograph of stationery.",
+      "input_files": [],
+      "output_file": "generated/ET-O02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "4668f438a1abe18e19e0c99bb08acb8468a5e8c753060ebcbf75daf72be19682",
+      "review": {
+        "status": "pass",
+        "scope": "实际查看内置工具返回的全幅生成图，检查对象关系、构图、线条、留白与有无错字；未验证目标应用和小尺寸。",
+        "notes": "清浅背景中，两支完整铅笔在纸上共同落到同一弧线两端，留白清楚。弧线构成连续笔迹，作为协作概念可读；没有文字与精确字体声明。"
+      }
+    },
+    {
+      "id": "ET-O03",
+      "kind": "original_study",
+      "title": "上下文线轴",
+      "brief": "为长文理解工具研究从杂乱上下文中找到可延续线索的封面。",
+      "method": "对照紧密卷绕与舒展路径，以同一根线保持结构连续。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create one original minimalist conceptual editorial illustration for a fictional knowledge/software product, landscape 3:2. Natural charcoal ink contours, a few gentle dry-brush variations, pale warm off-white background, generous breathing space. Deliberate drawing with clear object relationships, not an icon grid. Restrained art-print composition. No written words, letterforms, logos, branding, captions, numerical data, borders or watermark. No neon, metallic gloss, dramatic 3D or busy surface texture. Subject: one small wooden spool lies on its side in the left half of the central composition. A loosely wound charcoal thread leaves the spool, forms two broad calm loops, then passes underneath a single upright folded paper tab on the right. Keep the loops separated and the free end visible. One muted blue-gray surface on the paper tab is the only color accent. The physical spool, unwinding thread, and tab establish a readable beginning-route-end metaphor. No dense tangled ball, no arrows, no printed page content. Balanced asymmetry with ample blank margin.",
+      "input_files": [],
+      "output_file": "generated/ET-O03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "12814d6d10b5efbcb49ff8d4106178a6b5b8f431c69f36a59514543d7dbaad03",
+      "review": {
+        "status": "pass",
+        "scope": "实际查看内置工具返回的全幅生成图，检查对象关系、构图、线条、留白与有无错字；未验证目标应用和小尺寸。",
+        "notes": "线轴、两处舒展回环、折起蓝灰纸签和自由线头形成清楚起点—路径—定位关系。线轴有较细铅笔明暗，画面背景保持安静，未声明真实线结构算法。"
+      }
+    },
+    {
+      "id": "ET-O04",
+      "kind": "original_study",
+      "title": "筛选与保留",
+      "brief": "为研究资料筛选工具研究按条件分组而非宣称答案正确的概念图。",
+      "method": "以筛网、不同尺度形体和上下空间分区表达筛选动作。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create one original minimalist conceptual editorial illustration for a fictional knowledge/software product, landscape 3:2. Natural charcoal ink contours, a few gentle dry-brush variations, pale warm off-white background, generous breathing space. Deliberate drawing with clear object relationships, not an icon grid. Restrained art-print composition. No written words, letterforms, logos, branding, captions, numerical data, borders or watermark. No neon, metallic gloss, dramatic 3D or busy surface texture. Subject: a shallow circular hand-held sieve suspended at a gentle angle in open space, with only four irregular stone-like paper shapes resting inside it. Beneath the mesh, three small rounded grains fall toward a plain shallow dish. Large and small forms must be distinct; the sieve mesh is suggested by sparse lines, not a dense texture. A muted ochre interior patch on the dish is the single accent. One connected scene, centered on the passage through the sieve. No checkmarks, success symbolism, particles everywhere, hands, text or data claims.",
+      "input_files": [],
+      "output_file": "generated/ET-O04.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "4679b6573ce10e0fae11413d9cf47b2cfa88972b3e014775aa7de9c2f08de315",
+      "review": {
+        "status": "pass",
+        "scope": "实际查看内置工具返回的全幅生成图，检查对象关系、构图、线条、留白与有无错字；未验证目标应用和小尺寸。",
+        "notes": "筛网中四个较大形体与下落的三颗小粒分层清楚，单个浅赭色接收盘突出动作。网格比提示词的稀疏建议更密，但主体和上下关系仍可辨；不是模型正确率或真实筛选结果。"
+      }
+    },
+    {
+      "id": "ET-O05",
+      "kind": "original_study",
+      "title": "版本层叠",
+      "brief": "为文档版本比较工具研究不同阶段之间可定位的变化。",
+      "method": "以错位折页和共同穿行的标记展示时间层次与稳定参照。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create one original minimalist conceptual editorial illustration for a fictional knowledge/software product, landscape 3:2. Natural charcoal ink contours, a few gentle dry-brush variations, pale warm off-white background, generous breathing space. Deliberate drawing with clear object relationships, not an icon grid. Restrained art-print composition. No written words, letterforms, logos, branding, captions, numerical data, borders or watermark. No neon, metallic gloss, dramatic 3D or busy surface texture. Subject: three accordion-folded paper strips standing in a low zigzag arrangement, each strip slightly offset behind the next. A single thin terracotta ribbon lies across one matching fold of all three strips, marking a shared location. Black hand-drawn outlines, ivory planes with very light warm-gray underside shading. Use visibly distinct folded planes and generous gaps; avoid a maze or stacked flat rectangles. Low three-quarter view, complete objects visible, quiet architectural rhythm. No letters, numbers, interface symbols, hands or decorative arrows.",
+      "input_files": [],
+      "output_file": "generated/ET-O05.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "414b0d0f6b2dc273fbd94d04273008af83823640bcba0065b482246ba95dec70",
+      "review": {
+        "status": "pass",
+        "scope": "实际查看内置工具返回的全幅生成图，检查对象关系、构图、线条、留白与有无错字；未验证目标应用和小尺寸。",
+        "notes": "三个错位折页的前后层次和对应的陶土色标记清楚。输出把一条跨页丝带改为三个对齐的色条，不宣称一根连续丝带；保留同一位置跨版本对照的主意。"
+      }
+    },
+    {
+      "id": "ET-O06",
+      "kind": "original_study",
+      "title": "定位一页",
+      "brief": "为知识检索工具研究从资料集合中定位目标页面的封面。",
+      "method": "用放大镜与一处留空书签建立焦点，避免用真实文字模拟搜索结果。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: illustration-story. Create one original minimalist conceptual editorial illustration for a fictional knowledge/software product, landscape 3:2. Natural charcoal ink contours, a few gentle dry-brush variations, pale warm off-white background, generous breathing space. Deliberate drawing with clear object relationships, not an icon grid. Restrained art-print composition. No written words, letterforms, logos, branding, captions, numerical data, borders or watermark. No neon, metallic gloss, dramatic 3D or busy surface texture. Subject: a small upright stack of slim paper folders sits at the center. One plain bookmark projects from the middle folder. A handheld magnifying glass leans nearby, its circular lens framing that single bookmark rather than enlarging text. The handle rests on the ground; no hand is present. A small muted teal patch on the bookmark provides the only accent. Light transparent lens indication, no glare, strong negative space between the circular rim and bookmark. Clear editorial drawing of a tool selecting one item, not a generic search icon.",
+      "input_files": [],
+      "output_file": "generated/ET-O06.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "b29b3e0af1c3978b4f98cc21ef20cee815b8c9bec792adae00ce982758626db3",
+      "review": {
+        "status": "pass",
+        "scope": "实际查看内置工具返回的全幅生成图，检查对象关系、构图、线条、留白与有无错字；未验证目标应用和小尺寸。",
+        "notes": "放大镜框住中间书签，文件夹的错位边缘与镜框分开，留白和单点青色焦点清楚；没有文字，不作为搜索结果或生产图标验收。"
+      }
+    }
+  ]
+}

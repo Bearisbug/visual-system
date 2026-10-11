@@ -4,8 +4,9 @@
 
 | ID | 触发 | 规则入口 |
 | --- | --- | --- |
+| BD-RUNTIME-001 | 开始使用 Skill、换执行环境或交给另一 Agent | [BD-RUNTIME-001 · 按产物选择执行能力](runtime.md#bd-runtime-001) |
 | BD-INPUT-001 | 接到品牌任务、继承简报或只做部分阶段 | [BD-INPUT-001 · 范围与既有选择](design.md#bd-input-001) |
-| BD-REF-001 | 使用外部风格、来源图或 AI 清晰化参考 | [BD-REF-001 · 参考角色](design.md#bd-ref-001) |
+| BD-REF-001 | 使用风格库、来源图、AI 重新演绎、清晰化或原创研究 | [BD-REF-001 · 参考角色](design.md#bd-ref-001) |
 | BD-CONCEPT-001 | 生成新构思、比较不同方向 | [BD-CONCEPT-001 · 概念差异](design.md#bd-concept-001) |
 | BD-EDIT-001 | 用户反馈、版本指代、局部修改 | [BD-EDIT-001 · 选择与改动](design.md#bd-edit-001) |
 | BD-MATERIAL-001 | 既有 Logo 的材质或配色研究 | [BD-MATERIAL-001 · 轮廓与表现](design.md#bd-material-001) |

@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "style_id": "geometric-letter-monograms",
+  "coverage": "all_source_samples",
+  "examples": [
+    {
+      "id": "J01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "J01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached DF monogram reference for a restrained identity study, not an official original. Preserve a single joined D and F symbol: rounded thick strokes, left vertical spine with domed D curve, two rightward F arms, and an inner upright curved path. Keep the open gaps and rounded terminals in the reference. Near-black monochrome. Present one centred symbol only, optically balanced at about 35 percent of canvas width, ample clean negative space, on warm ivory. Landscape 3:2, flat precise vector-like matte ink forms, clean edges. Keep the reference's concept and key shape relationships. No text, labels, caption, grid, panels, multiple variants, frame, mockup objects, gradient, shadow, bevel, shiny metal, watermark or decorative texture.",
+      "input_files": [
+        "references/J01.png"
+      ],
+      "output_file": "generated/J01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "e53d7caf1cf20422cd7eb13f7610fe2a638bf17cf2fb3e93388088293bf85e82",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "共享竖向骨架、D 弧与 F 两横保留，圆头笔画清楚；单一墨色主体，暖白留白。"
+      }
+    },
+    {
+      "id": "J02",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "J02",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached S monogram reference for a restrained identity study, not an official original. Isolate ONE S symbol from the multicolour source board. Preserve the distinctive paired parallel S-curves winding diagonally with staggered openings at the upper right and lower left. Near-black monochrome, no separate ordinary S typeset letter. Present one centred symbol only, optically balanced at about 35 percent of canvas width, ample clean negative space, on warm ivory. Landscape 3:2, flat precise vector-like matte ink forms, clean edges. Keep the reference's concept and key shape relationships. No text, labels, caption, grid, panels, multiple variants, frame, mockup objects, gradient, shadow, bevel, shiny metal, watermark or decorative texture.",
+      "input_files": [
+        "references/J02.png"
+      ],
+      "output_file": "generated/J02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "dbbeddcf54afb7c045219be8431307eddebad8f3c07a123f10069161db286882",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "S 的平行回旋曲线与错位开口保持；从多色图板提炼为单一主形，无网格和重复色版。"
+      }
+    },
+    {
+      "id": "J03",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "J03",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached D monogram reference for a restrained identity study, not an official original. Isolate ONE final D symbol from the right side of the source board, removing grids. Preserve the rounded D outer contour and internal upright stroke connected into a rounded inward spiral-like counter. Near-black monochrome. Present one centred symbol only, optically balanced at about 35 percent of canvas width, ample clean negative space, on warm ivory. Landscape 3:2, flat precise vector-like matte ink forms, clean edges. Keep the reference's concept and key shape relationships. No text, labels, caption, grid, panels, multiple variants, frame, mockup objects, gradient, shadow, bevel, shiny metal, watermark or decorative texture.",
+      "input_files": [
+        "references/J03.png"
+      ],
+      "output_file": "generated/J03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "b2f28e85f8f1084427c1e64c8ef7788ee3ab039722d034f06d8d47beda19ec4f",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "圆弧 D 外缘和内竖线/回环结构清楚；仅保留一个成品符号，网格已移除。"
+      }
+    },
+    {
+      "id": "J04",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "J04",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Unii reference for a restrained identity study, not an official original. Isolate ONE outlined U symbol, based on the upper-left reference variant. Preserve two circular ring dots above the U stems, rounded doubled U contours, and the gentle hooked speech-tail at the lower right. Muted dark teal linework. Do not include the word or any other variant. Present one centred symbol only, optically balanced at about 35 percent of canvas width, ample clean negative space, on warm ivory. Landscape 3:2, flat precise vector-like matte ink forms, clean edges. Keep the reference's concept and key shape relationships. No text, labels, caption, grid, panels, multiple variants, frame, mockup objects, gradient, shadow, bevel, shiny metal, watermark or decorative texture.",
+      "input_files": [
+        "references/J04.png"
+      ],
+      "output_file": "generated/J04.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "097e6774ad0c7eeb2b098f83c3dc2e612be29b0dcf7041c7bb6080ac85d81150",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "U 形双轨、两枚圆环点与下部钩形保留；暗青墨色、拟人结构清楚，单主体。"
+      }
+    },
+    {
+      "id": "J05",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "J05",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached T monogram reference for a restrained identity study, not an official original. Preserve the precise split symmetrical T construction: two separated top horizontal cap sections with upturned outer ends, and two lower inward vertical stems with angular shoulders and short feet. Central vertical white slit and horizontal white gap remain open. Near-black monochrome. Present one centred symbol only, optically balanced at about 35 percent of canvas width, ample clean negative space, on warm ivory. Landscape 3:2, flat precise vector-like matte ink forms, clean edges. Keep the reference's concept and key shape relationships. No text, labels, caption, grid, panels, multiple variants, frame, mockup objects, gradient, shadow, bevel, shiny metal, watermark or decorative texture.",
+      "input_files": [
+        "references/J05.png"
+      ],
+      "output_file": "generated/J05.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "efd48d2212741cbd56a154d31d70aa195210fbe228bdf55fc197c4f579ebb479",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "四段分离结构和纵横白缝保留，镜像平衡；字母 T 的构造关系清楚。"
+      }
+    },
+    {
+      "id": "J06",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "J06",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached U monogram reference as a refined identity study, not an official original. Preserve the nested U double-track arrangement with a smoothly rounded bottom, straight upright sides and separate short horizontal top terminals. Remove the source's drop shadow. Near-black monochrome. One centred symbol only with ample clean whitespace, optically balanced about 35 percent of canvas width on warm ivory. Landscape 3:2, flat precise vector-like matte ink forms and clean edges. Preserve concept and key shape relationships. No text, labels, captions, grids, panels, multiple variants, frame, mockup objects, gradient, shadow, bevel, shiny metal, watermark or decorative texture.",
+      "input_files": [
+        "references/J06.png"
+      ],
+      "output_file": "generated/J06.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "c7fde837de82ab722bae8e66fb40b5c6aee2d91bd194d5b1a89b1feae8c9d16f",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "嵌套 U 形路径、圆底和顶部横端清楚；源阴影已去除，单一黑色主形。"
+      }
+    },
+    {
+      "id": "J07",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "J07",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached R monogram reference as a refined identity study, not an official original. Isolate one final symbol from the lower row. Preserve the circular open upper loop, its inward diagonal cut and horizontal short segment, and the diagonal leg descending to lower right, with long baseline reaching left. The angular leg and curved loop make the abstract R; do not replace with a typeset R. Near-black monochrome. One centred symbol only with ample clean whitespace, optically balanced about 35 percent of canvas width on warm ivory. Landscape 3:2, flat precise vector-like matte ink forms and clean edges. Preserve concept and key shape relationships. No text, labels, captions, grids, panels, multiple variants, frame, mockup objects, gradient, shadow, bevel, shiny metal, watermark or decorative texture.",
+      "input_files": [
+        "references/J07.png"
+      ],
+      "output_file": "generated/J07.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "7339ddd4a7cc56e000f899bf572e0d78e6ef30f952830215a8183803b883db8b",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "圆环、内斜切口和右下斜腿保留，抽象 R 关系清楚；网格和四种色版归为单色展示。"
+      }
+    },
+    {
+      "id": "J08",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "J08",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached fysiosportief F monogram reference as a refined identity study, not an official original. Extract only the small orange abstract F/person symbol from the photographed card. Preserve the floating round head, two rounded rightward arms, and the slanted F stem producing forward motion. Muted burnt-orange symbol on warm ivory. No typography, no card, no grid. One centred symbol only with ample clean whitespace, optically balanced about 35 percent of canvas width on warm ivory. Landscape 3:2, flat precise vector-like matte ink forms and clean edges. Preserve concept and key shape relationships. No text, labels, captions, grids, panels, multiple variants, frame, mockup objects, gradient, shadow, bevel, shiny metal, watermark or decorative texture.",
+      "input_files": [
+        "references/J08.png"
+      ],
+      "output_file": "generated/J08.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "a81eca9ccfc3c422fdc1d310b139f8b1ba1de6667149ad46226917b716f38f63",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "圆点头部、斜 F 主干与双横臂完整；从名片场景提炼为一个橙色平面图形，未加字样。"
+      }
+    },
+    {
+      "id": "J09",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "J09",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached AP monogram reference as a refined identity study, not an official original. Preserve the reference's interlocking rounded A/P structure: tall left upright joining the rounded top, enclosed central small counter, curved crossing band to right, and short lower right upright enclosing a narrow slot. Near-black monochrome. Do not add diagonals or substitute generic AP lettering. One centred symbol only with ample clean whitespace, optically balanced about 35 percent of canvas width on warm ivory. Landscape 3:2, flat precise vector-like matte ink forms and clean edges. Preserve concept and key shape relationships. No text, labels, captions, grids, panels, multiple variants, frame, mockup objects, gradient, shadow, bevel, shiny metal, watermark or decorative texture.",
+      "input_files": [
+        "references/J09.png"
+      ],
+      "output_file": "generated/J09.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "2ccaba7a8f1136775e9ebed9a702c274e30882c6f2a08b02d8dc3721e1cdbe0b",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "AP 的上部圆弧交汇、中央小字腔和双竖槽保留，结构可辨；黑色平面展示。"
+      }
+    },
+    {
+      "id": "J10",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "J10",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached PR monogram reference as a refined identity study, not an official original. Preserve the thin rounded-line monogram: a compact two-turn loop at top with short inward terminal, flowing into a left vertical leg and diagonal right leg. Keep the light continuous-line character and wide lower opening. Near-black monochrome. One centred symbol only with ample clean whitespace, optically balanced about 35 percent of canvas width on warm ivory. Landscape 3:2, flat precise vector-like matte ink forms and clean edges. Preserve concept and key shape relationships. No text, labels, captions, grids, panels, multiple variants, frame, mockup objects, gradient, shadow, bevel, shiny metal, watermark or decorative texture.",
+      "input_files": [
+        "references/J10.png"
+      ],
+      "output_file": "generated/J10.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "aae00d1ff8035017771de89fdd42da7dcf816d24919fd13329f42d898730cf6d",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "上部双回环与下方竖腿、斜腿完整；细线性与圆端保留，暖白底留白充分。"
+      }
+    }
+  ]
+}

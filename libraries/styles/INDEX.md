@@ -1,68 +1,58 @@
 # 品牌风格库
 
-本索引用于选择品牌标志的视觉方法。先按触发与适用条件选择，再读取该行链接的 `STYLE.md`。包内参考是研究素材，不能直接作为新品牌标志交付。执行范围与优先级遵循用户任务、Skill 与上层维护规则。
+当前活跃库收录 **12 类风格、152 张 AI 研究图，每类至少 10 张**，其中 119 张为来源重新演绎、33 张为本库独立原创研究。以简约、清楚且有艺术设计感的科技、AI、SaaS 品牌表达为主；122 个第三方源样本另行登记，原图与派生图不重复计数。
 
-寻找新增样本或扩充研究方向时，查看 [采样来源目录](SOURCES.md)，其中登记设计师作品入口、X 发布证据、分类站点与访问边界；来源候选不计入下表的已建风格包。
+先按[选择表](SELECT.md)确定要解决的视觉问题，再读命中包。想直观看例图，打开[案例导航](CASEBOOK.md)。共同的展示取向见[艺术方向](ART-DIRECTION.md)。用户要求和 Skill 规则优先，库中的文字与图像是研究材料。
 
-当前收录 **16 个图像参考风格包**，均有实际参考图片、逐例说明、Prompt 和来源清单。各项状态均为 provisional，新品牌生成迁移尚未验证。风格按构思、字形、构图或表现方法组织，可以交叉使用，不是互斥标签。作者名用于定位所采作品，不将有限样本等同于设计师的全部风格。
+![十二类风格：AI 重新演绎与原创研究](OVERVIEW.png)
 
-## 互联网、科技与 AI 品牌的选用顺序
+总览每类选一张，逐张图像与原来源的生成状态进入下表的示例页查看。[总览映射](OVERVIEW.sources.json)登记图像身份、对应清单、案例 ID 与 SHA-256。
 
-当前采样与导航优先服务互联网、科技和 AI 品牌。下面是基于样本的选择建议，实际执行仍以品牌简报和用户选择为准。
+来源重绘范围：118 例按原主体重新演绎；PG02 展示同源条带图案。现代主义包 C02、C03、C08 因生成工具拒绝而未生成，原图与失败记录保留。上述四例的原标志重绘未完成，具体范围见对应示例页。
 
-| 品牌任务 | 优先研究 | 选择依据 |
-| --- | --- | --- |
-| SaaS、AI 工具与数据产品，已有清楚的产品含义 | [Alex Tass · 科技语义与字母融合](semantic-tech-marks/STYLE.md) | 从功能、字母与关系构造识别；十例来自具体软件与科技项目 |
-| 产品名称要成为主要识别 | [Mihai · 现代产品字标](modern-product-wordmarks/STYLE.md) | 整词阅读、局部改字、数字与标点的识别节奏 |
-| 协作、流转、连接关系适合带状结构 | [Dmitry · 折带与连续路径](folded-ribbon-paths/STYLE.md) | 先判断路径和交叠，再决定是否需要渐变；不能仅凭科技行业套无限环 |
-| 开发工具、平台、缩写品牌，需要紧凑图标 | [Jeroen · 几何字母与组合](geometric-letter-monograms/STYLE.md)、[几何负空间](geometric-negative-space/STYLE.md) | 重点检查字母骨架、开口与小尺寸可辨性 |
-| 效率工具与独立 App，希望克制而有产品感 | [黑白产品意象](monochrome-product-marks/STYLE.md)、[轻立体图形](soft-dimensional-symbols/STYLE.md) | 分别比较平面轮廓与轻体积表现；拟物效果用于简报明确需要的场景 |
-| 已有自有母版，需要发布视觉或官网主图 | [Martin · 虹彩金属浮雕](holographic-chrome-relief/STYLE.md) | 只借材质与光照；基础轮廓另行确定，界面小图标使用平面版本 |
-| 科技公司母品牌、基础设施与长期平台 | [CGH · 现代主义企业符号](modernist-corporate-symbols/STYLE.md) | 借鉴清晰符号与稳定组合的方法，具体品牌行业并非全部为科技 |
+## 活跃风格
 
-其余包按品牌性格选用：手写字标用于强调人味的名称表达，单线用于轮廓语义，精密拟物用于器物型产品意象，徽章与民艺用于相应文化叙事，插画角色用于有明确角色运营需求的产品。行业标签本身不足以决定采用哪种表现。
+| ID | 方法 | 适用场景 | 实际图数（其中原创） | 入口 |
+| --- | --- | --- | ---: | --- |
+| editorial-typographic-systems | 编辑式字体与概念手绘 | 阅读、知识、研究与 AI 概念表达 | 10（6） | [STYLE](editorial-typographic-systems/STYLE.md) · [示例](editorial-typographic-systems/EXAMPLES.md) · [手绘专题](editorial-typographic-systems/HAND-DRAWN.md) |
+| modern-product-wordmarks | 现代产品字标 | 完整名称承担识别，字距与局部改字形成性格 | 10 | [STYLE](modern-product-wordmarks/STYLE.md) · [示例](modern-product-wordmarks/EXAMPLES.md) |
+| geometric-negative-space | 几何负空间 | 空白与实体共同表达一个明确关系 | 10 | [STYLE](geometric-negative-space/STYLE.md) · [示例](geometric-negative-space/EXAMPLES.md) |
+| geometric-letter-monograms | 几何字母与组合 | 开发工具、缩写品牌、紧凑图标 | 10 | [STYLE](geometric-letter-monograms/STYLE.md) · [示例](geometric-letter-monograms/EXAMPLES.md) |
+| semantic-tech-marks | 科技语义与字母融合 | 产品动作、名称与功能关系形成标志 | 10 | [STYLE](semantic-tech-marks/STYLE.md) · [示例](semantic-tech-marks/EXAMPLES.md) |
+| modernist-corporate-symbols | 现代主义企业符号 | 长期平台、企业与基础设施的稳定识别 | 10（3） | [STYLE](modernist-corporate-symbols/STYLE.md) · [示例](modernist-corporate-symbols/EXAMPLES.md) |
+| monoline-contour-marks | 单线与轮廓图形 | 以少量线条表达对象、动作或共享边界 | 10 | [STYLE](monoline-contour-marks/STYLE.md) · [示例](monoline-contour-marks/EXAMPLES.md) |
+| monochrome-product-marks | 黑白产品意象 | 器物、功能隐喻、字形和抽象构成 | 42 | [STYLE](monochrome-product-marks/STYLE.md) · [示例](monochrome-product-marks/EXAMPLES.md) |
+| modular-responsive-identities | 可组合与可变识别 | 多产品平台与协作工作空间的家族变化 | 10（8） | [STYLE](modular-responsive-identities/STYLE.md) · [示例](modular-responsive-identities/EXAMPLES.md) |
+| parametric-science-visuals | 参数化科学图形 | 曲面与连续边界的克制雕塑感 | 10（8） | [STYLE](parametric-science-visuals/STYLE.md) · [示例](parametric-science-visuals/EXAMPLES.md) |
+| pixel-grid-identities | 像素网格与离散图形 | 离散单元、阶梯和条带构成数字识别 | 10（8） | [STYLE](pixel-grid-identities/STYLE.md) · [示例](pixel-grid-identities/EXAMPLES.md) |
+| folded-ribbon-paths | 折带与连续路径 | 用平面折返、穿插与转向表达连接 | 10 | [STYLE](folded-ribbon-paths/STYLE.md) · [示例](folded-ribbon-paths/EXAMPLES.md) |
 
-## 图像参考包浏览
+风格描述可迁移的方法，允许按变量组合，不是互斥标签。作者与工作室署名在来源档案中逐例记录，不能把本库 AI 例图归给原作者。各包状态均为 `provisional`：单张研究图与目检不等于正式品牌迁移通过。原创样例的名称和任务为本库构思，不代表真实品牌已采用。
 
-![十六种风格浏览总览](OVERVIEW.png)
+## 资源与记录
 
-每格只展示一例，完整样本见下表入口；拟物格使用已有的 AI 清晰化参考并在图内标注。[总览来源映射](OVERVIEW.sources.json)记录对应风格、案例与展示文件。
+| 文件 | 内容 |
+| --- | --- |
+| STYLE.md | 适用条件、方法、参数、工作方式与验证边界 |
+| EXAMPLES.md | AI 重新演绎与独立原创研究分区展示，保留源样本阻碍与变化说明 |
+| generated.json | 来源重新演绎的完整实际 Prompt、工具、输入角色、输出哈希与逐例目检 |
+| originals.json（有原创时） | 本库原创构思的简报、方法、实际 Prompt、独立输出与逐例目检 |
+| REFERENCES.md | 第三方原图、原作观察、来源事实与未知项 |
+| sources.json | 原采集、格式预览、细节裁切、清晰化与源样本的真实来源链 |
+| PROMPTS.md | 新任务可用模板；已执行 Prompt 分别以 generated.json 与 originals.json 为准 |
 
-| ID | 名称 | 适用与触发 | 构思分支 | 状态 | 入口 |
-| --- | --- | --- | --- | --- | --- |
-| semantic-tech-marks | Alex Tass · 科技语义与字母融合 | 互联网、科技、AI 产品，需要把品牌字母与产品功能、连接、流转或模块关系结合 | 10 个具名项目；AI 翻译、票务、数据分析、会议、笔记、建站与应用开发；采用状态逐例标注 | provisional；参考与来源已核对，生成迁移未验证 | [STYLE.md](semantic-tech-marks/STYLE.md) · [案例](semantic-tech-marks/EXAMPLES.md) |
-| modern-product-wordmarks | Mihai Dolganiuc · 现代产品字标 | 产品名称为主要识别，需要局部改字、数字组合与清楚的整词节奏 | 10 个名称；AI 助手、SaaS、媒体、工程与金融等，行业未知项单列 | provisional；参考提取，生成迁移未验证 | [STYLE.md](modern-product-wordmarks/STYLE.md) · [案例](modern-product-wordmarks/EXAMPLES.md) |
-| folded-ribbon-paths | Dmitry Lepisov · 折带与连续路径 | 以转向、穿插、环路与带状关系表达连接和流转 | 10 个具名标志；九个未采用方案与一个云平台研究 | provisional；参考提取，生成迁移未验证 | [STYLE.md](folded-ribbon-paths/STYLE.md) · [案例](folded-ribbon-paths/EXAMPLES.md) |
-| geometric-letter-monograms | Jeroen van Eerden · 几何字母与组合 | 用平行线、共笔、盘绕和开口组织单字母或缩写 | 10 个条目；DF / S / D / Unii / T / U / R / F / AP / PR；色版不重复计数 | provisional；参考提取，生成迁移未验证 | [STYLE.md](geometric-letter-monograms/STYLE.md) · [案例](geometric-letter-monograms/EXAMPLES.md) |
-| geometric-negative-space | 几何负空间 | 以孔隙、侧边切口和共用边界表达字母、对象或空间关系 | 10 个品牌；包含四向空白、三角切口、阶梯字母与框内竖槽 | provisional；来源与参考图已核对 | [STYLE.md](geometric-negative-space/STYLE.md) · [案例](geometric-negative-space/EXAMPLES.md) |
-| monochrome-product-marks | 黑白产品意象 | 用户给出的参考偏黑白、单一识别主体、克制材质；需要研究 App 品牌标志、字母标或产品语义图形 | 灰阶立体单体 12 / 功能与界面隐喻 10 / 字母与排版 10 / 抽象几何 10；共 42 个独立产品 | provisional；已核对来源与目检，生成迁移尚未验证 | [STYLE.md](monochrome-product-marks/STYLE.md) · [案例](monochrome-product-marks/EXAMPLES.md) |
-| soft-dimensional-symbols | 轻立体图形 | 简洁字母、几何符号或圆润角色，以渐变、叠层与局部体积表现；适合研究轻盈或亲和的产品识别 | 几何/字母与角色两条构思路线；14 组具名项目，按项目去重 | provisional；描述性风格归纳，生成迁移未验证 | [STYLE.md](soft-dimensional-symbols/STYLE.md) · [案例](soft-dimensional-symbols/EXAMPLES.md) |
-| holographic-chrome-relief | Martin Naumann · 虹彩金属浮雕 | 已有确定轮廓，为官网主图、发布视觉等研究金属反射与彩色倒角 | 10 个既有品牌主体的个人材质再演绎；属于表现层 | provisional；参考提取，生成迁移未验证 | [STYLE.md](holographic-chrome-relief/STYLE.md) · [案例](holographic-chrome-relief/EXAMPLES.md) |
-| modernist-corporate-symbols | CGH · 现代主义企业符号 | 企业、机构、媒体需要清晰独立图形及稳定图文组合 | 10 个具名品牌；抽象与具象、单色与多色；工作室集体归属 | provisional；参考提取，生成迁移未验证 | [STYLE.md](modernist-corporate-symbols/STYLE.md) · [案例](modernist-corporate-symbols/EXAMPLES.md) |
-| handwritten-script-wordmarks | 手写与连笔字标 | 名称承担主要识别，需要手写笔势、流动连接或不规则字形节奏 | 10 个品牌；粗重连笔、细线笔势、高低与环圈变化；原字体未知 | provisional；来源与参考图已核对 | [STYLE.md](handwritten-script-wordmarks/STYLE.md) · [案例](handwritten-script-wordmarks/EXAMPLES.md) |
-| monoline-contour-marks | 单线与轮廓图形 | 以近等粗线条、共用边界和少量实心强调表达人物、植物或动物 | 10 个具名标志；Mila Katagarova 作者合集；不是单根路径要求 | provisional；来源与参考图已核对 | [STYLE.md](monoline-contour-marks/STYLE.md) · [案例](monoline-contour-marks/EXAMPLES.md) |
-| retro-skeuomorphic-marks | 复古精密拟物 | 参考强调实体器物、材料分区、按键、屏幕、镜片与机械结构 | 12 个不同主体，包含品牌拟物化练习与过程版本 | provisional；参考已目检，生成迁移未验证 | [STYLE.md](retro-skeuomorphic-marks/STYLE.md) · [案例](retro-skeuomorphic-marks/EXAMPLES.md) |
-| retro-badge-emblems | 复古徽章 | 以圆章、盾形或矩形标签组织中心图形、主字和辅助信息 | 10 个不同项目；Aaron Draplin 官方作品；平面徽章构图 | provisional；来源与参考图已核对 | [STYLE.md](retro-badge-emblems/STYLE.md) · [案例](retro-badge-emblems/EXAMPLES.md) |
-| ornamental-folk-symbols | Stefan Kanchev · 装饰与民艺符号 | 文化、工艺与出版品牌需要对称、重复、卷曲或刺绣式图形 | 10 个历史档案标志；花鸟、面孔、人物与图形结；归属沿用档案 | provisional；参考提取，生成迁移未验证 | [STYLE.md](ornamental-folk-symbols/STYLE.md) · [案例](ornamental-folk-symbols/EXAMPLES.md) |
-| illustrative-brand-mascots | Von Glitschka · 插画品牌角色 | 以表情、姿态、道具和有限色面建立可用于包装与周边的角色 | 10 个项目；角色改造、品牌探索与主动提案分别标注 | provisional；参考提取，生成迁移未验证 | [STYLE.md](illustrative-brand-mascots/STYLE.md) · [案例](illustrative-brand-mascots/EXAMPLES.md) |
-| capsule-eye-bot-avatars | 黑色胶囊眼极简 Bot 头像 | 已有人物／角色转换，AI 助手或品牌头像；Grok bot icon、Grokbot、胶囊眼、歪头近景 | 网站短提示词 5 张、完整提示词 5 张；共 10 张输出，输入角色身份未知；逐例标注与规范的差异 | provisional；网站来源与参考图已核对，本库转换未实测 | [STYLE.md](capsule-eye-bot-avatars/STYLE.md) · [案例](capsule-eye-bot-avatars/EXAMPLES.md) |
+寻找研究素材时查看[采样来源目录](SOURCES.md)。候选来源不计作已建风格或已完成验证。
 
-## 条目字段约定
+## 来源与生成数据
 
-每个包记录稳定 ID、中文名称、版本、状态、范围、来源角色、实际查看样本、观察与推导、适用/不适用条件、可调参数、字体角色、Prompt 入口、限制及验证范围。使用工具参数必须有当前可核验依据；没有依据时只提供通用自然语言提示。
+`sources.json` 使用 schema v1，原字段语义保持稳定。每个 `assets` 条目记录 URL、真实格式、尺寸、SHA-256 与派生关系；`samples` 以包内声明的项目、产品或主体为单位，不以图片文件数计数。原图展示链是 `display_file` → `detail_file` → 关联 `preview_file`。原图不足时先取高清版本；确需 AI 清晰化时另存并使用 `enhancement.kind: ai_clarity_enhancement`，不覆盖原图。
 
-`provisional` 表示基于样本的提取或基于来源文本的整理，未证明跨品牌可复现；`validated` 必须附实际新任务的输入、结果与评审范围。原参考样张、Agent 新生成样张和测试记录必须可区分；不能因为原参考好看就将包标为 validated。
+`generated.json` 独立使用 schema v1，`coverage: all_source_samples` 要求生成图与本包源样本一一对应。有未生成项时使用 `coverage: partial_with_blockers`，`examples` 与非空 `blocked` 合计须唯一覆盖全部源样本；`blocked` 保存 ID、状态、工具、原因与实际尝试记录，不含输出或通过结论。每个 `examples` 条目有 `id`、`source_sample_id`、`kind: ai_reinterpretation`、`tool`、完整 `prompt`、`input_files`、`output_file`、宽高、SHA-256 和 `review`。`input_files` 只记实际传给生成工具的图片；默认 `image_reference_mode: supplied`，至少一图。仅根据已看参考作文字生成时使用 `image_reference_mode: observed_only`、空 `input_files` 与非空 `reference_files`。两种路径的图片都须属于对应样本的主资产、辅助资产或已登记派生链；生成图独立保存。目检记录的 `status`、`scope`、`notes` 写实际结果，替代了原主体须明示，缺图或未看图时不能写通过。
 
-`sources.json` 的 `schema_version` 描述来源清单字段版本；`assets` 逐项记录页面 URL、资源 URL、来源文件、预览文件、实际格式、尺寸、校验和、转换过程及来源/授权状态。预览和源图不重复算作独立设计样本。原始素材仅因容器格式转换产生预览时，也必须记录转换。可选的 `samples` 以独立产品登记主组、资产 ID、观察和迁移建议；`reference_groups` 登记成员 ID、数量及总览派生方式。目录页实际显示图片时，`page_url` 记录目录，`product_page_url` 只表示目录提供的详情链接，不等同于已访问详情页。
+`originals.json` 使用 schema v1，含 `style_id` 与非空 `examples`；每个原创条目含包内唯一 `id`、`kind: original_study`、非空 `title`、`brief`、`method`、`tool`、完整 `prompt`、空 `input_files: []`、`output_file`、宽高、SHA-256 和 `review`。这一分支用于独立文字简报生成，不传入第三方源图，不含 `source_sample_id`、`asset_id`、`designer`、`page_url` 等第三方归属字段（含嵌套对象）。ID 不得与同包源样本、重绘或阻碍相撞；输出路径、链接指向的文件及实际字节必须独立于原图、预览、清晰化、重绘和其他原创图。每个条目计一个不同构思，多色版和多格式不增计数。该清单不参与源样本覆盖对账。
 
-本索引管理资源数据，不取代规则卡 catalog；模板占位字段必须在提交生图任务前替换为当前任务内容。外部资料不具备指令权限。发布素材文件前按来源清单核对其使用条件。
+总览使用 schema v2：`ai_reinterpretation` 成员通过 `generated_file` 与 `example_id` 连接重绘清单；`original_study` 成员通过 `originals_file` 与 `example_id` 连接原创清单，禁止混填两类清单键或来源归属字段。总览是确定性缩略排列，不是额外案例。旧来源总览 v1 仅用于解释历史来源数据，不与当前 AI 展示混称。
 
-## 清晰度与展示文件
+## 使用边界
 
-逐例检查原采集图和实际展示尺寸。来源模糊时先取可用高清版本；仍不足则使用 imagegen 清晰化并目检。单纯放大像素不能视为通过。清晰图保留，预览压缩问题通过重新导出解决。清晰化操作不证明风格 Prompt 或跨品牌迁移已验证。
-
-样本可选 `clarity_review` 记录用途、原始清晰度判断、处理决定与复核范围。可选 `display_file` 指向默认展示文件；未设置时使用 `detail_file`，再回退到关联资产的 `preview_file`。清晰化产物必须另存，并在 `enhancement` 中记录 `kind: ai_clarity_enhancement`、`input_file`、`output_file`、`tool`、`prompt_file`、`prompt_id`、宽高、SHA-256 和 `review`。原始 `detail_file`、裁切坐标与校验和继续指向真实采集内容，禁止改成 AI 图。
-
-`EXAMPLES.md` 显式标注 AI 清晰化，并提供原采集图入口。总览记录它实际采用的展示文件。AI 补绘的微细结构不能成为原设计事实；来源、原采集图与清晰化图按同一案例计数。
-
-截图采集的来源条目标记 `source_kind: browser_capture`，并用 `original_role` 说明 `original_file` 是完整浏览器截图，禁止冒称远程作品原文件。`width` / `height` 对应该采集文件；裁切预览另外记录 `preview_width` / `preview_height` 和 `crop`，没有这两个尺寸字段时预览尺寸与来源文件一致。样本细节裁切记录对应图板 ID、区域、尺寸与校验和。参考数量按包内声明的产品、项目或主体计数，不将这些不同单位相加成“独立品牌总数”。
+逐张查看入选图在任务尺度下的主体、文字、开口与线条。AI 重新演绎允许产生已记录的视觉变化，不能证明原作的字体、精确几何、官方配色或采用状态。重绘不构成新品牌独创性证明，也不赋予第三方标志使用权。独立原创研究说明本库的构思与生成来源，不代表商标检索、真实采用或法律上的独创性认定。正式交付仍从自有可编辑母版生成，并验证约定的应用范围。

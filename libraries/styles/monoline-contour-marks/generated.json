@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "style_id": "monoline-contour-marks",
+  "coverage": "all_source_samples",
+  "examples": [
+    {
+      "id": "L01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "L01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Hearty Heritage reference as a refined minimal line-art identity study, not an official original. Focus on the circular emblem only. Preserve the paired animal side profiles inside the circle, a rounded dog profile at upper-left, a cat-like profile sweeping right, and the heart outline in lower-left sharing the contour. Simplify to essential clear lines, no added fur. Preserve the two small dark facial details. One centred emblem only, clean open composition and ample whitespace. Near-black fine matte ink lines on warm ivory, landscape 3:2. Preserve the source's essential concept and key line relationships while refining drawing and removing presentation clutter. Light monoline character, not thick filled pictogram. No text, captions, labels, wordmarks, duplicate variants, grids, mockup objects, canvas frame, shading, gradients, glow, metallic material, shadow or decorative texture.",
+      "input_files": [
+        "references/L01.png"
+      ],
+      "output_file": "generated/L01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "17bfe4d85d8ad9b83b2f88407ac46535d82f7df3e9c5f02754052094e50633ec",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "狗、另一动物侧面、心形与双圆框完整，线条简洁且相互共边；剥离字标后识别构思仍清楚。"
+      }
+    },
+    {
+      "id": "L02",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "L02",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Nuteese reference as a refined minimal line-art identity study, not an official original. Focus on the circular face-and-leaf emblem only. Preserve the fine double circular boundary, minimal forward-facing eyes/nose/lips on the left, three clean vertical bands at upper right and one leaf with diagonal vein divisions at lower right. Keep a calm illustrative line quality. One centred emblem only, clean open composition and ample whitespace. Near-black fine matte ink lines on warm ivory, landscape 3:2. Preserve the source's essential concept and key line relationships while refining drawing and removing presentation clutter. Light monoline character, not thick filled pictogram. No text, captions, labels, wordmarks, duplicate variants, grids, mockup objects, canvas frame, shading, gradients, glow, metallic material, shadow or decorative texture.",
+      "input_files": [
+        "references/L02.png"
+      ],
+      "output_file": "generated/L02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "43bae041681bd457ab51b56fb6dd292c088cdf71749afb5106bcc9e250222e17",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "人脸、三根竖线、右下叶与双圆框保持，五官完整，线宽清楚无冗余文字。"
+      }
+    },
+    {
+      "id": "L03",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "L03",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Karma reference as a refined minimal line-art identity study, not an official original. Focus on the four-leaf geometric emblem only. Preserve four pointed leaf outlines radiating diagonally around the clear central cross, each with one main diagonal vein and a few perpendicular branch veins. Balance the internal rhythm and generous central negative space. One centred emblem only, clean open composition and ample whitespace. Near-black fine matte ink lines on warm ivory, landscape 3:2. Preserve the source's essential concept and key line relationships while refining drawing and removing presentation clutter. Light monoline character, not thick filled pictogram. No text, captions, labels, wordmarks, duplicate variants, grids, mockup objects, canvas frame, shading, gradients, glow, metallic material, shadow or decorative texture.",
+      "input_files": [
+        "references/L03.png"
+      ],
+      "output_file": "generated/L03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "cc466bf2acf3fa1fd4f46ef56afdd82cd68bb7125777e64bd5dbc61b70af9c42",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "四片叶与中心十字白隙清楚，内叶脉数量克制，几何线条平衡。"
+      }
+    },
+    {
+      "id": "L04",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "L04",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Native Joy Superfoods reference as a refined minimal line-art identity study, not an official original. Focus on the plant-and-land emblem only. Preserve a tall central stem with three leaves, circular outside arcs interrupted at the upper tips, a simple curved field boundary at lower left and three nested field arcs at lower right. Airy, precise monoline construction. One centred emblem only, clean open composition and ample whitespace. Near-black fine matte ink lines on warm ivory, landscape 3:2. Preserve the source's essential concept and key line relationships while refining drawing and removing presentation clutter. Light monoline character, not thick filled pictogram. No text, captions, labels, wordmarks, duplicate variants, grids, mockup objects, canvas frame, shading, gradients, glow, metallic material, shadow or decorative texture.",
+      "input_files": [
+        "references/L04.png"
+      ],
+      "output_file": "generated/L04.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "36d8265ba83dedeaadfd161a36c221244c60c6dabaf7af5decbd97a30c2ef8d0",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "三叶植物、上方开口圆弧和下方曲面田垄保留，开口与线距清楚，单线气质保持。"
+      }
+    },
+    {
+      "id": "L05",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "L05",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Artemis Fragrances reference as a refined minimal line-art identity study, not an official original. Focus on the sun-and-moon emblem only. Preserve the facing profiles within a loose circular outline: slender crescent moon profile on left, wider sun face on right, a controlled fan of tapering rays between. Reduce facial detail to nose, one eye and mouth, with fewer clear rays and light confident strokes. Keep the celestial concept and asymmetrical human drawing quality. One centred emblem only, clean open composition and ample whitespace. Near-black fine matte ink lines on warm ivory, landscape 3:2. Preserve the source's essential concept and key line relationships while refining drawing and removing presentation clutter. Light monoline character, not thick filled pictogram. No text, captions, labels, wordmarks, duplicate variants, grids, mockup objects, canvas frame, shading, gradients, glow, metallic material, shadow or decorative texture.",
+      "input_files": [
+        "references/L05.png"
+      ],
+      "output_file": "generated/L05.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "52b9f52a7cc546b46496c33ecc51f9bf5c2f74d33298c0af0140986cb6676d20",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "日月相对侧面及交错射线完整；面部和线条密度已收敛，保留自然非对称感，无额外文字。"
+      }
+    },
+    {
+      "id": "L06",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "L06",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Takatu Road Olives reference as a refined minimal line-art identity study, not an official original. Focus on the olive emblem only. Preserve one hanging oval olive on a short stem, a single pointed upper-left leaf and a curved twig loop across the open top of the circular enclosure. Fluid confident fine linework, uncluttered. One centred emblem only, clean open composition and ample whitespace. Near-black fine matte ink lines on warm ivory, landscape 3:2. Preserve the source's essential concept and key line relationships while refining drawing and removing presentation clutter. Light monoline character, not thick filled pictogram. No text, captions, labels, wordmarks, duplicate variants, grids, mockup objects, canvas frame, shading, gradients, glow, metallic material, shadow or decorative texture.",
+      "input_files": [
+        "references/L06.png"
+      ],
+      "output_file": "generated/L06.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "28d6e742a0d6af4056e043fccbe11330227032d4d66bf759420fc0854b3bf8ef",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "一枚橄榄、叶和开口圆弧完整，流动线条与上方留口可辨；暖白底单主体。"
+      }
+    },
+    {
+      "id": "L07",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "L07",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Best Goat Milk reference as a refined minimal line-art identity study, not an official original. Focus on the goat emblem only. Preserve the front-facing goat head with two curved horns and broad lateral ears emerging beyond a simple circular boundary. Keep just two small cloud curves and a minimal hill behind its lower face. Simplify the collar and surrounding landscape. No text ring. One centred emblem only, clean open composition and ample whitespace. Near-black fine matte ink lines on warm ivory, landscape 3:2. Preserve the source's essential concept and key line relationships while refining drawing and removing presentation clutter. Light monoline character, not thick filled pictogram. No text, captions, labels, wordmarks, duplicate variants, grids, mockup objects, canvas frame, shading, gradients, glow, metallic material, shadow or decorative texture.",
+      "input_files": [
+        "references/L07.png"
+      ],
+      "output_file": "generated/L07.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "a829aab543b8b594b24f9d6dfec4db206075a4fc634be4c4591c76ded1a13e74",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "正面山羊、双角、宽耳、两朵云和圆框完整；田野与领圈收敛，取消环排文字，构思保持。"
+      }
+    },
+    {
+      "id": "L08",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "L08",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Shire City Herbals reference as a refined minimal line-art identity study, not an official original. Focus on the hand-and-sprout emblem only. Preserve the cupped open hand entering from lower right and holding one vertical stem with two side leaves and the long flame-like upper leaf extending above a simple circular boundary. Use clear minimal hand contours and smooth thin ink lines. One centred emblem only, clean open composition and ample whitespace. Near-black fine matte ink lines on warm ivory, landscape 3:2. Preserve the source's essential concept and key line relationships while refining drawing and removing presentation clutter. Light monoline character, not thick filled pictogram. No text, captions, labels, wordmarks, duplicate variants, grids, mockup objects, canvas frame, shading, gradients, glow, metallic material, shadow or decorative texture.",
+      "input_files": [
+        "references/L08.png"
+      ],
+      "output_file": "generated/L08.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "7d907d5047cc8d9200d6893d29991cdc94ab9ed368c12f6a7413e90189cdb705",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "托举手、直立植物与超出圆框的长叶完整，手指与叶片分界可读；以轻线条保留生长主题。"
+      }
+    },
+    {
+      "id": "L09",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "L09",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Super Seeds reference as a refined minimal line-art identity study, not an official original. Focus on the radial leaf rosette only. Preserve eight long pointed outlined leaves arranged in a radial ring, with a small eight-seed star at the centre. Reduce the extra tiny peripheral seeds to one quiet seed per gap; preserve the balanced organic geometry, outline vs filled seed contrast. One centred emblem only, clean open composition and ample whitespace. Near-black fine matte ink lines on warm ivory, landscape 3:2. Preserve the source's essential concept and key line relationships while refining drawing and removing presentation clutter. Light monoline character, not thick filled pictogram. No text, captions, labels, wordmarks, duplicate variants, grids, mockup objects, canvas frame, shading, gradients, glow, metallic material, shadow or decorative texture.",
+      "input_files": [
+        "references/L09.png"
+      ],
+      "output_file": "generated/L09.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "6efb650f5bac73928c3fa07747b32406b1c3615a4b01453d0c1770017fb5a2f8",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "八叶放射、中心八种子和线/面对比保持，外围小种子从密集装饰缩为每隙一枚，白隙充足。"
+      }
+    },
+    {
+      "id": "L10",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "L10",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one AI reinterpretation of the attached Damascene Essential Oils reference as a refined minimal line-art identity study, not an official original. Focus on the floral water-drop emblem only. Preserve a central teardrop encircled by six softly overlapping rounded petal loops, the interlaced line rhythm and rounded compact outline. No surrounding text, no added drops or ornament. One centred emblem only, clean open composition and ample whitespace. Near-black fine matte ink lines on warm ivory, landscape 3:2. Preserve the source's essential concept and key line relationships while refining drawing and removing presentation clutter. Light monoline character, not thick filled pictogram. No text, captions, labels, wordmarks, duplicate variants, grids, mockup objects, canvas frame, shading, gradients, glow, metallic material, shadow or decorative texture.",
+      "input_files": [
+        "references/L10.png"
+      ],
+      "output_file": "generated/L10.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "3cd51345f295002b807030901721597459872a760b13296678fe4559cdd11ed2",
+      "review": {
+        "status": "pass",
+        "scope": "逐图查看源输入和内置工具返回的完整生成图；核对主体、核心结构、拼写、留白和展示质感。",
+        "notes": "中央水滴与环绕花瓣线保持；环排文案和下方字标去除，主体成为单个清楚的紧凑轮廓。"
+      }
+    }
+  ]
+}

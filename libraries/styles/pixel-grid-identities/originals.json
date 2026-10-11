@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "style_id": "pixel-grid-identities",
+  "examples": [
+    {
+      "id": "PG-O01",
+      "kind": "original_study",
+      "title": "续桥 · 断点恢复",
+      "brief": "虚构工作流 SaaS「续桥」需要表达任务中断后仍可从准确断点接续。",
+      "method": "用两段相向的离散阶梯和连接缺口的一枚强调方块，把断点恢复转译成像素桥。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a completely original visual study of a fictional digital product concept. Design a singular abstract pixel bridge for a fictional workflow recovery tool. Two low, heavy stair-stepped ink forms extend inward from left and right, with a short narrow square gap between their inner upper edges; one muted terracotta square occupies the gap as a visible final linking module. Keep the two outer bases broad and the inner stepped climb gentle, with a quiet horizontal silhouette. The concept is reconnection of interrupted progress, not an arrow, an M, an animal or a letter. Limit the construction to roughly sixteen large square units, merged where touching. The bridge must feel coherent and stable, not a game scene. Visual direction: quiet artistic modernism, landscape 3:2 canvas, warm ivory background, generous breathing room and exactly one clear graphic protagonist centred optically, occupying about the middle 40 percent of the width. Large deliberate discrete square units, crisp straight edges, near-black matte flat ink with at most the one restrained accent described. Sophisticated proportions and clean negative space. No text or letters, no captions, no grid lines, no illustration scene, no mockup, no 3D, no bevel, no gloss, no shadows, no gradient, no decorative texture, no watermark. Invent the geometry from this brief; do not imitate an existing company logo.",
+      "input_files": [],
+      "output_file": "generated/PG-O01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "310ac52070dc094cbf342c32c755b8247a7f1c1f8b53da8da47ae4e9b3c417d7",
+      "review": {
+        "status": "pass",
+        "scope": "生成后用 view_image 实际查看完整单图；核对概念轮廓、留白、方块/阶梯关系、配色和无额外文字。未验证矢量母版、小尺寸导出或商标独创性。",
+        "notes": "相向阶梯与中央陶土色连接块形成完整桥形；底部白色拱口可辨，暖白留白充分，构思与来源字母标志不同。"
+      }
+    },
+    {
+      "id": "PG-O02",
+      "kind": "original_study",
+      "title": "页栈 · 检索归位",
+      "brief": "虚构知识检索工具「页栈」需要让被检索的证据在有序资料库中有明确归属。",
+      "method": "用三条同宽的网格书脊和上移的一枚方块，形成资料归档与单项定位的关系。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a completely original visual study of a fictional digital product concept. Design an original compact archive-search symbol built from grid-aligned solid rectangles. Three substantial near-black horizontal shelves are vertically stacked, with quiet equal gaps and subtly stepped left ends; a single small muted blue-gray square rises above the right end of the middle shelf as the found item. The shelves should read as one integrated archival form, not a histogram or server rack. No enclosing box, no outer grid. Keep the geometry flat, square-cornered and very restrained, about ten large units across. The idea is one located evidence item within ordered knowledge. Visual direction: quiet artistic modernism, landscape 3:2 canvas, warm ivory background, generous breathing room and exactly one clear graphic protagonist centred optically, occupying about the middle 40 percent of the width. Large deliberate discrete square units, crisp straight edges, near-black matte flat ink with at most the one restrained accent described. Sophisticated proportions and clean negative space. No text or letters, no captions, no grid lines, no illustration scene, no mockup, no 3D, no bevel, no gloss, no shadows, no gradient, no decorative texture, no watermark. Invent the geometry from this brief; do not imitate an existing company logo.",
+      "input_files": [],
+      "output_file": "generated/PG-O02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "f68fccf87c6a0b3c253bc8be2f8d7f2418114adac682ab6a2311bd8904a15c7e",
+      "review": {
+        "status": "pass",
+        "scope": "生成后用 view_image 实际查看完整单图；核对概念轮廓、留白、方块/阶梯关系、配色和无额外文字。未验证矢量母版、小尺寸导出或商标独创性。",
+        "notes": "三层同向资料脊线与蓝灰单块清楚，层距安静且单项位置突出；纯平面无文本或重复变体。"
+      }
+    },
+    {
+      "id": "PG-O03",
+      "kind": "original_study",
+      "title": "隐窗 · 有界共享",
+      "brief": "虚构数据共享工具「隐窗」需要只向协作者开放被许可的信息范围。",
+      "method": "用厚重像素边界包住偏置矩形留白，并在一角打开阶梯缺口，表达有界开放。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a completely original visual study of a fictional digital product concept. Design an original privacy-window mark using one solid near-black blocky square form with an offset ivory rectangular opening inside. Carve a deliberate two-step opening through the upper-right boundary, connecting the inner window to outside space. All edges follow the same generous square grid, with three or four steps at most. Use asymmetry and negative space to convey a precisely limited opening. One compact flat symbol only; no padlock, eye, letter, face, shield or real brand emblem. Entirely monochrome. Visual direction: quiet artistic modernism, landscape 3:2 canvas, warm ivory background, generous breathing room and exactly one clear graphic protagonist centred optically, occupying about the middle 40 percent of the width. Large deliberate discrete square units, crisp straight edges, near-black matte flat ink with at most the one restrained accent described. Sophisticated proportions and clean negative space. No text or letters, no captions, no grid lines, no illustration scene, no mockup, no 3D, no bevel, no gloss, no shadows, no gradient, no decorative texture, no watermark. Invent the geometry from this brief; do not imitate an existing company logo.",
+      "input_files": [],
+      "output_file": "generated/PG-O03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "aea1834993cb3cfb6622274254746a71ca21249f15d7744bdf4d6ded8e12174c",
+      "review": {
+        "status": "pass",
+        "scope": "生成后用 view_image 实际查看完整单图；核对概念轮廓、留白、方块/阶梯关系、配色和无额外文字。未验证矢量母版、小尺寸导出或商标独创性。",
+        "notes": "偏置矩形白窗通过右上阶梯开口连接外部，厚重外边与有限开口形成明确正负形关系；单色主体清楚。"
+      }
+    },
+    {
+      "id": "PG-O04",
+      "kind": "original_study",
+      "title": "声格 · 有用信号",
+      "brief": "虚构语音整理 AI「声格」需要从连续录音中识别并保留一段有价值的语音。",
+      "method": "以一条整合的阶梯波形配合一枚分离采样方块，表达连续语音的离散筛选。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a completely original visual study of a fictional digital product concept. Design an original pixel-audio symbol: a single cohesive horizontal stepped waveform made from near-black square columns, low at both ends with one clear tall off-centre peak and two quieter shoulders. The columns touch into one continuous lower baseline; the upper profile is a rhythmic staircase, never rounded. Place one small muted ochre square just above the right shoulder, separated by exactly one unit of whitespace, as a selected sample. About nine columns, each a whole-number unit high. No spectrum gradient, equalizer UI, axes, labels, screen or bars floating independently. Visual direction: quiet artistic modernism, landscape 3:2 canvas, warm ivory background, generous breathing room and exactly one clear graphic protagonist centred optically, occupying about the middle 40 percent of the width. Large deliberate discrete square units, crisp straight edges, near-black matte flat ink with at most the one restrained accent described. Sophisticated proportions and clean negative space. No text or letters, no captions, no grid lines, no illustration scene, no mockup, no 3D, no bevel, no gloss, no shadows, no gradient, no decorative texture, no watermark. Invent the geometry from this brief; do not imitate an existing company logo.",
+      "input_files": [],
+      "output_file": "generated/PG-O04.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "fb7e2a97e6061a10848985e9f073fe7df973048517d40b9c2bebc685f202e2a2",
+      "review": {
+        "status": "pass",
+        "scope": "生成后用 view_image 实际查看完整单图；核对概念轮廓、留白、方块/阶梯关系、配色和无额外文字。未验证矢量母版、小尺寸导出或商标独创性。",
+        "notes": "阶梯波形包含单一主峰和右侧独立采样方块，底线连贯；无坐标或数据标注，仅作概念图形研究。"
+      }
+    },
+    {
+      "id": "PG-O05",
+      "kind": "original_study",
+      "title": "合渠 · 数据合流",
+      "brief": "虚构数据管道服务「合渠」需要把两路重复来源合并成一条可信输出。",
+      "method": "用两条平行起步、逐阶靠拢的直角路径汇成单一出口，区分输入并强调去重后的合流。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a completely original visual study of a fictional digital product concept. Design an original data-confluence symbol made from two bold horizontal pixel paths entering from the left at different heights. The upper path uses near-black, the lower uses muted blue-gray; each advances in two right-angle steps toward a shared middle level, then they merge cleanly into one substantial near-black horizontal output bar to the right. Keep the paths separate before their single meeting point, with generous white space between. No intersections, no arrowheads, no circuit-board branches, no rotational symmetry, no enclosing frame. The whole silhouette is low and horizontally extended, about eleven large square units wide. One coherent convergence gesture, not multiple icons. Visual direction: quiet artistic modernism, landscape 3:2 canvas, warm ivory background, generous breathing room and exactly one clear graphic protagonist centred optically, occupying about the middle 40 percent of the width. Large deliberate discrete square units, crisp straight edges, near-black matte flat ink with at most the one restrained accent described. Sophisticated proportions and clean negative space. No text or letters, no captions, no grid lines, no illustration scene, no mockup, no 3D, no bevel, no gloss, no shadows, no gradient, no decorative texture, no watermark. Invent the geometry from this brief; do not imitate an existing company logo.",
+      "input_files": [],
+      "output_file": "generated/PG-O05.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "f00bfea3a33ff23463a00a52391b38cfb16fb7ab8166e2058da384a7fc8e3c8f",
+      "review": {
+        "status": "pass",
+        "scope": "生成后用 view_image 实际查看完整单图；核对概念轮廓、留白、方块/阶梯关系、配色和无额外文字。未验证矢量母版、小尺寸导出或商标独创性。",
+        "notes": "两条错位直角路径在单一交点汇成右向出口，蓝灰输入与黑色输出分工清楚；无交叉臂或附加装饰。"
+      }
+    },
+    {
+      "id": "PG-O06",
+      "kind": "original_study",
+      "title": "凝核 · 信息蒸馏",
+      "brief": "虚构 AI 摘要工具「凝核」需要从散开的信息片段提炼一个稳定核心。",
+      "method": "以宽行离散方块逐级收束到一枚实心方核，呈现从多到少的信息压缩过程。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a completely original visual study of a fictional digital product concept. Design an original information-distillation mark: a calm inverted terraced triangle assembled from separated large square tiles. Use a top row of five near-black squares, a second row of three centred squares, then one centred near-black square; below these, separated by slightly more breathing room, place one muted terracotta square as the distilled core. All square tiles use one consistent unit, with airy narrow equal gaps horizontally. Strong ordered reduction from many to one, about sixteen total visible components or fewer. No funnel container, no arrows, no letter, no spark, no animal, no existing logo reference. The overall image is one integrated downward composition. Visual direction: quiet artistic modernism, landscape 3:2 canvas, warm ivory background, generous breathing room and exactly one clear graphic protagonist centred optically, occupying about the middle 40 percent of the width. Large deliberate discrete square units, crisp straight edges, near-black matte flat ink with at most the one restrained accent described. Sophisticated proportions and clean negative space. No text or letters, no captions, no grid lines, no illustration scene, no mockup, no 3D, no bevel, no gloss, no shadows, no gradient, no decorative texture, no watermark. Invent the geometry from this brief; do not imitate an existing company logo.",
+      "input_files": [],
+      "output_file": "generated/PG-O06.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "ec46395a75444b82ac6e858ed49942289603d2f1fc6bca2ff59e0fb7f20cdf04",
+      "review": {
+        "status": "pass",
+        "scope": "生成后用 view_image 实际查看完整单图；核对概念轮廓、留白、方块/阶梯关系、配色和无额外文字。未验证矢量母版、小尺寸导出或商标独创性。",
+        "notes": "5、3、1 的离散方块逐级收束到独立陶土方核，数量递减与间隔清楚；与其他图的连续轮廓明显不同。"
+      }
+    },
+    {
+      "id": "PG-O07",
+      "kind": "original_study",
+      "title": "时隙 · 原子调度",
+      "brief": "虚构计算调度器「时隙」需要表达任务在可控时间窗口内逐步执行。",
+      "method": "用上下两片相向阶梯与中央独立方块构成离散沙漏，强调一个明确执行时隙。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a completely original visual study of a fictional digital product concept. Design an original pixel-hourglass symbol for precise job scheduling: an upper near-black stair-stepped triangle tapering downward and a lower near-black stair-stepped triangle widening downward, with a clean narrow ivory waist between them. Suspend one small muted ochre square exactly in the waist as a single execution slot. Use four broad stair levels in each mass, square corners throughout, symmetrical overall but no outer container. The upper and lower masses must remain physically separate from the central square. Keep it elegant and architectural, not retro game art, not a clock face, no sand particles, no letter or crossed ribbons. Visual direction: quiet artistic modernism, landscape 3:2 canvas, warm ivory background, generous breathing room and exactly one clear graphic protagonist centred optically, occupying about the middle 40 percent of the width. Large deliberate discrete square units, crisp straight edges, near-black matte flat ink with at most the one restrained accent described. Sophisticated proportions and clean negative space. No text or letters, no captions, no grid lines, no illustration scene, no mockup, no 3D, no bevel, no gloss, no shadows, no gradient, no decorative texture, no watermark. Invent the geometry from this brief; do not imitate an existing company logo.",
+      "input_files": [],
+      "output_file": "generated/PG-O07.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "1ae80099113a6bbf4e3d26b723362fc462a5c91a666000304e02110c6deea6f7",
+      "review": {
+        "status": "pass",
+        "scope": "生成后用 view_image 实际查看完整单图；核对概念轮廓、留白、方块/阶梯关系、配色和无额外文字。未验证矢量母版、小尺寸导出或商标独创性。",
+        "notes": "上下相向四阶块面与中央独立赭黄方块形成清楚时隙，三部分互不粘连；沙漏只保留建筑式几何关系。"
+      }
+    },
+    {
+      "id": "PG-O08",
+      "kind": "original_study",
+      "title": "叶算 · 低碳计算",
+      "brief": "虚构云计算工具「叶算」需要把减少计算浪费表达为可辨的生长与节制。",
+      "method": "用阶梯叶片外轮廓和留白方格叶脉，将有机生长转译为有限计算单元。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a completely original visual study of a fictional digital product concept. Design an original minimal pixel-leaf mark. A single diagonally ascending leaf silhouette built entirely from large axis-aligned dark olive square steps, broad in the middle and narrowing to a two-step tip at upper right. Carve one clean ivory stair-step vein from lower-left stem to upper-right tip, dividing the leaf into two unequal solid lobes; add only two short square-grid branch cuts, not fine botanical detail. The outer edge must be deliberate stepped geometry, never a smooth curve or a long diagonal edge. A short near-black squared stem extends at lower left. One poised organic-digital silhouette, no tree, no extra leaves, no environmental slogan. Visual direction: quiet artistic modernism, landscape 3:2 canvas, warm ivory background, generous breathing room and exactly one clear graphic protagonist centred optically, occupying about the middle 40 percent of the width. Large deliberate discrete square units, crisp straight edges, near-black matte flat ink with at most the one restrained accent described. Sophisticated proportions and clean negative space. No text or letters, no captions, no grid lines, no illustration scene, no mockup, no 3D, no bevel, no gloss, no shadows, no gradient, no decorative texture, no watermark. Invent the geometry from this brief; do not imitate an existing company logo.",
+      "input_files": [],
+      "output_file": "generated/PG-O08.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "3b6434d76d665e4016f645021c548efc6096c8b95b39ff747d1f99ded7525ebe",
+      "review": {
+        "status": "pass",
+        "scope": "生成后用 view_image 实际查看完整单图；核对概念轮廓、留白、方块/阶梯关系、配色和无额外文字。未验证矢量母版、小尺寸导出或商标独创性。",
+        "notes": "阶梯叶片、对角白色像素叶脉和短深色茎可辨；橄榄绿克制，主脉与短白缺口形成数字化植物关系，未使用现有品牌形状。"
+      }
+    }
+  ]
+}

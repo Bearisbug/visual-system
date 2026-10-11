@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "style_id": "modernist-corporate-symbols",
+  "examples": [
+    {
+      "id": "MC-O01",
+      "kind": "original_study",
+      "title": "汇入拱门",
+      "brief": "为虚构基础设施协作平台研究多个入口汇向共同空间的独立符号。",
+      "method": "以两块不对称实形与中央拱形负空间形成紧凑而稳定的识别。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one entirely original abstract corporate symbol for an imaginary infrastructure collaboration platform. Landscape 3:2 off-white canvas, one compact centered flat mark, no text. The idea is two unequal solid vertical piers that lean inward slightly, bridged by a thick shallow arch; the open archway between them must be a clean asymmetric negative space with one stepped shoulder. The left pier is shorter and wider, the right pier taller and narrower, deliberately balanced rather than mirrored. Deep charcoal only. Quiet mid-century modernist clarity, bold flat silhouettes and intelligent whitespace. Do not depict a house, letter monogram, existing brand mark, hexagon, rotating four-arm arrangement, arrow, star or globe. No shadows, gradients, bevels, gloss, texture, frame or watermark. This is a fresh independent abstract study, with its identity arising from the specific offset arch relationship.",
+      "input_files": [],
+      "output_file": "generated/MC-O01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "cb6aebf77fb2405fe7f53a00ae6f573e66db299d4235158d59734a00098ff22a",
+      "review": {
+        "status": "pass",
+        "scope": "实际查看工具返回全幅，检查实体数量、负空间、开口、配色与构图；未验证小尺寸或精确几何。",
+        "notes": "粗拱、左右不等高立柱与台阶状肩部形成清楚负空间，整体单色、留白充足；两端重心不对称但稳定。仅为新概念位图，不声称几何可编辑或商标独创性已核验。"
+      }
+    },
+    {
+      "id": "MC-O02",
+      "kind": "original_study",
+      "title": "连续刻口",
+      "brief": "为虚构开发版本平台研究连续推进但保留可回溯节点的符号。",
+      "method": "用三个错位的水平实体与一条纵向负空间刻口组织连续节奏。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Design one entirely original corporate symbol for an imaginary software versioning platform. A compact sculptural flat silhouette composed of three horizontal slabs of equal thickness, each successive slab shifted a little right. Their ends are softly squared, not pill-shaped. A single narrow vertical white notch cuts through the left third of the combined stack, but stops before the bottom edge, creating one shared alignment reference. Clear differentiation between the three slabs by thin open horizontal gaps. Use a single deep ink blue on a pale neutral background. The overall mark is wider than tall, visually grounded, with plenty of empty space on a landscape 3:2 canvas. No letters, brand names, arrows, existing logos or app tiles. No 3D, shadows, gradients, metallic surfaces, decorative pattern or watermark. Strong modernist rhythm and precise negative space.",
+      "input_files": [],
+      "output_file": "generated/MC-O02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "9f7e70c85268f5a0f74fae641fbb1cf2b028119f930fb804edd1912724821711",
+      "review": {
+        "status": "pass",
+        "scope": "实际查看工具返回全幅，检查实体数量、负空间、开口、配色与构图；未验证小尺寸或精确几何。",
+        "notes": "三条错位实体以相同纵向切口定位，横向间隙和底部未切断部分可辨。没有字样或多余装饰；输出端部圆角不完全一致，正式母版需后续统一几何。"
+      }
+    },
+    {
+      "id": "MC-O03",
+      "kind": "original_study",
+      "title": "偏心容纳",
+      "brief": "为虚构隐私计算平台研究外部边界保护内部开放空间的标志概念。",
+      "method": "用偏心留白与单侧开口表达容纳关系，区别于盾牌和锁的直接图示。",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Generate one new original minimalist institutional symbol for an imaginary privacy-computing platform. One broad near-circular solid form, gently flattened at the bottom, contains an off-center vertically oval negative space shifted toward the upper left. A narrow horizontal cut opens the oval to the right outer edge, producing a calm sheltered cavity without a literal lock or shield. The outer and inner curves have visibly different centers, giving purposeful asymmetrical weight. Deep forest green only on warm off-white, flat ink, generous whitespace, landscape 3:2. One symbol, no lettering, no existing-brand references, no eye or face, no keyhole, no spiral, no arrow. Avoid gradient, gloss, bevel, drop shadow, texture, frames and watermark. Restrained contemporary modernist graphic design.",
+      "input_files": [],
+      "output_file": "generated/MC-O03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "75784c8e837b43e2078077ed317fc6dcc61e635f5c83d217ec9dac3ea6d29928",
+      "review": {
+        "status": "pass",
+        "scope": "实际查看工具返回全幅，检查实体数量、负空间、开口、配色与构图；未验证小尺寸或精确几何。",
+        "notes": "偏心椭圆留白与右侧开口组成包容关系，底边略平、上下墨量不同，单色轮廓清楚。可能被读为字母e，作为概念研究记录这一联想；未进行识别测试或商标检索。"
+      }
+    }
+  ]
+}

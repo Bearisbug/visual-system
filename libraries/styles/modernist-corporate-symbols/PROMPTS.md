@@ -1,4 +1,6 @@
-# Chermayeff & Geismar & Haviv（CGH） · 现代主义企业符号 Prompt
+# 现代主义企业符号 · Prompt
+
+库内 AI 重新演绎的实际 Prompt、输入和输出见 [generated.json](generated.json)；从文字简报生成的原创研究见 [originals.json](originals.json)，图像统一展示于 [EXAMPLES](EXAMPLES.md)。两类生成记录各自保存逐图目检；原创研究不对应源案例，其主体与生成细节不归属于原作者或原品牌。以下通用模板尚未实测，不能用上述实际生成记录代替模板验证。按[艺术方向](../ART-DIRECTION.md)选择表现，用户已定品牌优先。
 
 先按 [STYLE.md](STYLE.md) 判断适用范围。以下是研究者编写的自然语言模板，未实测，非作者原始提示词。提交前替换所有字段；已有简报与用户选定方向优先。参考作者姓名只用于出处，不代替可观察的视觉描述。
 

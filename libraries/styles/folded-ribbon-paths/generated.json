@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "style_id": "folded-ribbon-paths",
+  "coverage": "all_source_samples",
+  "examples": [
+    {
+      "id": "R01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "R01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make one carefully art-directed AI reinterpretation study of the attached symbol-only reference. Preserve the distinctive path topology, open spaces and major components; simplify rendering. Not an official redesign or exact restoration. Landscape 3:2 warm white canvas, one centered symbol at moderate scale with large calm margins. No words, letters added as captions, watermark, border, mockup props or second variant. Flat or extremely shallow matte graphic; one muted hue with restrained darker fold planes. No neon, glow, chrome, glossy plastic, rainbow or candy gradient, heavy shadow, texture clutter. Reference role: Corelo is a slender outlined ribbon C with nested inner curve and top/bottom angular turning lobes on its open right side; the ribbon crosses itself at the upper and lower diagonal joins. Preserve the large C opening, continuous curved left side, inner C and two pointed return paths. Use dark muted teal ink with at most a slightly darker overpass segment; do not turn it into a solid C or disconnected arcs.",
+      "input_files": [
+        "references/R01.png"
+      ],
+      "output_file": "generated/R01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "0e741e2c2856fa66f8e5e01b8a09859542da56acbf0fd96924c9c526e2d8d83f",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：外层 C、内弧和右侧上下折返点保留，交叉处有轻微明暗提示；深青色线带与暖白背景清楚，没有发光与新增部件。"
+      }
+    },
+    {
+      "id": "R02",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "R02",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make one carefully art-directed AI reinterpretation study of the attached symbol-only reference. Preserve the distinctive path topology, open spaces and major components; simplify rendering. Not an official redesign or exact restoration. Landscape 3:2 warm white canvas, one centered symbol at moderate scale with large calm margins. No words, letters added as captions, watermark, border, mockup props or second variant. Flat or extremely shallow matte graphic; one muted hue with restrained darker fold planes. No neon, glow, chrome, glossy plastic, rainbow or candy gradient, heavy shadow, texture clutter. Reference role: Play4ever is a continuous rounded triangular ribbon loop pointing right, with one triangular open center and subtle turning depth around its three corners. Preserve the three rounded corners, broad ribbon width and clear central aperture. Reinterpret as a muted terracotta matte loop with very restrained darker folding planes on warm white, no pink atmospheric backdrop or luminous highlights.",
+      "input_files": [
+        "references/R02.png"
+      ],
+      "output_file": "generated/R02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "380a421e6592ac0cdefed0c0475dce09e0edbff9a547aaf84007e78dc59667fd",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：向右三角环、三处圆角和中央开口保留；浅陶土色哑光折面代替粉色发光环境，单一主体清楚。"
+      }
+    },
+    {
+      "id": "R03",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "R03",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make one carefully art-directed AI reinterpretation study of the attached symbol-only reference. Preserve the distinctive path topology, open spaces and major components; simplify rendering. Not an official redesign or exact restoration. Landscape 3:2 warm white canvas, one centered symbol at moderate scale with large calm margins. No words, letters added as captions, watermark, border, mockup props or second variant. Flat or extremely shallow matte graphic; one muted hue with restrained darker fold planes. No neon, glow, chrome, glossy plastic, rainbow or candy gradient, heavy shadow, texture clutter. Reference role: My Market is a two-tier slanted ribbon lattice: two parallel rows of three diagonally oriented open cells joined by rounded turns, with the central horizontal band serving both rows. Retain the two-tier stacking, three cells across each row, the rising slash direction and open interiors. Reinterpret in near-black warm graphite flat strokes with tiny tonal fold distinctions only; no orange glow or colored background.",
+      "input_files": [
+        "references/R03.png"
+      ],
+      "output_file": "generated/R03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "dab79ca8911e608787908472adfed01e6f8e6c8a0eb28929950fca9182404a3a",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：两层倾斜格带与每层三个开口保留，中央共享横向连接清楚；用深灰平面显示，原发光渐隐效果被收敛，未当作精确母版。"
+      }
+    },
+    {
+      "id": "R04",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "R04",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make one carefully art-directed AI reinterpretation study of the attached symbol-only reference. Preserve the distinctive path topology, open spaces and major components; simplify rendering. Not an official redesign or exact restoration. Landscape 3:2 warm white canvas, one centered symbol at moderate scale with large calm margins. No words, letters added as captions, watermark, border, mockup props or second variant. Flat or extremely shallow matte graphic; one muted hue with restrained darker fold planes. No neon, glow, chrome, glossy plastic, rainbow or candy gradient, heavy shadow, texture clutter. Reference role: Motor consists of three parallel diagonal rounded ribbon tracks slanting upward right: a short upper-left pill, a longer central folded track, and a short lower-right track. Preserve their staggered heights, round ends, clear spacing and shallow overlap divisions. Use a single muted slate-teal hue with dark tonal overlap planes instead of blue-cyan-green gradients. No new components or additional track.",
+      "input_files": [
+        "references/R04.png"
+      ],
+      "output_file": "generated/R04.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "9945a8c9cd5fe698a5c5df70874f64f65d5085a880360240ceb594ec6b5414cd",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：左短、中长、右短三条斜向圆端路径及层叠分界保留；颜色统一为蓝灰青单色相，轮廓与间隙清楚。"
+      }
+    },
+    {
+      "id": "R05",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "R05",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one minimal AI reinterpretation study from the attached symbol reference, retaining its characteristic topology and component relationships while refining the presentation. This is not an official redesign or exact restoration. Landscape 3:2 warm-white canvas, generous margins, single centered symbol only; no brand text, captions, border, watermark, additional marks or mockup. Flat matte shapes with clean edges, one restrained ink hue and small tonal differences only where needed to explain a fold. No neon, glossy plastic, chrome, colorful gradients, glow, heavy shadow or dense texture. Reference role: Newation is a broad ascending/descending ribbon that reads N, with a rounded upper-left turn and rounded lower-right turn. Preserve the two opposing folded sections and the clear diagonal interruption / negative gap between their interior ends. Keep the open lower-left and upper-right diagonal terminals. Use deep muted teal with restrained darker inner fold planes; do not join the central gap into a solid bar.",
+      "input_files": [
+        "references/R05.png"
+      ],
+      "output_file": "generated/R05.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "7926f672e61f8e7e25b3d4c7e3e097bbe6689669651cfee205a57fa8153da613",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：两段相向折带共同构成 N，上下圆转角及中间斜向空隙保留；深青哑光面清楚，未把空隙连成实心条。"
+      }
+    },
+    {
+      "id": "R06",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "R06",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one minimal AI reinterpretation study from the attached symbol reference, retaining its characteristic topology and component relationships while refining the presentation. This is not an official redesign or exact restoration. Landscape 3:2 warm-white canvas, generous margins, single centered symbol only; no brand text, captions, border, watermark, additional marks or mockup. Flat matte shapes with clean edges, one restrained ink hue and small tonal differences only where needed to explain a fold. No neon, glossy plastic, chrome, colorful gradients, glow, heavy shadow or dense texture. Reference role: Apex is a slim angular continuous-line symbol, with an upper-left triangular A-like peak and a lower-right opposing triangular fold connected by a tall vertical segment. Preserve the two triangular apertures, staggered left/right open notches, rounded outer corners and vertical central structure. Use near-black graphite line on warm white, no luminous blue background and no extra letter beneath.",
+      "input_files": [
+        "references/R06.png"
+      ],
+      "output_file": "generated/R06.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "359c03287ddc3420b298cfeb82bfad571d0f18f2c4a3472aafcf68fc1ffbf9e9",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：左上尖峰与右下相向折返、中央竖段和两侧三角空隙保留；反白图转为暖白底黑线，轮廓清楚且无多余文字。"
+      }
+    },
+    {
+      "id": "R07",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "R07",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create one minimal AI reinterpretation study from the attached symbol reference, retaining its characteristic topology and component relationships while refining the presentation. This is not an official redesign or exact restoration. Landscape 3:2 warm-white canvas, generous margins, single centered symbol only; no brand text, captions, border, watermark, additional marks or mockup. Flat matte shapes with clean edges, one restrained ink hue and small tonal differences only where needed to explain a fold. No neon, glossy plastic, chrome, colorful gradients, glow, heavy shadow or dense texture. Reference role: WiFlag uses three broad wavy horizontal bands and a left-leaning slanted flagpole emerging beneath the lowest band. Preserve three parallel flowing bands, the shift of curvature at the shared diagonal seam, clear white gaps, and the single pole. Use charcoal ink with just a slightly darker overlap at the pole joint. Keep the whole symbol upright in the same orientation, not a literal fabric flag or 3D object.",
+      "input_files": [
+        "references/R07.png"
+      ],
+      "output_file": "generated/R07.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "3cc79610f2081dd325e813b12f03f417a265a766dc319c415e9508626cb34170",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：三层波带、共有斜向接缝与左下旗杆保留，条带间留白清楚；炭灰平面关系统一，未引入实体旗帜道具。"
+      }
+    },
+    {
+      "id": "R08",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "R08",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make a single restrained AI reinterpretation study of this existing symbol, preserving its recognizable topology, openings and folds. Do not present as an official redesign or exact restoration. Landscape 3:2 warm-white background with generous clear margins, one centered symbol at moderate scale. Flat matte graphic, one muted hue with only minimal tonal fold distinctions. No typography, watermark, captions, frames, props, multiple variants, glossy metal, neon, vivid gradient, glow, heavy shadows or dense textures. Reference role: Saferpay is a broad squared S-like folded ribbon built from an upper and lower squared U section, with rounded outer corners, rectangular inner apertures and two diagonal central connecting folds. Preserve the opposing horizontal upper/lower bars, the white rectangular interiors and the stepped diagonal middle relation. Use muted slate-blue, darker only at the two fold facets. Remove the strong blue backdrop, keep the whole outline on warm white.",
+      "input_files": [
+        "references/R08.png"
+      ],
+      "output_file": "generated/R08.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "922703e402f1f84ca963ecae3f0cab8381fa3b2cf842f45b692f6b31db0d20c1",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：上下宽带、外侧圆角、矩形留白与中央两处斜折保持 S 式结构；蓝灰色折面清楚，强蓝背景已简化为暖白。"
+      }
+    },
+    {
+      "id": "R09",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "R09",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make a single restrained AI reinterpretation study of this existing symbol, preserving its recognizable topology, openings and folds. Do not present as an official redesign or exact restoration. Landscape 3:2 warm-white background with generous clear margins, one centered symbol at moderate scale. Flat matte graphic, one muted hue with only minimal tonal fold distinctions. No typography, watermark, captions, frames, props, multiple variants, glossy metal, neon, vivid gradient, glow, heavy shadows or dense textures. Reference role: Beecomb is a slim continuous outlined B-like ribbon inside a hexagonal path. Preserve the hexagonal outer turning logic, upper inner slanted rectangular loop, rounded middle right bowl, open lower-left returning end and over/under interruptions at the horizontal crossing. Use near-black graphite lines, constant visual line width and clean negative spaces. Do not simplify to an ordinary solid B or a generic honeycomb.",
+      "input_files": [
+        "references/R09.png"
+      ],
+      "output_file": "generated/R09.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "46904c4afce528d355bf9f4a4b803cc63ef0e8255a3d3cc0fe1631e217376a61",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：六边形外轮廓、内部斜方环、中部圆转与下方开口保留，交叉断开关系可辨；黑灰平面线带清楚，未简化为普通 B。"
+      }
+    },
+    {
+      "id": "R10",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "R10",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make a single restrained AI reinterpretation study of this existing symbol, preserving its recognizable topology, openings and folds. Do not present as an official redesign or exact restoration. Landscape 3:2 warm-white background with generous clear margins, one centered symbol at moderate scale. Flat matte graphic, one muted hue with only minimal tonal fold distinctions. No typography, watermark, captions, frames, props, multiple variants, glossy metal, neon, vivid gradient, glow, heavy shadows or dense textures. Reference role: Northflank uses two elongated six-sided ribbon loops tilted together diagonally, interlocking through the middle. Preserve exactly two loops, both inner apertures, the opposing left-bottom and right-top endpoints, and the middle over-under relationship. Replace rainbow blue/green with one muted deep petrol hue and darker occlusion planes; make the lines appear flat graphic ribbons rather than shiny tubes.",
+      "input_files": [
+        "references/R10.png"
+      ],
+      "output_file": "generated/R10.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "27ec1d3cde0972b5a7e48adcac2bd5e9c423db3df2d0ac53d1590d6ab5a242a0",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：两个六边形长环保持交锁与中部穿插，内孔和外轮廓清楚；蓝绿渐变收敛为深青同色相，单一图形留白充足。"
+      }
+    }
+  ]
+}

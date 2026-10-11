@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "style_id": "modern-product-wordmarks",
+  "coverage": "all_source_samples",
+  "examples": [
+    {
+      "id": "P01",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "P01",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Produce one refined AI reinterpretation of the reference wordmark as a typographic study, preserving the exact visible brand name and its distinctive letter construction. It is not an official redesign or a restoration. Single wordmark centered on landscape 3:2 warm-white background with abundant clear space. Beautiful deliberate kerning and coherent letter weight, flat ink-like shapes, near-black or a single muted accent hue. No extra symbol, slogan, caption, watermark, border, gradients, neon, gloss, shadow, mockup objects or duplicate versions. Exact text \"BITO\", all uppercase. Retain the very bold B with upward and downward arrowheads built into its left stem, two rounded counters open toward that stem, followed by heavy I T O. Preserve the thick O and its round counter. Reinterpret in deep muted pine green, with controlled optical spacing. The integrated arrows must remain part of B, not separate icons.",
+      "input_files": [
+        "references/P01.png"
+      ],
+      "output_file": "generated/P01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "3158bef2e49b183668a5fe92a941edbbb91150776d51d5f7f847a1ed6ea2f48c",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：BITO 大写完整，B 左侧上下箭头与两个内部留白、厚重 O 均可辨；深松绿替代亮绿色，粗字形和留白统一。"
+      }
+    },
+    {
+      "id": "P02",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "P02",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Produce one refined AI reinterpretation of the reference wordmark as a typographic study, preserving the exact visible brand name and its distinctive letter construction. It is not an official redesign or a restoration. Single wordmark centered on landscape 3:2 warm-white background with abundant clear space. Beautiful deliberate kerning and coherent letter weight, flat ink-like shapes, near-black or a single muted accent hue. No extra symbol, slogan, caption, watermark, border, gradients, neon, gloss, shadow, mockup objects or duplicate versions. Exact text \"Flow48\". Preserve strong geometric near-black Flow and the distinctive 48 to the right: continuous rounded strokes, a rounded open 4 and a figure-8 with two counters, the 4 crossbar visually joining the 8. Use subdued berry-magenta only for 48, with at most one darker overlap plane. Keep all six characters readable; avoid fluorescent pink or shading.",
+      "input_files": [
+        "references/P02.png"
+      ],
+      "output_file": "generated/P02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "8082728572c65f9cbb03a2789e1e736258c1e35e407b7df9001f6fbba1a87924",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：Flow48 完整清楚，圆滑 4 与 8 的连接关系仍在；数字单独用克制莓红，主体字形与画布边缘有清楚留白。"
+      }
+    },
+    {
+      "id": "P03",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "P03",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Produce one refined AI reinterpretation of the reference wordmark as a typographic study, preserving the exact visible brand name and its distinctive letter construction. It is not an official redesign or a restoration. Single wordmark centered on landscape 3:2 warm-white background with abundant clear space. Beautiful deliberate kerning and coherent letter weight, flat ink-like shapes, near-black or a single muted accent hue. No extra symbol, slogan, caption, watermark, border, gradients, neon, gloss, shadow, mockup objects or duplicate versions. Exact lowercase text \"yoodel\". Retain the cheerful rounded letter ends and subtly rising/falling baseline; two adjacent o letters must be present. Preserve three short call/sound strokes on each side, but restrain their scale and spacing. Use muted terracotta ink. Crisp warm typography with playful rhythm without cartoon texture.",
+      "input_files": [
+        "references/P03.png"
+      ],
+      "output_file": "generated/P03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "bab74c5c0125556da16219c867990ad07c7fe0a00b473764a604a7cbef8c23c4",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：yoodel 的两个 o 和圆头字形完整，两侧各三条发声短线保留；土橙配色、字形高低节奏与留白清楚。"
+      }
+    },
+    {
+      "id": "P04",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "P04",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Produce one refined AI reinterpretation of the reference wordmark as a typographic study, preserving the exact visible brand name and its distinctive letter construction. It is not an official redesign or a restoration. Single wordmark centered on landscape 3:2 warm-white background with abundant clear space. Beautiful deliberate kerning and coherent letter weight, flat ink-like shapes, near-black or a single muted accent hue. No extra symbol, slogan, caption, watermark, border, gradients, neon, gloss, shadow, mockup objects or duplicate versions. Exact lowercase text \"thundyr\" (t h u n d y r), not thunder. Preserve soft rounded letter construction and the distinctive y descender that turns sharply left into a lightning-bolt end. Use near-black ink with very subtle muted aubergine character, no separate lightning icon. Keep y leg and following r clearly distinct.",
+      "input_files": [
+        "references/P04.png"
+      ],
+      "output_file": "generated/P04.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "f3280699931b1336377d6fb67d2156e6a17f9f65c56ffc62d1dede87952b84f0",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：thundyr 七个字母完整，y 的下降笔画保留向左闪电折角且与 r 分开；近黑紫平面字标收敛，未增加独立装饰。"
+      }
+    },
+    {
+      "id": "P05",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "P05",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make a minimal, art-directed AI reinterpretation study of this exact wordmark reference, preserving its recognizable letter construction and spelling. Not an official redesign or restoration. Landscape 3:2 canvas, warm-white background and generous blank margins. Center one complete wordmark, with optical kerning, crisp flat near-black ink shapes; a single restrained accent is permitted only where specified. No gradient, neon, gloss, shadows, decorative objects, slogan, caption, watermark, border, repeated logos or UI. Exact text \"Janie\" with capital J then a n i e. Preserve the reference’s tall rounded monoline construction and the J descender sweeping into a large elegant loop that crosses the lower a region. The n, dotted i, and open e remain clearly legible. Near-black only, no extra calligraphic flourishes; preserve the single distinctive large J loop and calm horizontal rhythm.",
+      "input_files": [
+        "references/P05.png"
+      ],
+      "output_file": "generated/P05.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "b2c89c43cbc3e171224949e69e8a6386374347d443d63131ad5353cd6ffd7b72",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：Janie 的大 J 环线、跨过 a 的曲线与右侧 nie 的连续关系保留；黑色平面笔画、i 点和 e 开口清楚，未增加多余花饰。"
+      }
+    },
+    {
+      "id": "P06",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "P06",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make a minimal, art-directed AI reinterpretation study of this exact wordmark reference, preserving its recognizable letter construction and spelling. Not an official redesign or restoration. Landscape 3:2 canvas, warm-white background and generous blank margins. Center one complete wordmark, with optical kerning, crisp flat near-black ink shapes; a single restrained accent is permitted only where specified. No gradient, neon, gloss, shadows, decorative objects, slogan, caption, watermark, border, repeated logos or UI. Exact text \"ClipHire\" with capital C and H. Preserve the open clean sans-serif geometry, round i dots, and a single underline beneath Hire. Use near-black text, and one quiet moss-green underline shaped as the reference’s shallow taper / gentle upward edge. Maintain baseline and balanced spacing, underline is separate from the letters and appears only beneath Hire.",
+      "input_files": [
+        "references/P06.png"
+      ],
+      "output_file": "generated/P06.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "e084a27134fc8ffd209f9961e97a00d48ffa729109facd63d34720e0df760ebc",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：ClipHire 大小写与名称完整，Hire 下方保留独立浅斜下划线；主体改近黑，强调只留苔绿色线条，留白充足。"
+      }
+    },
+    {
+      "id": "P07",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "P07",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Make a minimal, art-directed AI reinterpretation study of this exact wordmark reference, preserving its recognizable letter construction and spelling. Not an official redesign or restoration. Landscape 3:2 canvas, warm-white background and generous blank margins. Center one complete wordmark, with optical kerning, crisp flat near-black ink shapes; a single restrained accent is permitted only where specified. No gradient, neon, gloss, shadows, decorative objects, slogan, caption, watermark, border, repeated logos or UI. Exact text \"FUEL\" all uppercase. Preserve the very heavy block letter forms, the U round-bottom counter, and especially the upward arrow integrated into the left F structure with its tall white arrow-shaped cutout. Near-black monochrome. Keep the white arrow channel fully open and clearly distinguish F from U; one typographic composition only.",
+      "input_files": [
+        "references/P07.png"
+      ],
+      "output_file": "generated/P07.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "c7e0a9a1a0f78455c45b5c7233437bfe84483a72cab1eb6c05fe21323bfb10a0",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：FUEL 四字母、粗重 U 与 F 内白色上箭头通道完整；单色大字重与暖白背景清楚，未增加额外符号。"
+      }
+    },
+    {
+      "id": "P08",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "P08",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a refined minimal AI reinterpretation study of the attached wordmark. Preserve exact spelling and its distinguishing letter shapes. Not an official redesign and not a source restoration. Center a single wordmark on landscape 3:2 warm-white canvas, expansive clean margins, confident optical kerning, flat matte ink-like forms. Use near-black plus no more than one quiet accent hue. No gradients, neon, chrome, shadows, mockup props, captions, watermark, borders or additional versions. Exact text \"Rplay\": capital R, lowercase p l a y. The R incorporates a white right-pointing triangular play counter and sharp diagonal exterior cuts, while play is bold and round. Preserve the internal play triangle, R leg, outer diagonal notch and readable full word. Reinterpret the entire word in a restrained dark brick-red rather than bright scarlet.",
+      "input_files": [
+        "references/P08.png"
+      ],
+      "output_file": "generated/P08.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "f1c8dc5dd3d21bd0500ce2d20cd5ca341ff50ced062d574ddc7901b2ae9bccc6",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：Rplay 拼写完整，R 内播放三角与外部斜切保留，play 的粗字形可辨；红色收敛为砖红，平面关系清楚。"
+      }
+    },
+    {
+      "id": "P09",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "P09",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a refined minimal AI reinterpretation study of the attached wordmark. Preserve exact spelling and its distinguishing letter shapes. Not an official redesign and not a source restoration. Center a single wordmark on landscape 3:2 warm-white canvas, expansive clean margins, confident optical kerning, flat matte ink-like forms. Use near-black plus no more than one quiet accent hue. No gradients, neon, chrome, shadows, mockup props, captions, watermark, borders or additional versions. Exact text \"Alstu!\" with capital A, lowercase l s t u, then an exclamation mark. Preserve forward-leaning bold sans-serif typography and the distinctive exclamation composed of two slightly offset upright quadrilateral strokes over one dark round dot. Set Alstu and dot near-black; use only muted petrol-blue tonal values for both offset rectangles, retaining the offset geometry instead of cyan/magenta.",
+      "input_files": [
+        "references/P09.png"
+      ],
+      "output_file": "generated/P09.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "00e437ef3fd4ec1f4012f7555021bb90cb4200809f5542ec3b83f3ff4a0f70ed",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：Alstu! 斜体节奏完整，感叹号仍由两片错位矩形和圆点组成；青洋红双色改为同一蓝色相，未改变关键叠置关系。"
+      }
+    },
+    {
+      "id": "P10",
+      "kind": "ai_reinterpretation",
+      "source_sample_id": "P10",
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: logo-brand. Create a refined minimal AI reinterpretation study of the attached wordmark. Preserve exact spelling and its distinguishing letter shapes. Not an official redesign and not a source restoration. Center a single wordmark on landscape 3:2 warm-white canvas, expansive clean margins, confident optical kerning, flat matte ink-like forms. Use near-black plus no more than one quiet accent hue. No gradients, neon, chrome, shadows, mockup props, captions, watermark, borders or additional versions. Exact uppercase text \"DOUBLE\", all six letters. Preserve the italic wide bold wordmark, rounded square counters, and distinctive D with three leftward speed-like points and an internal right-pointing triangular play opening. Near-black with a very subtle deep aubergine cast, fully flat. Keep D recognizable and the O U B L E separate and correctly ordered.",
+      "input_files": [
+        "references/P10.png"
+      ],
+      "output_file": "generated/P10.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "90fb0b166cbc00a7a7e86bb849ce81a12c1bc7e69934886188dc7822dda7823b",
+      "review": {
+        "status": "pass",
+        "scope": "逐张原参考与生成结果的构思、主体、文字及展示质感目检；未验证精确几何或正式资产适用性",
+        "notes": "已对照原图：DOUBLE 六字母顺序正确，D 的左侧三层速度尖角与播放式空白保留；近黑紫取代亮紫，圆角方孔和倾斜节奏清楚。"
+      }
+    }
+  ]
+}
