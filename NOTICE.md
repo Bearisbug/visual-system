@@ -10,6 +10,10 @@ The MIT License in [LICENSE](LICENSE) covers this repository's original text, sc
 
 `vendor/theme-extract/` 为同一作者的 tokens 生成器、格式文档与示例原样副本，上游提交与逐文件 SHA-256 见 `SOURCE.json`，代码采用 MIT。
 
+`vendor/cc-lineart/` is a verbatim copy of [CC-lineart](https://github.com/aa2246740/CC-lineart) by BiggerdreamStudioDavid: a line-art script, motif library, method documents and previews, under the MIT License copied as `vendor/cc-lineart/LICENSE`. Its built-in palette follows Anthropic's brand colors and two motifs draw the Claude spark; this repository uses that palette only as source research and does not grant rights to Anthropic marks.
+
+`vendor/cc-lineart/` 为 BiggerdreamStudioDavid 的 [CC-lineart](https://github.com/aa2246740/CC-lineart) 原样副本（线稿脚本、母题库、方法文档与预览图），采用 MIT，许可原文见 `vendor/cc-lineart/LICENSE`，上游提交与逐文件 SHA-256 见 `SOURCE.json`。其内置色板取自 Anthropic 品牌色，两个母题画有 Claude 星芒；本仓库只把该色板作为来源研究，不对 Anthropic 的标志授予任何权利。
+
 ## Fonts / 字体
 
 Space Grotesk, Noto Sans SC and JetBrains Mono files in `libraries/fonts/files/` are distributed under SIL OFL 1.1. License texts are in `libraries/fonts/licenses/`; source, version and hashes are in `libraries/fonts/sources.json`.

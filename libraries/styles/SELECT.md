@@ -6,6 +6,7 @@
 | --- | --- | --- |
 | 知识、写作或研究产品，希望安静且有人味 | [编辑式](editorial-typographic-systems/STYLE.md)、[现代字标](modern-product-wordmarks/STYLE.md) | 文字层级、字形节奏与概念插画怎样分工 |
 | “Anthropic 那种手写风”、暖底黑线的 AI 概念图 | [手绘专题](editorial-typographic-systems/HAND-DRAWN.md) | 物件与动作、自然笔触、图层明度；正式文字独立处理 |
+| 功能图标、空状态小图或项目图标要手绘线稿感（墨线 + 水彩色块） | [手绘专题 · 图标级](editorial-typographic-systems/HAND-DRAWN.md#lineart-icons) | 三层结构、色块偏置、28px 可辨；色板换成品牌色 |
 | 产品名称就是最重要的识别 | [现代字标](modern-product-wordmarks/STYLE.md) | 整词阅读与一处有意义的改字；自然笔势可作为分支 |
 | 缩写、开发工具或基础设施需要紧凑图标 | [几何字母](geometric-letter-monograms/STYLE.md)、[负空间](geometric-negative-space/STYLE.md) | 字母骨架、共笔、开口与小尺寸可辨性 |
 | 产品功能能转成清楚的动作或关系 | [科技语义](semantic-tech-marks/STYLE.md)、[黑白产品](monochrome-product-marks/STYLE.md) | 构思是否来自真实含义，去掉材质后能否成立 |

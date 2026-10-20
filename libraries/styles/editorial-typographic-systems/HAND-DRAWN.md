@@ -75,13 +75,64 @@
 
 正式标题与正文在排版源中编辑。生图只做插画时，Prompt 明确不生成文案并写出需要避让的区域；工具输出的空白区域仍需实看。需要手写短注时，检查它是否引入额外语义、错字或假作者签名。
 
+<a id="lineart-icons"></a>
+
+## 图标级：墨线 + 水彩色块
+
+叙事插画缩小后当不了图标。产品功能图标、空状态小图、README 与项目图标、特性卡片配图需要手绘感时用这一节。方法来自 CC-lineart（MIT，作者 BiggerdreamStudioDavid，上游提交 `3f044ca`），原样副本在 [vendor/cc-lineart](../../../vendor/cc-lineart/SOURCE.json)：渲染与检查脚本 `scripts/lineart.py`、14 个示例母题 `motifs/*.json`、开稿方法 [art-direction.md](../../../vendor/cc-lineart/references/art-direction.md) 与网格笔法 [drawing-guide.md](../../../vendor/cc-lineart/references/drawing-guide.md)。它的画法参照 claude.com 的插画。本节是本库的整理，细节以副本原文为准。正式标志仍走本技能的 Logo 流程，这里只提供笔触与色块语言。
+
+![CC-lineart 上游示例：14 个母题](../../../vendor/cc-lineart/docs/icons.png)
+
+| 层（自下而上） | 做法 | 检查 |
+| --- | --- | --- |
+| 水彩色块 | 一块不规则四边形，偏向主体一侧、不居中；噪声滤镜让色块透明度斑驳，边缘一圈深一档的颜色以 55% 不透明度模拟颜料积在边上 | 色块露出不少于 30%，占画布 10%–50%，再多就成了底板 |
+| 纸白形 | 主体的闭合轮廓填纸色，压在色块上、遮住一部分 | 28px 下纸白区域不被糊掉 |
+| 墨线 | 圆端圆角的粗线，带轻微位移抖动，没有尺子般的直线 | 线稿伸出色块（压在色块上的比例不超过 80%）；不用对称记号或碎屑点缀充当手绘感 |
+
+画布是 64×64 网格。`lg` 用于 48px 及以上的展示，`sm` 用于约 14px 的界面小位；两个尺寸分别渲染，不把 `lg` 缩小当 `sm` 交付。`sm` 只加粗线条、放大色块，不删细节：元素多的图标（多行字形、三个以上部件）到 20px 及以下即使用 `sm` 也会糊成一团，要另画简化版，只留主体外形和一个识别点，在 14、16、20px 实看。lint 的 28px 检查管不到这些尺寸。
+
+### 色板只作来源研究
+
+脚本内置的纸色 `#FAF9F5`、墨色 `#141413` 与九种色块色（clay、sky、cactus、heather、plum、mineral、peach、kraft、olive）取自 Anthropic 的品牌配色。给自家产品画图标时按角色换成产品自己的颜色：纸色换品牌表面色，墨色换品牌主墨色，色块换品牌强调色或辅助色，边缘换同一色块色加深一档（有按下态 token 时用它）。产品还没有色板时，先按本技能建立色板再画图标。
+
+脚本的色板写在代码里，副本又不可修改，所以换色放在渲染之后。渲染出的 SVG 只含墨、纸、色块、边缘四个颜色值，按对应关系整体替换即可；`pencil` 母题的笔尖另写了 `#D97757`，一并替换。lint 用原纸色判断色块露出，所以先在原色板上跑完 lint 再换色；换色后在目标背景和目标尺寸下实看，并检查墨线与表面色的对比。图标没有自带底色，深色墨线放到暗色背景上会消失（实测对比度约 1.1:1）；有暗色模式时另出一版，或给图标垫一块纸色底，二者都按暗色背景重新检查。
+
+### 画一个新图标
+
+1. 读副本里的 art-direction.md 与 drawing-guide.md，先写简报、两三个文字缩略构思和图层计划，再写坐标。
+2. 草稿 JSON 写 `name`、`description`、`tags`、`color`、`block`、`ink`，存进目标项目（例如 `brand/icons/lineart/`）。副本只读，不对它运行 `add`。
+3. 渲染 `lg` 与 `sm`，对 `lg` 跑 lint，再把新图和两个已有母题放进同一张预览图比较线重与密度，打开看。
+4. 按 art-direction 的批评清单逐条写答案，至少改一轮；每条 lint 警告修掉或写明理由。
+5. 换成品牌色，导出所需尺寸。
+
+命令在技能根目录运行，Python 由 uv 管理：
+
+```bash
+L() { uv run --quiet --with pillow python -I vendor/cc-lineart/scripts/lineart.py "$@"; }
+L list
+L render <母题名或 draft.json> -o out/x.svg --size lg   # 再以 --size sm 渲染一次
+L lint out/x.svg
+L preview out/x.svg out/x-sm.svg -o out/sheet.png
+```
+
+`preview` 与 `lint` 依赖 `rsvg-convert` 与 ImageMagick（`brew install librsvg imagemagick`）。缺少时只能写 SVG、不能出预览与检查结果，交付时写明未检查。lint 只抓机械痕迹，零警告不代表图好看。
+
+### 边界
+
+- `lightbulb`、`display` 两个母题画了 Claude 的星芒标志，`mac` 画的是经典 Macintosh；用于自家产品时换掉这些识别元素。其余母题可作起稿参考，产品图标按自己的功能含义重画。
+- 不把 Anthropic 官网的插画 SVG 复制进项目或母题。
+- 渲染出的每个 SVG 都用 `wash`、`ink` 作滤镜 id。用 `<img>` 引用互不影响；多个图标内联进同一页面时 id 会冲突，后面的图标套用第一个的纹理，内联前给每个文件的 id 加前缀。
+- 一套图标统一色块大小、偏置方向、线重与密度；色块颜色可以按主题区分，但都取自品牌色板。
+
+本节为 **provisional**：脚本在本机实跑过渲染、lint、预览与换色；一轮盲测按本节给带品牌目录的产品画出三枚功能图标并换成品牌色（`skill-tests/visual-system/blind-36-lineart-icons-brand/`）。Edge 155、WebKit 26.5（Safari 的渲染引擎，经 Playwright 驱动，不是 Safari 本体）、Firefox 151 下滤镜都能渲染，水彩纹理细节略有差异；48px 以下用 `sm` 与简化版做过对照（`skill-tests/visual-system/validation-lineart-crossbrowser-small/`）。
+
 ## 从单图扩成系列
 
 在已有方向记录中固定：笔触分支、墨线与辅助色角色、背景处理、物体比例、观察视角、图像与文字边界。每幅另列主题、主动作、对象和允许变化项。
 
 例如同一知识产品的三个主题可以分别使用“为纸页设置索引”“用筛网分组条目”“沿折页找到出处”。这是未实测的构思示例；一致性来自线条、比例与配色职责，三个主题仍需各自可辨。不要把同一构图换底色或贴不同文字当作完成系列设计。
 
-布局迁移时，文章封面检查标题避让；窄卡片删减次要细节并重排主体；帮助／空状态图控制图文距离和实际用户动作。产品图标、favicon 或通用功能图标需要单独简化与小尺寸检查，不能直接缩小叙事插画充当。
+布局迁移时，文章封面检查标题避让；窄卡片删减次要细节并重排主体；帮助／空状态图控制图文距离和实际用户动作。产品图标、favicon 或通用功能图标需要单独简化与小尺寸检查，不能直接缩小叙事插画充当；需要手绘感的功能图标按[图标级：墨线 + 水彩色块](#lineart-icons)。
 
 ## 交付与目检
 

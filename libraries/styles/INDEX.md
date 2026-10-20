@@ -14,7 +14,7 @@
 
 | ID | 方法 | 适用场景 | 实际图数（其中原创） | 入口 |
 | --- | --- | --- | ---: | --- |
-| editorial-typographic-systems | 编辑式字体与概念手绘 | 阅读、知识、研究与 AI 概念表达 | 10（6） | [STYLE](editorial-typographic-systems/STYLE.md) · [示例](editorial-typographic-systems/EXAMPLES.md) · [手绘专题](editorial-typographic-systems/HAND-DRAWN.md) |
+| editorial-typographic-systems | 编辑式字体与概念手绘 | 阅读、知识、研究与 AI 概念表达；手绘线稿图标 | 10（6） | [STYLE](editorial-typographic-systems/STYLE.md) · [示例](editorial-typographic-systems/EXAMPLES.md) · [手绘专题](editorial-typographic-systems/HAND-DRAWN.md) |
 | modern-product-wordmarks | 现代产品字标 | 完整名称承担识别，字距与局部改字形成性格 | 10 | [STYLE](modern-product-wordmarks/STYLE.md) · [示例](modern-product-wordmarks/EXAMPLES.md) |
 | geometric-negative-space | 几何负空间 | 空白与实体共同表达一个明确关系 | 10 | [STYLE](geometric-negative-space/STYLE.md) · [示例](geometric-negative-space/EXAMPLES.md) |
 | geometric-letter-monograms | 几何字母与组合 | 开发工具、缩写品牌、紧凑图标 | 10 | [STYLE](geometric-letter-monograms/STYLE.md) · [示例](geometric-letter-monograms/EXAMPLES.md) |

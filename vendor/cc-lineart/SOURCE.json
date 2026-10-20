@@ -1,0 +1,97 @@
+{
+  "upstream": "https://github.com/aa2246740/CC-lineart",
+  "commit": "3f044ca756cb2c75e25e15bac989fd3a13971d44",
+  "copied": "2026-10-11",
+  "license": "MIT, Copyright (c) 2026 BiggerdreamStudioDavid; the upstream LICENSE is copied alongside.",
+  "note": "Verbatim copies. Update by copying the same paths from a newer upstream commit and refreshing commit/sha256; never edit in place. Do not run `lineart.py add` here: new motifs live in the target project.",
+  "files": [
+    {
+      "path": "LICENSE",
+      "sha256": "68ef13d3f0d98a236c10075029bb84808c49795521e69c01e47e2dd3d71a99ab"
+    },
+    {
+      "path": "README.md",
+      "sha256": "39511cb24cef9915d495969bd02e30d4538333d9a1db7658ce705fc0aac67fa7"
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "c0861ebbeb60b5749c3828a77cd6e2590632921a46b24eff4253e17e5ae155d4"
+    },
+    {
+      "path": "docs/hero.png",
+      "sha256": "9dc12575aee2eeb1abd5ebd8a97532f105235a4aa155d4fb7e06cc347ea94fe0"
+    },
+    {
+      "path": "docs/icons.png",
+      "sha256": "8294ec2ace2e71334e2a3b42fb77d1eff48ec76d9b4d514022bd4338c7f341a1"
+    },
+    {
+      "path": "motifs/book.json",
+      "sha256": "3bacdfd74823010cdeb530c17a6b24d256f70283161d7f4614751f63cb13226b"
+    },
+    {
+      "path": "motifs/branch.json",
+      "sha256": "caca0735b462bf12006bcc0b94e41e5852400a2c731eb341a650c6c65bdf961f"
+    },
+    {
+      "path": "motifs/chat.json",
+      "sha256": "d892e1748184ccdb21b2e6a9a78636406ef2f16a69a7dca5102925e69f6fcdca"
+    },
+    {
+      "path": "motifs/display.json",
+      "sha256": "2ae5db72d41b9f0b3fbd5072e4ac77ac2b9cb0061492a7c4c4f0f44461869707"
+    },
+    {
+      "path": "motifs/easel.json",
+      "sha256": "71d894ccfd97df80d195d090773e1125e2f61082065d92ee4c629eef0b585c81"
+    },
+    {
+      "path": "motifs/lightbulb.json",
+      "sha256": "aeb6fd001c3c57b57831c42623b6f54b130fff848a52614df77b20578e24b6a2"
+    },
+    {
+      "path": "motifs/mac.json",
+      "sha256": "29de36d8708bddfa9802fa33b170afa3ac1120d4e60549e8b2fdd4f6c01f965d"
+    },
+    {
+      "path": "motifs/magnifier.json",
+      "sha256": "4307d328b0bd844da9e8c2a11deabc4416889aa739c770215fe842a685d88ea7"
+    },
+    {
+      "path": "motifs/mug.json",
+      "sha256": "6d358164761674e47e61c2f81a7577a933cddad51d45d492d739790c5531373d"
+    },
+    {
+      "path": "motifs/pencil.json",
+      "sha256": "0213489154b511348844790be8e3b4649290ee9c5114184726ea5a95beb584c1"
+    },
+    {
+      "path": "motifs/plane.json",
+      "sha256": "cd4a4ece9208d06aa917ee9b9539e062e072532b987c95bf6db5d4735386f24f"
+    },
+    {
+      "path": "motifs/raft.json",
+      "sha256": "00c36c11480ffca45c29f7414fa0bee54c53a32b0667d2e619a0d7b17459e41f"
+    },
+    {
+      "path": "motifs/sprout.json",
+      "sha256": "30307bbe1845564082b51b63323493046cfb9714bb955d3a117e14403400692e"
+    },
+    {
+      "path": "motifs/terminal.json",
+      "sha256": "05a320a0c182c8f3ba643ec020cd415ce9a2acb56dcb057daadad1b052194049"
+    },
+    {
+      "path": "references/art-direction.md",
+      "sha256": "2a1b532a3bd51d4e101ec7dc68f49accf4fbf4da773054807169bd16dde47b23"
+    },
+    {
+      "path": "references/drawing-guide.md",
+      "sha256": "2b17927b94d9fa0794b8b17de7ea570cd65f58274776601b7873e46923b2ccc5"
+    },
+    {
+      "path": "scripts/lineart.py",
+      "sha256": "3bbcdf6f05358dde647335ee578024b765345e0c712bd404b7849c511914fbd5"
+    }
+  ]
+}
