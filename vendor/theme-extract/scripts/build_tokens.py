@@ -1253,6 +1253,8 @@ def build_frontmatter(base_leaves, base_tree):
                 rv = resolved[path]
                 if isinstance(rv, str):
                     btn_fields.append((field, rv))
+                elif isinstance(rv, (int, float)) and not isinstance(rv, bool):
+                    btn_fields.append((field, fmt_num(rv)))
     if btn_fields:
         components.append(("button-primary", dict(btn_fields)))
 

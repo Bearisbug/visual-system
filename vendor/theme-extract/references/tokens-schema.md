@@ -62,8 +62,7 @@ primitive → semantic → component
 - **primitive** — the ONLY place a raw hex/number/array may appear. Measured ramps, raw dims, font
   sizes, durations, easings, opacities. **A primitive leaf is the single source for one distinct
   measured value.** Two primitive color leaves sharing an identical hex is a **build FAIL** (escape:
-  `--allow-dup-primitive`). *This is the structural kill for the real Bevel `#ECECF1` (border) vs
-  `#ECECF0` (chart track) one-digit fork.*
+  `--allow-dup-primitive`).
 - **semantic** — measured-role groups (`color`, `space`, `radius`, `typography`, `elevation`,
   `gradient`) MUST be an `{alias}` into `primitive` (or a composite whose sub-fields are aliases). A
   literal here is an ERR. **This is the only layer modes/themes re-point.**
@@ -139,19 +138,22 @@ platform units:
 - `timeUnit` ("ms") — unit applied to bare `duration` values.
 - `reference` — prose note pinning the reference unit.
 
+`meta.sourceNote` (optional string) — one prose line on the capture set: how many screenshots, where
+they came from, native size and scale, anything excluded. It is provenance for readers, not a token;
+per-value evidence still goes in the leaf-level `source` / `provenance` strings (§5).
+
 `meta.modeModel` is the **DETECTED mode topology** — one of
 `light-only | light-primary | light-dark-peer | dark-primary` (detect first; default to `light-primary`
 only when topology is undetectable):
 - `light-only` — no dark mode captured.
-- `light-primary` — a light base with a dark delta (today's bevel); `defaultMode = light`.
+- `light-primary` — a light base with a dark delta; `defaultMode = light`.
 - `light-dark-peer` — two co-equal measured modes, neither derived from the other.
 - `dark-primary` — **dark IS the base/only mode.** Do NOT assume a light base to derive from: the dark
   ramp is the measured primitive floor (`primitive.color.neutral.*` measured dark), `defaultMode = dark`,
   and any light mode (if present) is the delta.
 
 `meta.defaults` is the **global facet backstop**: any leaf whose facet isn't set on itself or an
-ancestor group resolves it here. `meta.confidence` (the old prose blob) is **deleted** — replaced by
-per-leaf `confidence`.
+ancestor group resolves it here. Confidence is a per-leaf facet (§5).
 
 ---
 
@@ -172,8 +174,8 @@ breakpoints, semantic aliases) ·
 as-is) · `scalable` (grows with density/text-size — space, font size, touch targets → rem on web) ·
 `ratio` (unitless pass-through — lineHeight, type-scale ratio, density multipliers, opacity).
 
-**`confidence`** — evidence tier, mirroring the flow-analyze honesty spine, now PER LEAF:
-`measured | derived | inferred`. Replaces the prose `meta.confidence`. Optional `source`/`provenance`
+**`confidence`** — evidence tier, mirroring the flow-analyze honesty spine, per leaf:
+`measured | derived | inferred`. Optional `source`/`provenance`
 string carries the crop note ("--accent crop img520").
 
 `scope ≠ confidence`: `radius.pill = 999` is `scope:invariant` but `confidence:inferred` (you saw
@@ -185,8 +187,8 @@ both lets the projector ask "is this the app's fingerprint?" separately from "di
 - `radius` → `cornerStyle` = the DETECTED radius/shape intent, a FIRST-CLASS enum
   `sharp (~0–2) | subtle (~4–8) | soft (~10+) | squircle` (iOS continuous corner). **Detect it; default only
   when no rounded surface is visible.** `subtle` is its own tier, NOT a rounding of `soft`. Legacy geometry
-  values `round | continuous | cut` stay valid synonyms (`round`→`soft`, `continuous`→`squircle`, `cut` =
-  beveled) so older sets like bevel-v2 (`cornerStyle:"round"`) validate unchanged. `smoothing` (0–1, iOS
+  values `round | continuous | cut` are accepted synonyms (`round`→`soft`, `continuous`→`squircle`, `cut` =
+  beveled). `smoothing` (0–1, iOS
   squircle amount; ignored off-iOS). **0-radius is allowed** — data grids/tables legitimately use 0-radius
   cells; there is NO "interactive controls must never be 0-radius" rule. Record `cornerStyle` on the
   `semantic.radius` group (children inherit it).
@@ -227,7 +229,7 @@ emits `dataViz` by default — §6.3.
   for tags/labels/status-enums/syntax — N-ary, UNCAPPED; see §6.1), `dataViz.{track,gridline,axis,metric}`
   plus the palettes `dataViz.{series,sequential,diverging}` (§6.3) — **in screenshot extraction present
   ONLY when the screenshots show charts, ABSENT (never forced) otherwise; design generation emits it by
-  default** (`track`/`gridline`/`axis` re-alias the neutral ramp — kills the ECECF0 fork).
+  default** (`track`/`gridline`/`axis` re-alias the neutral ramp).
 - `space` — named roles `screenMargin`, `cardInset`, `stack` (one-offs pulled OUT of the numeric scale).
 - `radius` (+ `cornerStyle`/`smoothing`) · `typography.*` composites · `elevation.*` shadow composites (+ per-mode `strategy`) · `gradient.*` stop arrays (+ `geometry`/`scale`).
 - **Portable scaffold groups** (the cross-platform layers a single phone can't show):
@@ -283,10 +285,8 @@ Detect which model the app uses BEFORE assigning `brand`:
   monochrome.
 - **Accent-driven** — a single saturated hue is the identity (bevel's orange): `brand.primary` = ink for
   fills, `brand.accent` = that hue.
-- **Null-accent trigger (broadened):** set `accent = null` when **no saturated hue is the brand
-  identity** — not just the old "every saturated hue is a chart color", but equally when the saturated hues
-  are a status / syntax / tag system. bevel-v2 keeps `brand.{ink, orange}` (accent-driven) and validates
-  unchanged.
+- **Null-accent trigger:** set `accent = null` when **no saturated hue is the brand
+  identity**, whether the saturated hues are chart colors or a status / syntax / tag system.
 
 ### 6.3 `semantic.color.dataViz` palettes — series, sequential, diverging
 
@@ -362,8 +362,8 @@ leaves keyed by consecutive integers from `1`:
   under the OS dark preference (`@media (prefers-color-scheme: dark)`) mixes dark values with the
   theme's base-mode values.
 
-Parity is enforced: each override's leaf-path set ⊆ base `semantic` leaf-path set (generalizes
-today's dark⊆light check via the leaf-walker).
+Parity is enforced: each override's leaf-path set ⊆ base `semantic` leaf-path set (checked via
+the leaf-walker).
 
 ---
 

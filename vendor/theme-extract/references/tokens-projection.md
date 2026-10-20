@@ -30,7 +30,7 @@ uv run --quiet python scripts/build_tokens.py <design-system-dir> --emit <target
    elevation/gradient`) is an `{alias}` (or composite of aliases); a literal is an ERR. Scaffold
    groups (`state/motion/opacity/layout/density/material`) are exempt.
 5. **FAIL on un-aliased dup** — two `primitive.color.*` leaves sharing an identical hex ⇒ **build
-   FAIL** (this is the `#ECECF1`/`#ECECF0` catch). Override with `--allow-dup-primitive` only for
+   FAIL**. Override with `--allow-dup-primitive` only for
    genuinely-distinct-but-equal values. A literal appearing in `semantic` that equals an existing
    primitive is the same failure surfaced earlier by rule 4 (it should have been the alias).
 6. **Alias integrity** — every `{dotted.path}` resolves to a leaf; cycle-detect; dangle = ERR.
@@ -64,7 +64,7 @@ Composites expand at emit time only: shadow → `box-shadow` / `NSShadow` / elev
 - default-mode re-assert → `[data-theme="<defaultMode>"] { … }` re-stating the base values of every
   var some non-default mode changes, emitted AFTER the `@media` blocks so a manual default-mode
   opt-in (e.g. `data-theme="light"`) beats the OS preference in both directions. Absent for
-  single-mode sets (their `tokens.css` is byte-identical to before this block existed).
+  single-mode sets.
 - theme set → `[data-theme="sleep"] { … }` (deltas only).
 - composites assembled to CSS HERE and ONLY here (shadow → `0 1px 3px #14141E0F`; gradient
   `strainRing` → `conic-gradient(...)`; typography split into `--type-body-size/-weight/-line-height/-family`).
@@ -98,7 +98,7 @@ a missing series leaf writes no line at all — no comment — so the adapter of
 A project imports exactly ONE adapter (tailwind OR shadcn), never both (each `@import`s tokens.css).
 
 **`DESIGN.md` frontmatter** (`--emit design-frontmatter`) — resolve the LIGHT semantic+component
-layers, then rename through the fixed PATH→FLAT map that reproduces today's names verbatim:
+layers, then rename through the fixed PATH→FLAT map:
 `semantic.color.action.primary→primary`, `…text.onAction→on-primary`, `primitive.color.neutral.N→neutral-N`,
 `semantic.color.feedback.{success,error,…}→same`, `…text.*→text-*`,
 `…surface.{background,raised,overlay}→surface-bg/raised/overlay`, `…border.*→border-*`,
@@ -108,8 +108,8 @@ theme deltas → `sleep-*`. Frontmatter dimensions emit `"<n>px"`; `lineHeight` 
 ratio (already a ratio in source — no division); colors resolve to literal hex. `components:` re-emit
 with the body's self-referential `{colors.primary}` dialect. The 8-section prose BODY is authored
 once and carried through unchanged. **The PATH→FLAT map is the single contract that keeps DESIGN.md
-byte-stable and check.sh green** — it MOVED from SKILL prose into `build_tokens.py` (cited there,
-not duplicated).
+byte-stable and check.sh green**; its source is `PATH_FLAT_COLORS` plus the dynamic rules in
+`build_frontmatter` (`build_tokens.py`).
 
 **`tokens.resolved.json`** (`--emit resolved`) — the de-aliased snapshot. A full copy of the TIERED
 base graph with every leaf `$value` resolved to its concrete value (aliases substituted transitively;
@@ -118,16 +118,11 @@ readers that want concrete values without running the resolver (`contrast.py aud
 For profile-2 sets the base file also carries `meta.resolvedMode`, each typography leaf carries its
 effective `langOverrides` de-aliased, and every non-default mode with an override file gets its own
 `tokens.resolved.<mode>.json` (mode applied, `$coverage` dropped, `meta.resolvedMode = "<mode>"`).
-The originally-planned legacy bridge — re-serializing an OLD nested flat shape
-(`color.brand.primary`, …) plus a re-emitted `meta.confidence` prose blob — was **NOT implemented**;
-today's `check.sh` consumes the projector-oracle directly and needs no old-shape file.
 
 ### Planned targets — 规划中,当前未实现
 
 The following targets do NOT exist in `scripts/build_tokens.py` (its `--emit` `choices` are exactly
-`css | design-frontmatter | resolved | tailwind | shadcn | all`; `tailwind`/`shadcn` were implemented
-2026-07-11 as var()-reference adapters over tokens.css — see Stage 3 above — not as standalone
-re-unitized emits). The unitless-source + `scaling`-facet model is designed so each remaining target
+`css | design-frontmatter | resolved | tailwind | shadcn | all`). The unitless-source + `scaling`-facet model is designed so each remaining target
 would be a pure function of `(resolved map, target unit policy, scaling facet)` — but until
 implemented, none of these can be invoked, and today's unitize stage emits **web units only**
 (px / rem via `--css-unit`; the pt / dp / sp mappings in Stage 2 describe the intended policy):
