@@ -21,7 +21,13 @@ node /absolute/skill/libraries/applications/render.mjs \
   --output /absolute/project/output
 ```
 
-输出包含可编辑 HTML、品牌 CSS、资源副本及构建记录。浏览器打开实例即可预览；PNG 由当前可用浏览器工具另行导出。[render.mjs](render.mjs)只生成文件，`build.json` 的视觉/浏览器状态始终是 `not_run`。实际验收按 [BD-APPLICATION-001](../../references/system.md#bd-application-001)与 [BD-QA-001](../../references/assets.md#bd-qa-001)记录。
+输出包含可编辑 HTML、品牌 CSS、资源副本及构建记录。浏览器打开实例即可预览。逐槽测量行数、溢出与槽间相交并导出 1x PNG：
+
+```sh
+node /absolute/skill/scripts/check-application.mjs /absolute/project/output
+```
+
+它需要 Node.js 22+ 与一个 Chromium 系浏览器，证据写入 `output/qa/`，合同见 [浏览器测量](contract.md#浏览器测量)。[render.mjs](render.mjs)只生成文件，`build.json` 的视觉/浏览器状态始终是 `not_run`。实际验收按 [BD-APPLICATION-001](../../references/system.md#bd-application-001)与 [BD-QA-001](../../references/assets.md#bd-qa-001)记录。
 
 ## 维护
 

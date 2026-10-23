@@ -73,9 +73,13 @@ async function fixture(t) {
   const catalog = { schema_version: 1, templates: [{ id: 'card', width: 1080, height: 1350, file: 'card.html' }] };
   await writeJSON(path.join(library, 'templates.json'), catalog);
   const brand = {
-    schema_version: 1, id: 'fixture-brand', name: 'Fixture & Co', language: 'zh-CN',
+    schema_version: 2, id: 'fixture-brand', name: 'Fixture & Co', language: 'zh-CN',
     colors: { paper: '#FAF8F0', text: '#17271A', muted: '#4A604E', brand: '#426E4B', on_brand: '#FFFFFF', rule: '#A3B8A7' },
-    type: { family: 'RendererFixture', file: 'font.ttf', license: 'OFL.txt', weight_min: 400, weight_max: 700, heading_weight: 700, body_weight: 400, label_weight: 500, heading_tracking_em: -0.025, kerning: 'none', ligatures: 'none', heading_line_height: 1.25, body_line_height: 1.5, label_line_height: 1.3 },
+    type: {
+      fonts: [{ family: 'RendererFixture', file: 'font.ttf', license: 'OFL.txt', weight_min: 400, weight_max: 700 }],
+      stacks: { heading: ['RendererFixture', 'sans-serif'], body: ['RendererFixture', 'sans-serif'], label: ['RendererFixture', 'sans-serif'] },
+      heading_weight: 700, body_weight: 400, label_weight: 500, heading_tracking_em: -0.025, kerning: 'none', ligatures: 'none', heading_line_height: 1.25, body_line_height: 1.5, label_line_height: 1.3,
+    },
     assets: { logo_on_paper: 'logo-paper.svg', logo_on_brand: 'logo-brand.svg', graphic: { paper: 'graphic.svg', brand: 'graphic.svg' } },
   };
   const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M0 0h20v20H0z" fill="#426E4B"/></svg>\n';
@@ -84,10 +88,10 @@ async function fixture(t) {
   await fs.writeFile(path.join(brandRoot, 'OFL.txt'), 'Original RendererFixture test font. Dedicated to the public domain.\n');
   const content = { schema_version: 2, items: [{ id: 'launch', template: 'card', theme: 'paper', kicker: '', title: 'A clear title', body: 'Body text.', footer: '', layout: {
     logo: { x: 80, y: 80, width: 240, height: 240 },
-    title: { x: 80, y: 380, width: 920, height: 240, font_size: 80, line_height_px: 96, max_lines: 2, align: 'left' },
-    body: { x: 80, y: 680, width: 920, height: 160, font_size: 32, line_height_px: 44, max_lines: 3, align: 'left' },
-    kicker: { x: 360, y: 80, width: 640, height: 50, font_size: 24, line_height_px: 32, max_lines: 1, align: 'right' },
-    footer: { x: 80, y: 1250, width: 920, height: 50, font_size: 24, line_height_px: 32, max_lines: 1, align: 'left' },
+    title: { x: 80, y: 380, width: 920, height: 240, font_size: 80, line_height_px: 100, max_lines: 2, align: 'left' },
+    body: { x: 80, y: 680, width: 920, height: 160, font_size: 32, line_height_px: 48, max_lines: 3, align: 'left' },
+    kicker: { x: 360, y: 80, width: 640, height: 50, font_size: 24, line_height_px: 31, max_lines: 1, align: 'right' },
+    footer: { x: 80, y: 1250, width: 920, height: 50, font_size: 24, line_height_px: 31, max_lines: 1, align: 'left' },
     graphic: { x: 80, y: 900, width: 250, height: 250 },
   } }] };
   const brandPath = path.join(brandRoot, 'brand.json');
@@ -128,10 +132,12 @@ test('renders text safely, copies binary resources, and records verifiable prove
   assert.ok(html.includes('class="art" src="assets/graphic-paper.svg"'));
   assert.ok(html.includes('src="assets/logo-paper.svg"'));
   const css = await fs.readFile(path.join(f.output, 'brand.css'), 'utf8');
-  for (const name of ['paper', 'text', 'muted', 'brand', 'on-brand', 'rule', 'font-family', 'heading-weight', 'body-weight', 'label-weight', 'heading-tracking', 'heading-line-height', 'body-line-height', 'label-line-height', 'font-kerning', 'font-ligatures']) assert.ok(css.includes(`--${name}:`), name);
+  for (const name of ['paper', 'text', 'muted', 'brand', 'on-brand', 'rule', 'heading-font-family', 'body-font-family', 'label-font-family', 'heading-weight', 'body-weight', 'label-weight', 'heading-tracking', 'heading-line-height', 'body-line-height', 'label-line-height', 'font-kerning', 'font-ligatures']) assert.ok(css.includes(`--${name}:`), name);
   assert.ok(css.includes('--heading-tracking: -0.025em;') && css.includes('font-weight: 400 700;'));
+  assert.ok(css.includes('--heading-font-family: "BrandTemplate 1", sans-serif;') && css.includes('src: url("assets/fonts/1/font.ttf") format("truetype");'));
   assert.ok(css.includes('--heading-line-height: 1.25;') && css.includes('--body-line-height: 1.5;') && css.includes('--label-line-height: 1.3;'));
-  assert.deepEqual(await fs.readFile(path.join(f.output, 'assets/font.ttf')), tinyFont());
+  assert.deepEqual(await fs.readFile(path.join(f.output, 'assets/fonts/1/font.ttf')), tinyFont());
+  assert.equal(await fs.readFile(path.join(f.output, 'assets/fonts/1/OFL.txt'), 'utf8'), await fs.readFile(path.join(f.brandRoot, 'OFL.txt'), 'utf8'));
   const manifest = JSON.parse(await fs.readFile(path.join(f.output, 'build.json'), 'utf8'));
   const { integrity, ...unsigned } = manifest;
   assert.equal(integrity.sha256, hash(canonical(unsigned)));
@@ -234,7 +240,7 @@ test('invalid type, graphic, color, blank title, and font extension are rejected
     ['weight', f => { f.brand.type.heading_weight = 900; }, /heading_weight/],
     ['color', f => { f.brand.colors.text = 'red;display:none'; }, /expected #RRGGBB/],
     ['title', f => { f.content.items[0].title = '  '; }, /title required/],
-    ['font', f => { f.brand.type.file = 'logo-paper.svg'; }, /unsupported file extension/],
+    ['font', f => { f.brand.type.fonts[0].file = 'logo-paper.svg'; }, /unsupported file extension/],
     ['line height', f => { f.brand.type.heading_line_height = 0.8; }, /heading_line_height/],
     ['missing line height', f => { delete f.brand.type.body_line_height; }, /body_line_height/],
     ['invalid used graphic', f => { f.brand.assets.graphic.paper = 5; }, /graphic.paper/],
@@ -288,7 +294,7 @@ test('manifest formatting edits and missing managed files block rebuilding', asy
     rejects(f.run(), /build.json formatting was modified/); assert.deepEqual(await snapshot(f.output), before);
   });
   await t.test('missing output', async sub => {
-    const f = await fixture(sub); succeeds(f.run()); await fs.unlink(path.join(f.output, 'assets/OFL.txt'));
+    const f = await fixture(sub); succeeds(f.run()); await fs.unlink(path.join(f.output, 'assets/fonts/1/OFL.txt'));
     const before = await snapshot(f.output);
     rejects(f.run(), /managed file missing/); assert.deepEqual(await snapshot(f.output), before);
   });
@@ -401,11 +407,12 @@ test('deleted display slot blocks rebuild without changing previous outputs', as
 
 test('complete layouts scale both axes by canvas width and bind the validated mapping to the manifest', async t => {
   const f = await fixture(t);
-  Object.assign(f.content.items[0].layout.title, { x: 108, y: 216, width: 864, height: 216, font_size: 54, line_height_px: 64.8, max_lines: 3, align: 'center' });
+  Object.assign(f.content.items[0].layout.title, { x: 108, y: 216, width: 864, height: 216, font_size: 54, line_height_px: 67.5, max_lines: 3, align: 'center' });
   await f.save(); succeeds(f.run());
   const html = await fs.readFile(path.join(f.output, 'launch.html'), 'utf8');
   const dimensions = Object.fromEntries([...html.matchAll(/--title-([a-z-]+):([0-9.e+-]+)cqw/g)].map(([, key, value]) => [key, Number(value)]));
-  for (const [key, expected] of Object.entries({ x: 10, y: 20, w: 80, h: 20, 'font-size': 5, 'line-height': 6 })) assert.ok(Math.abs(dimensions[key] - expected) < 1e-12, key);
+  for (const [key, expected] of Object.entries({ x: 10, y: 20, w: 80, h: 20, 'font-size': 5, leading: 6.25 })) assert.ok(Math.abs(dimensions[key] - expected) < 1e-12, key);
+  assert.ok(!/--(?:title|body|kicker|footer)-line-height:/.test(html), 'slot leading must not reuse the brand line-height variable names');
   assert.ok(html.includes('--title-align:center;--title-max-lines:3;'));
   assert.ok(!html.includes('{{LAYOUT_STYLE}}'));
   const css = await fs.readFile(path.join(f.output, 'brand.css'), 'utf8');
@@ -473,7 +480,8 @@ test('invalid later layouts prevent writes for earlier valid changed items', asy
     ['outside canvas', item => { item.layout.graphic.x = 1000; }, /graphic: rectangle/],
     ['negative origin', item => { item.layout.logo.y = -1; }, /logo: rectangle/],
     ['zero dimensions', item => { item.layout.title.width = 0; }, /title: rectangle/],
-    ['incomplete text slot', item => { delete item.layout.body.line_height_px; }, /body.line_height_px: expected finite number/],
+    ['incomplete text slot', item => { delete item.layout.body.font_size; }, /body.font_size: expected finite number/],
+    ['string line height', item => { item.layout.body.line_height_px = '48'; }, /body.line_height_px: expected finite number/],
     ['line too short', item => { item.layout.body.line_height_px = 20; }, /body.line_height_px: must be at least font_size/],
     ['line does not fit', item => { item.layout.body.height = 30; }, /body.line_height_px: must be at least font_size/],
     ['invalid line limit', item => { item.layout.body.max_lines = 1.5; }, /body.max_lines: expected integer 1..50/],
@@ -535,4 +543,214 @@ test('templates missing the layout marker reject rebuilding and preserve existin
   await fs.writeFile(templatePath, (await fs.readFile(templatePath, 'utf8')).replace('{{LAYOUT_STYLE}}', ''));
   rejects(f.run(), /missing required marker \{\{LAYOUT_STYLE\}\}/);
   assert.deepEqual(await snapshot(f.output), before);
+});
+
+test('templates using CSS variables the renderer does not define are rejected; brand, layout and own variables pass', async t => {
+  const styled = async (f, css) => {
+    const templatePath = path.join(f.library, 'card.html');
+    await fs.writeFile(templatePath, (await fs.readFile(templatePath, 'utf8')).replace('</head>', `<style>${css}</style></head>`));
+  };
+  for (const [label, css, names] of [
+    ['schema 1 font family', 'h1{font-family:var(--font-family)}', '--font-family'],
+    ['schema 1 slot line heights', 'h1{line-height:var(--title-line-height)}p{line-height:var( --kicker-line-height)}footer{line-height:var(--footer-line-height, 1.2)}', '--title-line-height, --kicker-line-height, --footer-line-height'],
+  ]) await t.test(label, async sub => {
+    const f = await fixture(sub); succeeds(f.run()); const before = await snapshot(f.output);
+    await styled(f, css);
+    rejects(f.run(), new RegExp(`template card: uses CSS variables this renderer does not define: ${names}; see "从 brand.json schema 1 迁移"`));
+    assert.deepEqual(await snapshot(f.output), before);
+  });
+  await t.test('defined variables', async sub => {
+    const f = await fixture(sub);
+    await styled(f, ':root{--gap:4px}h1{font-family:var(--heading-font-family);line-height:var(--title-leading);margin:var(--gap)}p{line-height:var(--label-line-height);width:var(--kicker-w)}img{left:var(--logo-x)}');
+    succeeds(f.run());
+  });
+});
+
+// Range-limited Latin face for a Chinese material (BD-TOKEN-001 step 6); the shared marks are left to the Chinese face.
+const LATIN = 'U+0000-00B6, U+00B8-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-2013, U+2015-2017, U+201A-201B, U+201E-2025, U+2027-206F, U+20AC, U+2122, U+2212';
+async function twoFaces(f, { heading = ['Fixture Latin', 'Fixture CJK', 'sans-serif'] } = {}) {
+  await fs.mkdir(path.join(f.brandRoot, 'latin')); await fs.mkdir(path.join(f.brandRoot, 'cjk'));
+  await fs.writeFile(path.join(f.brandRoot, 'latin', 'Latin[wght].ttf'), tinyFont());
+  await fs.writeFile(path.join(f.brandRoot, 'latin', 'OFL.txt'), 'Latin fixture license.\n');
+  await fs.writeFile(path.join(f.brandRoot, 'cjk', 'CJK.ttf'), tinyFont());
+  await fs.writeFile(path.join(f.brandRoot, 'cjk', 'LICENSE.txt'), 'CJK fixture license.\n');
+  f.brand.type.fonts = [
+    { family: 'Fixture Latin', file: 'latin/Latin[wght].ttf', license: 'latin/OFL.txt', weight_min: 300, weight_max: 700, unicode_range: LATIN },
+    { family: 'Fixture CJK', file: 'cjk/CJK.ttf', license: 'cjk/LICENSE.txt', weight_min: 100, weight_max: 900 },
+  ];
+  f.brand.type.stacks = { heading, body: ['Fixture Latin', 'Fixture CJK', 'sans-serif'], label: ['Fixture Latin', 'Fixture CJK', 'sans-serif'] };
+  f.content.items[0].title = '用 Tracefold 追溯每一次决策';
+  await f.save();
+}
+
+test('Chinese title with an English product name: one @font-face per face, Latin face range-limited, licenses keep their file names', async t => {
+  const f = await fixture(t); await twoFaces(f); succeeds(f.run());
+  const css = await fs.readFile(path.join(f.output, 'brand.css'), 'utf8');
+  assert.equal((css.match(/@font-face/g) || []).length, 2);
+  assert.ok(css.includes('font-family: "BrandTemplate 1";\n  src: url("assets/fonts/1/Latin%5Bwght%5D.ttf") format("truetype");'));
+  assert.ok(css.includes(`unicode-range: ${LATIN};`) && css.includes('font-weight: 300 700;') && css.includes('font-weight: 100 900;'));
+  assert.equal((css.match(/unicode-range/g) || []).length, 1);
+  for (const role of ['heading', 'body', 'label']) assert.ok(css.includes(`--${role}-font-family: "BrandTemplate 1", "BrandTemplate 2", sans-serif;`), role);
+  assert.equal(await fs.readFile(path.join(f.output, 'assets/fonts/1/OFL.txt'), 'utf8'), 'Latin fixture license.\n');
+  assert.equal(await fs.readFile(path.join(f.output, 'assets/fonts/2/LICENSE.txt'), 'utf8'), 'CJK fixture license.\n');
+  const manifest = JSON.parse(await fs.readFile(path.join(f.output, 'build.json'), 'utf8'));
+  assert.deepEqual(manifest.brand.font_families, ['Fixture Latin', 'Fixture CJK']);
+  assert.deepEqual(manifest.sources.resources.filter(x => /^(font|license)_/.test(x.role)).map(x => x.output), ['assets/fonts/1/Latin[wght].ttf', 'assets/fonts/1/OFL.txt', 'assets/fonts/2/CJK.ttf', 'assets/fonts/2/LICENSE.txt']);
+  assert.ok((await fs.readFile(path.join(f.output, 'launch.html'), 'utf8')).includes('<h1>用 Tracefold 追溯每一次决策</h1>'));
+  const before = await snapshot(f.output); succeeds(f.run()); assert.deepEqual(await snapshot(f.output), before);
+});
+
+test('heading stack may use a different family from body and label', async t => {
+  const f = await fixture(t); await twoFaces(f, { heading: ['Fixture CJK', 'serif'] }); succeeds(f.run());
+  const css = await fs.readFile(path.join(f.output, 'brand.css'), 'utf8');
+  assert.ok(css.includes('--heading-font-family: "BrandTemplate 2", serif;'));
+  assert.ok(css.includes('--body-font-family: "BrandTemplate 1", "BrandTemplate 2", sans-serif;'));
+});
+
+test('font entries and stacks are validated before any output is written', async t => {
+  for (const [label, modify, pattern] of [
+    ['schema 1 brand', f => { f.brand.schema_version = 1; }, /brand.schema_version: expected 2; migrate a schema 1 brand.json as described under "从 brand.json schema 1 迁移" in libraries\/applications\/contract.md/],
+    ['shared punctuation in a Chinese Latin range', f => { f.brand.type.fonts[0].unicode_range = 'U+0000-00FF, U+2000-206F'; }, /covers U\+00B7 ·, U\+2014 —, U\+2018 ‘, U\+2019 ’, U\+201C “, U\+201D ”, U\+2026 …/],
+    ['range injection', f => { f.brand.type.fonts[0].unicode_range = 'U+0000-00FF; } body { display: none'; }, /unicode_range: expected/],
+    ['unknown family', f => { f.brand.type.stacks.body = ['Missing Face', 'sans-serif']; }, /stacks.body\[0\]: "Missing Face" is not a brand.type.fonts family/],
+    ['generic family first', f => { f.brand.type.stacks.label = ['sans-serif']; }, /stacks.label\[0\]: "sans-serif" is not a brand.type.fonts family/],
+    ['unused font', f => { for (const role of ['heading', 'body', 'label']) f.brand.type.stacks[role] = ['Fixture CJK']; }, /Fixture Latin is not used by any stack/],
+    ['weight outside a later face', f => { f.brand.type.fonts[1].weight_min = 500; }, /body_weight 400 is outside Fixture CJK 500..900/],
+    ['font and license share a name', f => { f.brand.type.fonts[1].license = 'cjk/CJK.ttf'; }, /font and license need different file names/],
+    ['family injection', f => { f.brand.type.fonts[0].family = 'X"; } body { display: none'; f.brand.type.stacks.body[0] = f.brand.type.fonts[0].family; }, /family: expected the real family name/],
+  ]) await t.test(label, async sub => { const f = await fixture(sub); await twoFaces(f); modify(f); await f.save(); rejects(f.run(), pattern); assert.equal(await snapshot(f.output), null); });
+});
+
+test('omitted slot line height takes font size times the brand line height of its role; explicit values win and are recorded', async t => {
+  const manifestOf = async f => JSON.parse(await fs.readFile(path.join(f.output, 'build.json'), 'utf8'));
+  await t.test('omitted', async sub => {
+    const f = await fixture(sub);
+    for (const slot of ['title', 'body', 'kicker', 'footer']) delete f.content.items[0].layout[slot].line_height_px;
+    f.content.items[0].layout.title.font_size = 64;
+    await f.save(); succeeds(f.run());
+    const item = (await manifestOf(f)).items[0];
+    assert.deepEqual(['title', 'body', 'kicker', 'footer'].map(slot => item.layout[slot].line_height_px), [80, 48, 31, 31]);
+    assert.deepEqual(item.line_height_overrides, []);
+    const html = await fs.readFile(path.join(f.output, 'launch.html'), 'utf8');
+    assert.ok(html.includes(`--title-leading:${80 / 1080 * 100}cqw`));
+  });
+  await t.test('explicit canvas-specific values pass and are recorded', async sub => {
+    const f = await fixture(sub);
+    f.content.items[0].layout.title.line_height_px = 96;
+    f.content.items[0].layout.footer.line_height_px = 36;
+    await f.save(); succeeds(f.run());
+    const item = (await manifestOf(f)).items[0];
+    assert.equal(item.layout.title.line_height_px, 96);
+    assert.deepEqual(item.line_height_overrides, [
+      { slot: 'title', line_height_px: 96, brand_line_height_px: 100 },
+      { slot: 'footer', line_height_px: 36, brand_line_height_px: 31 },
+    ]);
+  });
+  await t.test('sub-pixel values rounding to the brand value are not recorded', async sub => {
+    const f = await fixture(sub); f.content.items[0].layout.kicker.line_height_px = 31.4; await f.save(); succeeds(f.run());
+    assert.deepEqual((await manifestOf(f)).items[0].line_height_overrides, []);
+  });
+  await t.test('a resolved line height must still fit the slot', async sub => {
+    const f = await fixture(sub); delete f.content.items[0].layout.kicker.line_height_px; f.content.items[0].layout.kicker.height = 30; await f.save();
+    rejects(f.run(), /kicker.line_height_px: must be at least font_size and fit one line in height/); assert.equal(await snapshot(f.output), null);
+  });
+});
+
+const CHECKER = fileURLToPath(new URL('./check-application.mjs', import.meta.url));
+const check = (f, env = {}) => {
+  const result = spawnSync(process.execPath, [CHECKER, f.output, '--out', path.join(f.root, 'qa')], { encoding: 'utf8', env: { ...process.env, VISUAL_SYSTEM_BROWSER: path.join(f.root, 'no-browser'), ...env } });
+  return { status: result.status, evidence: JSON.parse(result.stdout) };
+};
+
+test('application check without a browser is not_run, binds the build and leaves it untouched', async t => {
+  const f = await fixture(t); succeeds(f.run());
+  const before = await snapshot(f.output);
+  const { status, evidence } = check(f);
+  assert.equal(status, 2);
+  assert.equal(evidence.result, 'not_run');
+  assert.match(evidence.reason, /VISUAL_SYSTEM_BROWSER is set but does not point to an executable file/);
+  assert.equal(evidence.browser, null);
+  assert.equal(evidence.inputs.build_json_sha256, hash(await fs.readFile(path.join(f.output, 'build.json'))));
+  const manifest = JSON.parse(await fs.readFile(path.join(f.output, 'build.json'), 'utf8'));
+  assert.deepEqual(evidence.inputs.files, manifest.outputs.map(({ path: file, sha256 }) => ({ path: file, sha256 })));
+  assert.deepEqual(JSON.parse(await fs.readFile(path.join(f.root, 'qa', 'application-check.json'), 'utf8')), evidence);
+  assert.deepEqual(await snapshot(f.output), before);
+});
+
+test('application check refuses outputs edited after the build before looking for a browser', async t => {
+  const f = await fixture(t); succeeds(f.run());
+  await fs.appendFile(path.join(f.output, 'launch.html'), '<!-- edited -->');
+  const { status, evidence } = check(f);
+  assert.equal(status, 1);
+  assert.equal(evidence.result, 'FAIL');
+  assert.deepEqual(evidence.errors.map(e => e.code), ['BUILD_MODIFIED']);
+  assert.equal(evidence.reason, undefined);
+});
+
+// The tests below need a Chromium-family browser and are skipped when check-application finds none.
+async function announcement(t, { kicker = '', title = 'A clear title', body = 'Body text.', css = '', layout = {}, brand = () => {} } = {}) {
+  const f = await fixture(t);
+  const html = await fs.readFile(fileURLToPath(new URL('../libraries/applications/templates/announcement.html', import.meta.url)), 'utf8');
+  await fs.writeFile(path.join(f.library, 'announcement.html'), html.replace('</style>', `${css}</style>`));
+  f.catalog.templates.push({ id: 'announcement', width: 1200, height: 630, file: 'announcement.html' });
+  await writeJSON(path.join(f.library, 'templates.json'), f.catalog);
+  delete f.brand.assets.graphic;
+  await brand(f);
+  f.content.items[0] = { id: 'launch', template: 'announcement', theme: 'paper', kicker, title, body, footer: '', layout: {
+    logo: { x: 80, y: 60, width: 64, height: 64 },
+    kicker: { x: 80, y: 150, width: 600, height: 31, font_size: 24, line_height_px: 31, max_lines: 1, align: 'left' },
+    title: { x: 80, y: 200, width: 760, height: 200, font_size: 80, line_height_px: 100, max_lines: 2, align: 'left' },
+    body: { x: 80, y: 430, width: 760, height: 96, font_size: 32, line_height_px: 48, max_lines: 2, align: 'left' },
+    ...layout,
+  } };
+  await f.save(); succeeds(f.run());
+  return check(f, { VISUAL_SYSTEM_BROWSER: process.env.VISUAL_SYSTEM_BROWSER });
+}
+
+test('application check: an empty kicker with a layout slot passes, a hidden kicker with copy is SLOT_MISSING', async t => {
+  await t.test('empty kicker', async sub => {
+    const { status, evidence } = await announcement(sub);
+    if (evidence.result === 'not_run') return sub.skip(evidence.reason);
+    assert.equal(status, 0, JSON.stringify(evidence.errors));
+    assert.equal(evidence.checker_sha256, hash(await fs.readFile(CHECKER)));
+    assert.deepEqual([evidence.items[0].slots.kicker.hidden, evidence.items[0].slots.kicker.empty], [true, true]);
+  });
+  await t.test('hidden kicker with copy', async sub => {
+    const { status, evidence } = await announcement(sub, { kicker: 'Release notes', css: '.kicker{visibility:hidden}' });
+    if (evidence.result === 'not_run') return sub.skip(evidence.reason);
+    assert.equal(status, 1);
+    assert.deepEqual(evidence.errors, [{ code: 'SLOT_MISSING', message: 'launch: kicker: [data-slot="kicker"] has copy but is not rendered' }]);
+  });
+});
+
+test('application check: overflow is judged by line boxes, not by a display face content area taller than the line height', async t => {
+  // Space Grotesk at 64px has an 82px content area; with a 70px line height, two lines fill a 140px
+  // slot exactly while scrollHeight reaches 146px.
+  const spaceGrotesk = async f => {
+    await fs.copyFile(fileURLToPath(new URL('../libraries/fonts/files/space-grotesk/SpaceGrotesk-VF.ttf', import.meta.url)), path.join(f.brandRoot, 'SpaceGrotesk-VF.ttf'));
+    await fs.copyFile(fileURLToPath(new URL('../libraries/fonts/licenses/space-grotesk-OFL.txt', import.meta.url)), path.join(f.brandRoot, 'space-grotesk-OFL.txt'));
+    Object.assign(f.brand.type, {
+      fonts: [{ family: 'Space Grotesk', file: 'SpaceGrotesk-VF.ttf', license: 'space-grotesk-OFL.txt', weight_min: 300, weight_max: 700 }],
+      stacks: { heading: ['Space Grotesk', 'sans-serif'], body: ['Space Grotesk', 'sans-serif'], label: ['Space Grotesk', 'sans-serif'] },
+      heading_line_height: 1.094,
+    });
+  };
+  const title = { x: 80, y: 200, width: 760, height: 140, font_size: 64, max_lines: 2, align: 'left' };
+  await t.test('two lines in a 140px slot', async sub => {
+    const { status, evidence } = await announcement(sub, { title: 'Portsmith keeps every release note', body: '', brand: spaceGrotesk, layout: { title, body: null } });
+    if (evidence.result === 'not_run') return sub.skip(evidence.reason);
+    const slot = evidence.items[0].slots.title;
+    assert.equal(status, 0, JSON.stringify(evidence.errors));
+    assert.deepEqual([slot.lines, slot.line_height_px, slot.line_box_bottom_px, slot.client_height], [2, 70, 140, 140]);
+    assert.ok(slot.scroll_height > slot.client_height, `scrollHeight ${slot.scroll_height}`);
+    assert.ok(slot.fonts.some(font => font.familyName.startsWith('Space Grotesk') && font.isCustomFont));
+  });
+  await t.test('three lines', async sub => {
+    const { status, evidence } = await announcement(sub, { title: 'Portsmith keeps every release note in one place for the team', body: '', brand: spaceGrotesk, layout: { title, body: null } });
+    if (evidence.result === 'not_run') return sub.skip(evidence.reason);
+    assert.equal(evidence.items[0].slots.title.lines, 3);
+    assert.equal(status, 1);
+    assert.deepEqual(evidence.errors.map(e => e.code), ['SLOT_LINES', 'SLOT_OVERFLOW']);
+    assert.equal(evidence.items[0].slots.title.line_box_bottom_px, 210);
+  });
 });

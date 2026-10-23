@@ -5,17 +5,17 @@
 <title>{{BRAND_NAME}} · {{TITLE}}</title>
 <link rel="stylesheet" href="brand.css">
 <style>
-*{box-sizing:border-box}body{margin:0;background:var(--paper);font-family:var(--font-family);font-weight:var(--body-weight);font-kerning:var(--font-kerning);font-variant-ligatures:var(--font-ligatures);font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);font-family:var(--body-font-family);font-weight:var(--body-weight);font-kerning:var(--font-kerning);font-variant-ligatures:var(--font-ligatures);font-synthesis:none}
 .sheet{width:100%;max-width:{{WIDTH}}px;aspect-ratio:{{WIDTH}}/{{HEIGHT}};container-type:inline-size;margin:auto;position:relative;background:var(--paper);color:var(--text)}
 .sheet.brand{background:var(--brand);color:var(--on-brand)}
 .logo{position:absolute;left:var(--logo-x);top:var(--logo-y);width:var(--logo-w);height:var(--logo-h);object-fit:contain;object-position:left top}
 .graphic{position:absolute;left:var(--graphic-x);top:var(--graphic-y);width:var(--graphic-w);height:var(--graphic-h)}.art{display:block;width:100%;height:100%;object-fit:contain}
-.kicker,.footer{color:var(--muted)}
+.kicker,.footer{color:var(--muted);font-family:var(--label-font-family)}
 .title,.body,.kicker,.footer{position:absolute;margin:0;white-space:pre-wrap;overflow-wrap:normal;word-break:normal;hyphens:none;text-wrap:wrap;letter-spacing:0}
-.title{left:var(--title-x);top:var(--title-y);width:var(--title-w);height:var(--title-h);font-size:var(--title-font-size);line-height:var(--title-line-height);text-align:var(--title-align);font-weight:var(--heading-weight);letter-spacing:var(--heading-tracking)}
-.body{left:var(--body-x);top:var(--body-y);width:var(--body-w);height:var(--body-h);font-size:var(--body-font-size);line-height:var(--body-line-height);text-align:var(--body-align);font-weight:var(--body-weight);color:var(--muted)}
-.kicker{left:var(--kicker-x);top:var(--kicker-y);width:var(--kicker-w);height:var(--kicker-h);font-size:var(--kicker-font-size);line-height:var(--kicker-line-height);text-align:var(--kicker-align);font-weight:var(--label-weight)}
-.footer{left:var(--footer-x);top:var(--footer-y);width:var(--footer-w);height:var(--footer-h);font-size:var(--footer-font-size);line-height:var(--footer-line-height);text-align:var(--footer-align);font-weight:var(--label-weight)}
+.title{left:var(--title-x);top:var(--title-y);width:var(--title-w);height:var(--title-h);font-size:var(--title-font-size);line-height:var(--title-leading);text-align:var(--title-align);font-family:var(--heading-font-family);font-weight:var(--heading-weight);letter-spacing:var(--heading-tracking)}
+.body{left:var(--body-x);top:var(--body-y);width:var(--body-w);height:var(--body-h);font-size:var(--body-font-size);line-height:var(--body-leading);text-align:var(--body-align);font-weight:var(--body-weight);color:var(--muted)}
+.kicker{left:var(--kicker-x);top:var(--kicker-y);width:var(--kicker-w);height:var(--kicker-h);font-size:var(--kicker-font-size);line-height:var(--kicker-leading);text-align:var(--kicker-align);font-weight:var(--label-weight)}
+.footer{left:var(--footer-x);top:var(--footer-y);width:var(--footer-w);height:var(--footer-h);font-size:var(--footer-font-size);line-height:var(--footer-leading);text-align:var(--footer-align);font-weight:var(--label-weight)}
 .body:empty,.kicker:empty,.footer:empty,.graphic:empty{display:none}
 </style>
 </head>

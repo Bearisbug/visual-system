@@ -15,7 +15,7 @@
 | 简报、方向比较、风格候选、静态交接说明 | 读取文字、写出文本；无文件写入能力时可在对话交付正文并注明未落盘 | 从文档建立设计假设，列出要看的参考与待试参数；不要求生图、浏览器或脚本先通过 |
 | 参考提取、视觉评审 | 实际查看本地或远程图像 | 只能引用已有文字记录并标为「文档记载，未独立目检」；不得把它写成当前观察。联网不可用时可研究可读取的本地素材，远端现状未核验 |
 | 新位图探索、材质编辑 | 当前可用且获准的图像工具 | 精确几何任务可走可编辑矢量流程；位图 / 材质需求缺工具时交付已完成的简报、Prompt 与输入清单，图像生成保持待执行。按运行时规定选择工具，不臆造参考图参数 |
-| SVG 母版、PNG 或物料导出 | 可编辑源处理、相应格式的渲染或导出工具，以及实际图像观察 | 可完成源文件或构造说明；缺渲染时列为未验收源稿，不能声称 PNG 已生成、透明度或小尺寸已通过 |
+| SVG 母版、PNG 或物料导出 | 可编辑源处理、相应格式的渲染或导出工具，以及实际图像观察。SVG 栅格化用 `rsvg-convert` 或浏览器：ImageMagick 内置的 SVG 渲染器会漏画描边和样式，`magick` 只用来读写 PNG，不用来渲染 SVG。导出后把 PNG 与浏览器里的 SVG 放到同一尺寸并排看，记录用了哪个渲染器 | 可完成源文件或构造说明；缺渲染时列为未验收源稿，不能声称 PNG 已生成、透明度或小尺寸已通过 |
 | 正式 release / tokens 机械验收 | 本包脚本声明的运行依赖，见下表 | 可完成不依赖脚本的源文件与说明；未运行的合同项保持 `not_run`。手工检查可另附记录，不能替代脚本并宣称脚本通过 |
 | Web / 原生 / 设计工具交接的实际消费 | 对应目标的真实运行或导入环境 | 完成静态映射与交接说明，目标消费保持未验证；不能用 Web 截图证明原生平台或设计工具已接入 |
 
@@ -28,6 +28,7 @@
 | 维护 Skill 资源 | `node scripts/check-skill.mjs`；Node.js 20+、`xmllint`；`--deep` 另需 ImageMagick 7 的 `magick`。`check.sh` 是 POSIX shell 包装入口；普通设计任务不要求运行此门 |
 | 正式资产 release | `node scripts/validate-release.mjs <manifest.json>`；Node.js、`xmllint`、`magick`，实际合同见 [交付校验](validation-contract.md) |
 | tokens 生成与检查 | 按 [BD-TOKEN-001](system.md#bd-token-001)调用内置 vendor 与检查器；需要 Node.js、uv 和 Python 虚拟环境。只交静态说明的任务不冒充完整 tokens 交付 |
+| 物料版面测量 | `node scripts/check-application.mjs <build-dir> [--out <dir>]`；Node.js 22+（用内置 WebSocket 驱动 CDP，不装 npm 包）与一个 Chromium 系浏览器。这是无人值守的无头测量，按 `VISUAL_SYSTEM_BROWSER` 指定的可执行文件 → Playwright 缓存里的 chromium-headless-shell → Google Chrome / Chromium → Microsoft Edge 的顺序查找，只启动一次；交互目检仍按 BD-QA-001。证据默认写入 `<build-dir>/qa/application-check.json`，绑定 build.json 与每个输出的 SHA-256，记录实际浏览器与版本，build.json 的 `validation` 保持 `not_run`。Node 低于 22 或找不到浏览器时结果为 `not_run` 并写明原因（退出码 2），版面容量记为未验证，不改用目测宣称放得下 |
 
 优先复用当前环境已提供的等效查看、渲染与浏览器能力。本机浏览器验证按 [BD-QA-001](assets.md#bd-qa-001)优先 Edge；确认不可用时选实际可用的浏览器并记录差异。浏览器工具并不统一提供 PNG 导出、字体检查或脚本执行，使用前核对接口。
 

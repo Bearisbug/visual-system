@@ -55,7 +55,7 @@ libraries/styles/        12 类风格、152 张 AI 图（119 重绘＋33 原创�
 libraries/fonts/         Space Grotesk、Noto Sans SC、JetBrains Mono（OFL）及一组已测搭配
 libraries/prompts/       Prompt 模式：新构思、轮廓细化、材质配色、字标、应用展示
 libraries/applications/  公告 1200×630、竖版 1080×1350、封面 1600×900 模板及渲染器
-scripts/                 Skill 自检、release manifest 校验、tokens 检查、tokens → brand.json、自测、渲染器测试
+scripts/                 Skill 自检、release manifest 校验、tokens 检查、tokens → brand.json、物料测量、自测、渲染器测试
 vendor/theme-extract/    tokens 生成器与 profile-2 格式文档的原样副本（SOURCE.json 记录上游提交与 SHA-256）
 agents/openai.yaml       Codex 展示元数据
 AGENTS.md                维护本 Skill 时的规则
@@ -94,11 +94,12 @@ git clone --depth 1 https://github.com/Bearisbug/visual-system.git ~/.claude/ski
 
 | 工具 | 用途 |
 | --- | --- |
-| Node.js 20+ | `check.sh`、校验器、物料渲染器 |
+| Node.js 20+（`check-application` 需 22+） | `check.sh`、校验器、物料渲染器 |
 | uv（Python 3，仅标准库） | 运行 vendor 的 tokens 生成器与 `check-tokens` |
 | `xmllint` | 检查时解析 SVG |
 | ImageMagick 7（`magick`） | `check.sh --deep`，以及 release 校验中的 PNG 与透明度检查 |
-| 具备相应检查 / 导出能力的浏览器 | 预览模板、导出 PNG；优先 Edge，不可用时记录实际浏览器 |
+| `rsvg-convert` 或浏览器 | 把 SVG 母版栅格化为 PNG；ImageMagick 内置的 SVG 渲染器会漏画描边和样式 |
+| Chromium 系浏览器 | `check-application` 逐槽测量与 1x PNG 导出（依次查找 Playwright 的 chromium-headless-shell、Chrome / Chromium、Edge）；预览模板，目检优先 Edge，不可用时记录实际浏览器 |
 | 生图工具（可选） | 位图探索与材质研究；矢量母版直接用 SVG 构建 |
 
 ## 用法
@@ -121,6 +122,7 @@ git clone --depth 1 https://github.com/Bearisbug/visual-system.git ~/.claude/ski
 node scripts/validate-release.mjs /abs/path/to/release/manifest.json
 node scripts/self-test.mjs --output /abs/path/to/validation-results.json
 node --test scripts/test-application-renderer.mjs
+node scripts/check-application.mjs /abs/path/to/application-output   # 没有浏览器时退出码 2（not_run）
 node scripts/check-tokens.mjs /abs/path/to/brand --lint /abs/path/to/example.css
 ```
 

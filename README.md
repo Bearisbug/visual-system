@@ -57,7 +57,7 @@ libraries/styles/        12 styles, 152 AI studies (119 reinterpretations + 33 o
 libraries/fonts/         Space Grotesk, Noto Sans SC, JetBrains Mono (OFL) + tested pairing
 libraries/prompts/       prompt patterns: new concept, refine, material, wordmark, application
 libraries/applications/  announcement 1200×630, story 1080×1350, cover 1600×900 + renderer
-scripts/                 skill checks, release manifest validator, token checks, tokens → brand.json, self-test, renderer tests
+scripts/                 skill checks, release manifest validator, token checks, tokens → brand.json, application measurement, self-test, renderer tests
 vendor/theme-extract/    verbatim copy of the token generator and profile-2 format docs (SOURCE.json pins upstream commit and SHA-256)
 agents/openai.yaml       display metadata for Codex
 AGENTS.md                maintenance rules for editing the skill itself
@@ -96,11 +96,12 @@ Claude Code, one project only: clone into `<project>/.claude/skills/visual-syste
 
 | Tool | Needed for |
 | --- | --- |
-| Node.js 20+ | `check.sh`, validators, application renderer |
+| Node.js 20+ (22+ for `check-application`) | `check.sh`, validators, application renderer |
 | uv (Python 3, stdlib only) | the vendored token generator and `check-tokens` |
 | `xmllint` | SVG parsing in checks |
 | ImageMagick 7 (`magick`) | `check.sh --deep` and PNG/alpha checks in release validation |
-| A browser with the required inspection/export capability | previewing templates and exporting PNGs; use Edge when available, otherwise record the actual browser |
+| `rsvg-convert` or a browser | rasterizing SVG masters to PNG; ImageMagick's built-in SVG renderer drops strokes and styles |
+| A Chromium-family browser | `check-application` slot measurement and 1x PNG export (looks up Playwright's chromium-headless-shell, then Chrome / Chromium, then Edge); previewing templates, where visual inspection uses Edge when available, otherwise record the actual browser |
 | An image generation tool (optional) | raster exploration and material studies; vector masters are built directly as SVG |
 
 ## Usage
@@ -123,6 +124,7 @@ Run from the skill root:
 node scripts/validate-release.mjs /abs/path/to/release/manifest.json
 node scripts/self-test.mjs --output /abs/path/to/validation-results.json
 node --test scripts/test-application-renderer.mjs
+node scripts/check-application.mjs /abs/path/to/application-output   # exits 2 (not_run) without a browser
 node scripts/check-tokens.mjs /abs/path/to/brand --lint /abs/path/to/example.css
 ```
 

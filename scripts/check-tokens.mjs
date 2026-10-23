@@ -17,13 +17,15 @@ Mechanical checks for a profile-2 token set (see references/system.md#bd-token-0
      adjacent series under simulated protanopia/deuteranopia and under normal vision, and distance
      from the feedback colors (thresholds in the comment above the check);
   4. state-layer distinctness per mode (STATE_DISTINCT): on every surface that carries a state
-     layer, the hover and pressed composites are at least CIEDE2000 deltaE00 3 apart;
-  5. at full depth, dataViz is present with series 1..6 or notApplicable, never missing;
-  6. meta.notUsed lint over the --lint CSS/HTML files.
+     layer, painted as the browser paints it, default and hover are at least CIEDE2000 deltaE00 2
+     apart and hover and pressed at least 3;
+  5. meta.roles never declares a state.* or focusRing.* role missing;
+  6. at full depth, dataViz is present with series 1..6 or notApplicable, never missing;
+  7. meta.notUsed lint over the --lint CSS/HTML files.
 Requires uv. No network. Does not prove visual quality, font loading or component behavior.`);
   process.exit(0);
 }
-const result = report('design-system tokens: generator freshness, per-mode role and chart-series contrast, chart-series distinctness, state-layer distinctness, dataViz coverage, notUsed lint');
+const result = report('design-system tokens: generator freshness, per-mode role and chart-series contrast, chart-series distinctness, state-layer distinctness, state roles declared, dataViz coverage, notUsed lint');
 const outIndex = args.indexOf('--out');
 const lintIndex = args.indexOf('--lint');
 const dirArg = args[0];
@@ -97,7 +99,7 @@ const SURFACES = ['surface.sunken', 'surface.default', 'surface.raised', 'surfac
 const PAIRS = [
   ...['text.primary', 'text.secondary', 'text.tertiary', 'accent', 'feedback.success', 'feedback.warning', 'feedback.error']
     .flatMap(fg => SURFACES.map(bg => [fg, bg, 4.5])),
-  ['text.primary', 'selection', 4.5],
+  ...['text.primary', 'text.secondary', 'text.tertiary'].map(fg => [fg, 'selection', 4.5]),
   ['onAccent', 'accent', 4.5],
   ...SURFACES.map(bg => ['focusRing.color', bg, 3]),
   ...SURFACES.map(bg => ['divider', bg, null])
@@ -265,19 +267,34 @@ if (scratch) capture(result, 'dataViz distinctness', () => {
 
 // State-layer distinctness (STATE_DISTINCT; BD-TOKEN-001 step 7). On every surface that carries a
 // state layer (the STATE_PAIRS above: the layer is the text's own color, i.e. currentColor, over
-// the fill), the hover and pressed composites stay at least deltaE00 3 apart in every mode.
-//   - Composite in sRGB and round each channel to 8 bits, as the browser paints it; then sRGB
-//     (IEC 61966-2-1) -> XYZ -> CIELAB with the D65 white.
+// the fill), in every mode the default and hover paints stay at least deltaE00 2 apart and the
+// hover and pressed paints at least deltaE00 3 apart.
+//   - Paint as Chromium's 8-bit source-over does: the layer opacity is stored as
+//     A = round(alpha * 255), the layer color is premultiplied and rounded to 8 bits, and the
+//     surface is scaled by (256 - A) / 256 and truncated. This reproduces every pixel of 280 random
+//     layer / surface / opacity triples drawn with the specimen spec's appendix A ::after layer in
+//     chrome-headless-shell 156 (software raster, macOS arm64), e.g. white over #315BE8 at 0.04 and
+//     0.11 -> (57, 97, 232) and (71, 109, 234). GPU raster can differ by 1 per channel.
+//   - Then sRGB (IEC 61966-2-1) -> XYZ -> CIELAB with the D65 white.
 //   - deltaE00 is CIEDE2000 (CIE 142-2001) as written out in Sharma, Wu & Dalal, "The CIEDE2000
 //     color-difference formula: implementation notes, supplementary test data, and mathematical
 //     observations", Color Research & Application 30(1), 2005; deltaE00() reproduces their test pairs.
-//   - Threshold 3 comes from this skill's regression judgments (Harness evals/visual-system.md,
-//     REG-021): white text on a blue primary fill with hover/pressed at deltaE00 3.40 was judged
-//     distinguishable side by side; 1.38-1.69 was judged indistinguishable.
+//   - Hover -> pressed threshold 3 comes from this skill's regression judgments (Harness
+//     evals/visual-system.md, REG-021): white text on a blue primary fill with hover/pressed at
+//     deltaE00 3.40 was judged distinguishable side by side; 1.38-1.69 was judged indistinguishable.
+//   - Default -> hover threshold 2 is a starting value awaiting the same side-by-side calibration.
+//     Evidence so far (REG-018, 2026-10-22): white on #315BE8 with hover 0.04 paints at deltaE00
+//     1.927 from the default fill and was judged nearly indistinguishable in a screenshot.
 // The specimen spec's reference opacities are a starting point, not fixed values; each mode may
 // point semantic.state.* at its own opacities. Strictness follows the overlay contrast rows: the
 // primary button at every depth, the other surfaces at full depth, advisory at minimal depth.
-const DE00_FLOOR = 3;
+const DE00_FLOOR = 3, HOVER_DE00_FLOOR = 2;
+const paint8 = (layer, surface, alpha) => {
+  const A = Math.round(alpha * 255);
+  const channel = key => Math.min(255, Math.round(layer[key] * A / 255) + ((surface[key] * (256 - A)) >> 8));
+  return { r: channel('r'), g: channel('g'), b: channel('b'), a: 1 };
+};
+const round8 = c => ({ r: Math.round(c.r), g: Math.round(c.g), b: Math.round(c.b), a: 1 });
 function cielab(c) {
   const [r, g, b] = linearRGB(c);
   const xyz = [0.4124564 * r + 0.3575761 * g + 0.1804375 * b, 0.2126729 * r + 0.7151522 * g + 0.0721750 * b, 0.0193339 * r + 0.1191920 * g + 0.9503041 * b];
@@ -316,21 +333,36 @@ if (scratch) capture(result, 'state distinctness', () => {
     for (const [fgRole, bgRole] of STATE_PAIRS) {
       const fg = roleColor(fgRole), bgRaw = roleColor(bgRole);
       if (!fg || !bgRaw) continue;
-      const bg = bgRaw.a < 1 ? over(bgRaw, base) : bgRaw;
-      const layer = fg.a < 1 ? over(fg, bg) : fg;
-      const paint = alpha => { const c = over({ ...layer, a: alpha }, bg); return { r: Math.round(c.r), g: Math.round(c.g), b: Math.round(c.b), a: 1 }; };
-      const exact = deltaE00(cielab(paint(hover)), cielab(paint(pressed)));
-      const row = { fg: fgRole, bg: bgRole, hover, pressed, deltaE00: Math.floor(exact * 100) / 100, threshold: DE00_FLOOR, pass: exact >= DE00_FLOOR };
+      const bg = round8(bgRaw.a < 1 ? over(bgRaw, base) : bgRaw);
+      const layer = round8(fg.a < 1 ? over(fg, bg) : fg);
+      const hoverPaint = cielab(paint8(layer, bg, hover));
+      const firstStep = deltaE00(cielab(bg), hoverPaint), secondStep = deltaE00(hoverPaint, cielab(paint8(layer, bg, pressed)));
+      const row = { fg: fgRole, bg: bgRole, hover, pressed,
+        default_hover_deltaE00: Math.floor(firstStep * 100) / 100, default_hover_threshold: HOVER_DE00_FLOOR,
+        deltaE00: Math.floor(secondStep * 100) / 100, threshold: DE00_FLOOR,
+        pass: firstStep >= HOVER_DE00_FLOOR && secondStep >= DE00_FLOOR };
       const strict = fgRole === 'onAccent' || result.depth === 'full';
       if (!strict) row.advisory = true;
-      const message = `${mode}: ${fgRole} state layer on ${bgRole}: hover ${hover} vs pressed ${pressed} is deltaE00 ${row.deltaE00} < ${DE00_FLOOR}`;
-      if (!row.pass && strict) { result.errors.push({ context: 'state', code: 'STATE_DISTINCT', message: `${message}; widen the per-mode opacities within 4.5:1, then derive an interaction color (BD-TOKEN-001 step 7)` }); result.result = 'FAIL'; }
-      if (!row.pass && !strict) result.warnings.push(`advisory (minimal depth): ${message}`);
+      const messages = [
+        firstStep < HOVER_DE00_FLOOR && `${mode}: ${fgRole} state layer on ${bgRole}: default vs hover ${hover} is deltaE00 ${row.default_hover_deltaE00} < ${HOVER_DE00_FLOOR}`,
+        secondStep < DE00_FLOOR && `${mode}: ${fgRole} state layer on ${bgRole}: hover ${hover} vs pressed ${pressed} is deltaE00 ${row.deltaE00} < ${DE00_FLOOR}`
+      ].filter(Boolean);
+      for (const message of messages) {
+        if (strict) { result.errors.push({ context: 'state', code: 'STATE_DISTINCT', message: `${message}; adjust the per-mode opacities within 4.5:1, then derive an interaction color (BD-TOKEN-001 step 7)` }); result.result = 'FAIL'; }
+        else result.warnings.push(`advisory (minimal depth): ${message}`);
+      }
       rows.push(row);
     }
     modes[mode] = rows;
   }
   result.state_distinct = modes;
+});
+
+// State layers and focus rings follow platform conventions, so they are inferred or
+// notApplicable, never missing (BD-TOKEN-001 step 3).
+capture(result, 'state roles', () => {
+  const missing = Object.entries(tree.meta?.roles || {}).filter(([role, target]) => /^(state|focusRing)\./.test(role) && target?.status === 'missing').map(([role]) => role);
+  assert(!missing.length, 'STATE_ROLE_MISSING', `${missing.join(', ')} declared missing: map each role to a leaf with confidence inferred from the platform convention, or mark it notApplicable with a reason (BD-TOKEN-001 step 3)`);
 });
 
 // Full depth derives chart colors from the accent by default; only a product the

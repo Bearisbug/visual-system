@@ -17,8 +17,8 @@ const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'brand-validation-'));
 const results = [];
 const write = (dir, file, value) => { const target = path.join(dir, file); fs.mkdirSync(path.dirname(target), { recursive: true }); fs.writeFileSync(target, typeof value === 'string' || Buffer.isBuffer(value) ? value : JSON.stringify(value, null, 2) + '\n'); return target; };
 const rect = (paint = '#152837', x = 4) => `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="${paint}" d="M ${x} 4 H 28 V 28 H 4 Z"/></svg>`;
-function invoke(script, parameters) {
-  const child = spawnSync(process.execPath, [path.join(here, script), ...parameters], { encoding: 'utf8', timeout: 60000 });
+function invoke(script, parameters, env = {}) {
+  const child = spawnSync(process.execPath, [path.join(here, script), ...parameters], { encoding: 'utf8', timeout: 60000, env: { ...process.env, ...env } });
   assert(!child.error, 'CHILD_EXECUTION', child.error?.message);
   let report;
   try { report = JSON.parse(child.stdout); } catch { throw new Error(`Invalid child report: ${child.stdout}\n${child.stderr}`); }
@@ -503,7 +503,7 @@ try {
   const editTokens = (dir, fn) => { const file=path.join(dir,'tokens.json'), j=JSON.parse(fs.readFileSync(file,'utf8')); fn(j); write(dir,'tokens.json',j); };
   // The example keeps the specimen spec's reference opacities (hover 0.08, pressed 0.10), which fail
   // STATE_DISTINCT; token fixtures start from a copy whose hover/pressed pass every gate in both modes.
-  const seed = dir => { fs.cpSync(example, dir, { recursive: true }); editTokens(dir, j => { j.primitive.opacity.hover.$value = 0.04; j.primitive.opacity.pressed.$value = 0.11; }); };
+  const seed = dir => { fs.cpSync(example, dir, { recursive: true }); editTokens(dir, j => { j.primitive.opacity.hover.$value = 0.048; j.primitive.opacity.pressed.$value = 0.115; }); };
   function testTokens(name, expected, mutate = () => {}, lint) {
     const dir = path.join(temp, name);
     seed(dir);
@@ -520,6 +520,7 @@ try {
   testTokens('tokens-category-undeclared','GENERATOR_FAILED', dir => editTokens(dir, j => delete j.meta.categories.motion));
   testTokens('tokens-contrast-below-threshold','CONTRAST_FAIL', dir => { editTokens(dir, j => { j.semantic.color.text.tertiary.$value='{primitive.color.neutral.300}'; }); generate(dir); });
   testTokens('tokens-leftover-snapshot','GENERATED_UNEXPECTED', dir => fs.copyFileSync(path.join(dir,'tokens.resolved.dark.json'),path.join(dir,'tokens.resolved.sepia.json')));
+  testTokens('tokens-contrast-tertiary-on-selection','CONTRAST_FAIL', dir => { editTokens(dir, j => { j.primitive.color.neutral['selprobe']={$value:'#A3A7AF'}; j.semantic.color.surface.selected.$value='{primitive.color.neutral.selprobe}'; }); generate(dir); });
   testTokens('tokens-contrast-rounding-band','CONTRAST_FAIL', dir => { editTokens(dir, j => { j.primitive.color.neutral['550']={$value:'#6C6D72'}; j.semantic.color.text.tertiary.$value='{primitive.color.neutral.550}'; }); generate(dir); });
   testTokens('tokens-roles-missing','ROLES_MISSING', dir => { editTokens(dir, j => { delete j.meta.roles; delete j.meta.categories; }); generate(dir); });
   testTokens('tokens-state-overlay-contrast','CONTRAST_FAIL', dir => { editTokens(dir, j => { j.primitive.opacity.pressed.$value = 0.3; }); generate(dir); });
@@ -614,7 +615,7 @@ try {
     const outcome = expected === 'PASS' ? exit_code === 0 && report.result === 'PASS' : exit_code === 1 && messages.length > 0;
     results.push({ case:name, expected, actual:report.result, detected_codes:report.errors.map(error => error.code), pass: outcome && check(messages, report) });
   }
-  // Dark points semantic.state.hover/pressed at its own primitives; light keeps the seeded 0.04 / 0.11.
+  // Dark points semantic.state.hover/pressed at its own primitives; light keeps the seeded 0.048 / 0.115.
   const darkState = (hover, pressed) => dir => {
     seed(dir);
     editTokens(dir, j => { j.primitive.opacity.hoverDark = { $value: hover }; j.primitive.opacity.pressedDark = { $value: pressed }; });
@@ -624,12 +625,25 @@ try {
   };
   const stateRows = (report, mode) => report.state_distinct?.[mode] || [];
   testState('tokens-state-per-mode-opacity', 'PASS', darkState(0.08, 0.16), (_, report) =>
-    stateRows(report,'light').length === 5 && stateRows(report,'light').every(row => row.hover === 0.04 && row.pressed === 0.11 && row.deltaE00 >= 3)
-    && stateRows(report,'dark').length === 5 && stateRows(report,'dark').every(row => row.hover === 0.08 && row.pressed === 0.16 && row.deltaE00 >= 3));
+    stateRows(report,'light').length === 5 && stateRows(report,'light').every(row => row.hover === 0.048 && row.pressed === 0.115 && row.default_hover_deltaE00 >= 2 && row.deltaE00 >= 3)
+    && stateRows(report,'dark').length === 5 && stateRows(report,'dark').every(row => row.hover === 0.08 && row.pressed === 0.16 && row.default_hover_deltaE00 >= 2 && row.deltaE00 >= 3));
   // The specimen spec's reference opacities: all five state-layer surfaces fail in both modes.
   testState('tokens-state-reference-opacity', 'STATE_DISTINCT', dir => fs.cpSync(example, dir, { recursive: true }),
     messages => messages.length === 10 && ['light', 'dark'].every(mode => messages.some(m => m.startsWith(`${mode}: onAccent state layer on accent:`))));
   testState('tokens-state-dark-only-indistinct', 'STATE_DISTINCT', darkState(0.08, 0.09), messages => messages.every(m => m.startsWith('dark: ')));
+  // REG-021 r4 probe (hover 0.01, focus 0.05, pressed 0.08): hover -> pressed passes, so only the
+  // default -> hover gate catches a hover that paints almost like the default state.
+  testState('tokens-state-hover-probe', 'STATE_DISTINCT', dir => { seed(dir); editTokens(dir, j => { Object.assign(j.primitive.opacity, { hover: { $value: 0.01 }, focus: { $value: 0.05 }, pressed: { $value: 0.08 } }); }); },
+    messages => messages.some(m => m.startsWith('light: onAccent state layer on accent: default vs hover 0.01 is deltaE00')) && messages.every(m => m.includes(': default vs hover 0.01 is deltaE00')));
+  // REG-018 primary button: white on #315BE8 with hover 0.04 paints deltaE00 1.927 from the default
+  // fill; hover -> pressed (0.11) is 4.068, so only the default -> hover gate fails it.
+  testState('tokens-state-portsmith-hover', 'STATE_DISTINCT', dir => { seed(dir); editTokens(dir, j => {
+    j.primitive.color.brand.portsmith = { $value: '#315BE8' }; j.semantic.color.action.primary.$value = '{primitive.color.brand.portsmith}';
+    j.primitive.opacity.hover.$value = 0.04; j.primitive.opacity.pressed.$value = 0.11;
+  }); }, messages => messages.some(m => m.startsWith('light: onAccent state layer on accent: default vs hover 0.04 is deltaE00 1.92 < 2'))
+    && !messages.some(m => m.startsWith('light: onAccent state layer on accent: hover')));
+  testTokens('tokens-state-role-missing','STATE_ROLE_MISSING', dir => { editTokens(dir, j => { j.meta.roles['state.dragged'] = { status:'missing', reason:'not designed yet' }; }); generate(dir); });
+  testTokens('tokens-state-role-not-applicable','PASS', dir => { editTokens(dir, j => { j.meta.roles['state.dragged'] = { status:'notApplicable', reason:'the product has no draggable rows or cards' }; }); generate(dir); });
   // Minimal depth enforces the primary button only; the other surfaces are advisory warnings.
   testState('tokens-state-minimal-advisory', 'STATE_DISTINCT', dir => { fs.cpSync(example, dir, { recursive: true }); editTokens(dir, j => { delete j.meta.categories; }); },
     (messages, report) => messages.length === 2 && messages.every(m => m.includes('onAccent state layer on accent:'))
@@ -646,7 +660,9 @@ try {
     fs.cpSync(example, dir, { recursive: true });
     generate(dir);
     mutateDir(dir);
-    const map = { id:'sample', name:'Sample', language:'en', type:{ heading:'semantic.typographyDisplay.headline', body:'semantic.typographyDisplay.subhead', label:'semantic.typographyDisplay.eyebrow', file:'fonts/brand.ttf', license:'fonts/OFL.txt', weight_min:300, weight_max:700, kerning:'normal', ligatures:'normal' }, assets:{ logo_on_paper:'logo.svg' } };
+    const map = { id:'sample', name:'Sample', language:'en', type:{ heading:'semantic.typographyDisplay.headline', body:'semantic.typographyDisplay.subhead', label:'semantic.typographyDisplay.eyebrow', kerning:'normal', ligatures:'normal', fonts:[
+      { family:'Space Grotesk', file:'fonts/space-grotesk/SpaceGrotesk-VF.ttf', license:'fonts/space-grotesk/OFL.txt', weight_min:300, weight_max:700 },
+      { family:'Noto Sans SC', file:'fonts/noto-sans-sc/NotoSansSC-VF.ttf', license:'fonts/noto-sans-sc/OFL.txt', weight_min:100, weight_max:900 } ] }, assets:{ logo_on_paper:'logo.svg' } };
     mutateMap(map);
     const mapFile = write(dir, 'map.json', map);
     const { exit_code, report } = invoke('tokens-to-brand-json.mjs', [dir, mapFile]);
@@ -655,21 +671,48 @@ try {
     if (pass && after) pass = after(JSON.parse(fs.readFileSync(path.join(dir,'brand.json'),'utf8')));
     results.push({ case:name, expected, actual:report.result, detected_codes:codes, pass });
   }
-  testBrandJson('brand-json-from-tokens','PASS', undefined, b => b.colors.paper === '#F7F7F8' && b.colors.brand === '#3E5BD8' && b.type.family === 'Space Grotesk' && b.type.heading_weight === 600 && b.type.heading_tracking_em === -0.0125 && b.generated_from.colors.paper === 'semantic.color.surface.background');
+  const stack = (b, role) => JSON.stringify(b.type.stacks[role]);
+  testBrandJson('brand-json-from-tokens','PASS', undefined, b => b.schema_version === 2 && b.colors.paper === '#F7F7F8' && b.colors.brand === '#3E5BD8' && stack(b,'heading') === '["Space Grotesk","Noto Sans SC","sans-serif"]' && b.type.fonts.length === 2 && b.type.heading_weight === 600 && b.type.heading_tracking_em === -0.0125 && b.type.heading_line_height === 1.15 && b.generated_from.colors.paper === 'semantic.color.surface.background');
   testBrandJson('brand-json-dark-mode','PASS', m => { m.mode = 'dark'; }, b => b.colors.paper === '#18181B' && b.generated_from.mode === 'dark');
-  testBrandJson('brand-json-chinese-override','PASS', m => { m.language = 'zh-CN'; }, b => b.type.family === 'Noto Sans SC' && b.type.heading_tracking_em === 0 && b.generated_from.language_override === 'zh');
+  // Chinese material: the zh override puts Noto Sans SC first; the range-limited Latin face moves ahead of it
+  // (BD-TOKEN-001 step 6), and the zh line height of the body step (1.75) reaches brand.json.
+  testBrandJson('brand-json-chinese-override','PASS', m => { m.language = 'zh-CN'; m.type.body = 'semantic.typography.body'; m.type.fonts[0].unicode_range = 'U+0000-00B6, U+00B8-00FF, U+2000-2013, U+2015-2017, U+201A-201B, U+201E-2025, U+2027-206F'; },
+    b => ['heading','body','label'].every(role => stack(b,role) === '["Space Grotesk","Noto Sans SC","sans-serif"]') && b.type.body_line_height === 1.75 && b.type.heading_tracking_em === 0 && b.generated_from.language_override === 'zh');
   testBrandJson('brand-json-ignores-stale-snapshot','PASS', undefined, b => b.colors.brand === '#123456', dir => { const f=path.join(dir,'tokens.json'), j=JSON.parse(fs.readFileSync(f,'utf8')); j.primitive.color.brand.accent.$value='#123456'; write(dir,'tokens.json',j); });
   testBrandJson('brand-json-unknown-mode','BRAND_JSON_MODE', m => { m.mode = 'sepia'; });
-  testBrandJson('brand-json-mixed-family','BRAND_JSON_FAMILY', m => { m.type.label = 'semantic.typography.code'; });
+  testBrandJson('brand-json-mixed-family','PASS', m => { m.type.label = 'semantic.typography.code'; m.type.fonts.push({ family:'JetBrains Mono', file:'fonts/jetbrains-mono/JetBrainsMono-VF.ttf', license:'fonts/jetbrains-mono/OFL.txt', weight_min:100, weight_max:800 }); },
+    b => stack(b,'label') === '["JetBrains Mono","monospace"]' && stack(b,'heading') === '["Space Grotesk","Noto Sans SC","sans-serif"]' && b.type.fonts.map(f => f.family).join() === 'Space Grotesk,Noto Sans SC,JetBrains Mono');
+  testBrandJson('brand-json-font-entry-missing','BRAND_JSON_FONT', m => { m.type.label = 'semantic.typography.code'; });
   testBrandJson('brand-json-unmapped-role','BRAND_JSON_ROLE', m => { m.colors = { rule: 'elevation.sunken' }; });
   testBrandJson('brand-json-non-color-role','BRAND_JSON_COLOR', m => { m.colors = { rule: 'elevation.raised' }; });
+  // check-application on a real renderer build with VISUAL_SYSTEM_BROWSER pointing at a missing file.
+  {
+    const dir = path.join(temp, 'application-check-no-browser');
+    write(dir, 'brand/brand.json', { schema_version:2, id:'sample', name:'Sample', language:'en',
+      colors:{ paper:'#F7F7F8', text:'#18181B', muted:'#52525B', brand:'#3E5BD8', on_brand:'#FFFFFF', rule:'#D4D4D8' },
+      type:{ fonts:[{ family:'Fixture Sans', file:'font.ttf', license:'LICENSE.txt', weight_min:400, weight_max:700 }],
+        stacks:{ heading:['Fixture Sans','sans-serif'], body:['Fixture Sans','sans-serif'], label:['Fixture Sans','sans-serif'] },
+        heading_weight:700, body_weight:400, label_weight:500, heading_tracking_em:0, kerning:'normal', ligatures:'normal', heading_line_height:1.2, body_line_height:1.5, label_line_height:1.3 },
+      assets:{ logo_on_paper:'logo.svg' } });
+    write(dir, 'brand/font.ttf', 'Fixture bytes; the renderer copies font files without parsing them.\n');
+    write(dir, 'brand/LICENSE.txt', 'Fixture license.\n');
+    write(dir, 'brand/logo.svg', rect());
+    write(dir, 'content.json', { schema_version:2, items:[{ id:'launch', template:'announcement', theme:'paper', kicker:'', title:'A clear title', body:'', footer:'', layout:{
+      logo:{ x:80, y:60, width:64, height:64 }, title:{ x:80, y:200, width:760, height:240, font_size:64, line_height_px:77, max_lines:3, align:'left' } } }] });
+    const build = path.join(dir, 'out');
+    const rendered = spawnSync(process.execPath, [path.join(here, '..', 'libraries', 'applications', 'render.mjs'), '--brand', path.join(dir, 'brand', 'brand.json'), '--content', path.join(dir, 'content.json'), '--output', build], { encoding: 'utf8', timeout: 60000 });
+    const before = rendered.status === 0 ? sha256(path.join(build, 'build.json')) : null;
+    const { exit_code, report } = before ? invoke('check-application.mjs', [build, '--out', path.join(dir, 'qa')], { VISUAL_SYSTEM_BROWSER: path.join(dir, 'missing-browser') }) : { exit_code: null, report: { result: `render failed: ${rendered.stderr}` } };
+    const pass = exit_code === 2 && report.result === 'not_run' && /^VISUAL_SYSTEM_BROWSER is set/.test(report.reason) && report.browser === null && report.inputs?.build_json_sha256 === before && sha256(path.join(build, 'build.json')) === before;
+    results.push({ case:'application-check-no-browser', expected:'not_run', actual:report.result, exit_code, pass });
+  }
   const badFont=write(temp,'bad.ttf','not a font');
   let fontCode; try {fontSignature(badFont,'ttf');}catch(error){fontCode=error.code;}
   results.push({case:'font-invalid-signature',expected:'FONT_SIGNATURE',actual:fontCode,pass:fontCode==='FONT_SIGNATURE'});
 } finally {
   fs.rmSync(temp, { recursive: true, force: true });
 }
-const report = { schema_version:1, generated_at:new Date().toISOString(), scope:'Mechanical validator self-tests; synthetic fixtures, not Agent behavior or visual design validation.', node_version:process.version, validator_sha256:Object.fromEntries(['check-skill.mjs','check-tokens.mjs','tokens-to-brand-json.mjs','validate-release.mjs','lib/validation.mjs','lib/tokens.mjs','self-test.mjs'].map(file=>[file,sha256(path.join(here,file))])), result:results.every(test=>test.pass)?'PASS':'FAIL', total:results.length, passed:results.filter(test=>test.pass).length, cases:results, fixture_cleanup:'complete' };
+const report = { schema_version:1, generated_at:new Date().toISOString(), scope:'Mechanical validator self-tests; synthetic fixtures, not Agent behavior or visual design validation.', node_version:process.version, validator_sha256:Object.fromEntries(['check-skill.mjs','check-tokens.mjs','check-application.mjs','tokens-to-brand-json.mjs','validate-release.mjs','lib/validation.mjs','lib/tokens.mjs','self-test.mjs'].map(file=>[file,sha256(path.join(here,file))])), result:results.every(test=>test.pass)?'PASS':'FAIL', total:results.length, passed:results.filter(test=>test.pass).length, cases:results, fixture_cleanup:'complete' };
 const output = JSON.stringify(report,null,2)+'\n';
 if(args[0]==='--output') { const destination=path.resolve(args[1]);fs.mkdirSync(path.dirname(destination),{recursive:true});fs.writeFileSync(destination,output); }
 process.stdout.write(output);

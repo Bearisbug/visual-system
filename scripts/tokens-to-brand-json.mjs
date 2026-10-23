@@ -11,10 +11,14 @@ Writes the application renderer's brand.json (libraries/applications/contract.md
 system's tokens, so fixed-canvas materials and product UI read one source. Values are resolved by
 regenerating from tokens.json (+ modes/) with the vendored generator; stale snapshots are never read.
 MAP.json: { id, name, language, mode?, colors?: {paper,text,muted,brand,on_brand,rule -> role or token path},
-  type: { heading, body, label -> typography token paths, file, license, weight_min, weight_max, kerning, ligatures },
+  type: { heading, body, label -> typography token paths, kerning, ligatures,
+          fonts: [{ family, file, license, weight_min, weight_max, unicode_range? }] },
   assets: { ...as brand.json } }. Default colors: surface.default, text.primary, text.secondary, accent, onAccent, divider.
 The typography steps' langOverrides for MAP.language (exact tag, then primary subtag) are applied.
-Paths in MAP are copied verbatim and resolve relative to the output brand.json. Requires uv.`);
+Each role's stack keeps the token stack's families that have a type.fonts entry, in token order, with
+range-limited faces (unicode_range) moved ahead of the others, plus the token stack's final generic
+family; the first family of every token stack needs a type.fonts entry. Only fonts used by a stack are
+written. Paths in MAP are copied verbatim and resolve relative to the output brand.json. Requires uv.`);
   process.exit(0);
 }
 const result = report('brand.json generated from design-system tokens');
@@ -61,14 +65,24 @@ capture(result, 'generate', () => {
     return key ? { ...value, ...overrides[key] } : value;
   };
   const heading = step('heading'), body = step('body'), label = step('label');
-  const first = ff => (Array.isArray(ff) ? ff[0] : String(ff).split(',')[0]).trim().replace(/^["']|["']$/g, '');
-  const family = first(heading.fontFamily);
-  assert([body, label].every(s => first(s.fontFamily) === family), 'BRAND_JSON_FAMILY', `heading/body/label must share one font family for the application renderer (got ${[heading, body, label].map(s => first(s.fontFamily)).join(', ')})`);
+  assert(Array.isArray(t.fonts) && t.fonts.length > 0, 'BRAND_JSON_FONT', 'type.fonts must list the font files: [{ family, file, license, weight_min, weight_max, unicode_range? }]');
+  const fonts = new Map(t.fonts.map(font => [font?.family, font]));
+  const GENERIC = new Set(['serif', 'sans-serif', 'monospace', 'cursive', 'fantasy', 'system-ui', 'ui-serif', 'ui-sans-serif', 'ui-monospace', 'ui-rounded', 'math', 'emoji', 'fangsong']);
+  const stackOf = (name, value) => {
+    const families = (Array.isArray(value.fontFamily) ? value.fontFamily : String(value.fontFamily).split(',')).map(ff => String(ff).trim().replace(/^["']|["']$/g, ''));
+    assert(fonts.has(families[0]), 'BRAND_JSON_FONT', `type.${name}: ${t[name]} starts with ${families[0]}, which has no type.fonts entry`);
+    const filed = families.filter(ff => fonts.has(ff));
+    const dropped = families.filter(ff => !fonts.has(ff) && !GENERIC.has(ff));
+    if (dropped.length) result.warnings.push(`type.${name}: ${dropped.join(', ')} has no type.fonts entry and is left out of the material stack`);
+    return [...filed.filter(ff => fonts.get(ff).unicode_range), ...filed.filter(ff => !fonts.get(ff).unicode_range), ...(GENERIC.has(families.at(-1)) ? [families.at(-1)] : [])];
+  };
+  const stacks = { heading: stackOf('heading', heading), body: stackOf('body', body), label: stackOf('label', label) };
+  const used = new Set(Object.values(stacks).flat());
   const brand = {
-    schema_version: 1, id: map.id, name: map.name, language: map.language,
+    schema_version: 2, id: map.id, name: map.name, language: map.language,
     colors,
     type: {
-      family, file: t.file, license: t.license, weight_min: t.weight_min, weight_max: t.weight_max,
+      fonts: t.fonts.filter(font => used.has(font.family)), stacks,
       heading_weight: heading.fontWeight, body_weight: body.fontWeight, label_weight: label.fontWeight,
       heading_line_height: heading.lineHeight, body_line_height: body.lineHeight, label_line_height: label.lineHeight,
       heading_tracking_em: Math.round((heading.letterSpacing || 0) / heading.fontSize * 10000) / 10000,
