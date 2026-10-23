@@ -521,6 +521,17 @@ try {
   testTokens('tokens-contrast-below-threshold','CONTRAST_FAIL', dir => { editTokens(dir, j => { j.semantic.color.text.tertiary.$value='{primitive.color.neutral.300}'; }); generate(dir); });
   testTokens('tokens-leftover-snapshot','GENERATED_UNEXPECTED', dir => fs.copyFileSync(path.join(dir,'tokens.resolved.dark.json'),path.join(dir,'tokens.resolved.sepia.json')));
   testTokens('tokens-contrast-tertiary-on-selection','CONTRAST_FAIL', dir => { editTokens(dir, j => { j.primitive.color.neutral['selprobe']={$value:'#A3A7AF'}; j.semantic.color.surface.selected.$value='{primitive.color.neutral.selprobe}'; }); generate(dir); });
+  {
+    // Pressed 0.12 over #F7F7F8 under #3E5BD8 text: 4.504:1 unquantized, 4.493:1 as the browser paints it.
+    const dir = path.join(temp, 'tokens-contrast-state-layer-quantized');
+    seed(dir);
+    editTokens(dir, j => { j.primitive.opacity.pressed.$value = 0.12; });
+    generate(dir);
+    const { exit_code, report } = invoke('check-tokens.mjs', [dir]);
+    const row = report.contrast?.modes?.light?.pairs?.find(x => x.fg === 'accent' && x.bg === 'surface.default+pressed');
+    const pass = exit_code === 1 && row?.ratio === 4.49 && row.pass === false;
+    results.push({ case:'tokens-contrast-state-layer-quantized', expected:'CONTRAST_FAIL: accent on surface.default+pressed 4.49:1 as painted', actual:report.result, detected_codes:report.errors.map(error => error.code), pass });
+  }
   testTokens('tokens-contrast-rounding-band','CONTRAST_FAIL', dir => { editTokens(dir, j => { j.primitive.color.neutral['550']={$value:'#6C6D72'}; j.semantic.color.text.tertiary.$value='{primitive.color.neutral.550}'; }); generate(dir); });
   testTokens('tokens-roles-missing','ROLES_MISSING', dir => { editTokens(dir, j => { delete j.meta.roles; delete j.meta.categories; }); generate(dir); });
   testTokens('tokens-state-overlay-contrast','CONTRAST_FAIL', dir => { editTokens(dir, j => { j.primitive.opacity.pressed.$value = 0.3; }); generate(dir); });
@@ -551,7 +562,8 @@ try {
     const { exit_code, report } = invoke('check-tokens.mjs', [dir]);
     const modes = report.dataviz_distinct || {};
     const pass = exit_code === 0 && modes.light?.band === 'light' && modes.dark?.band === 'dark'
-      && ['light', 'dark'].every(m => modes[m].series === 6 && modes[m].worst_adjacent_cvd >= 8 && modes[m].worst_adjacent_normal >= 15 && modes[m].nearest_feedback >= 15)
+      && ['light', 'dark'].every(m => modes[m].series === 6 && modes[m].worst_adjacent_cvd >= 8 && modes[m].worst_adjacent_normal >= 15 && modes[m].nearest_feedback >= 15
+        && modes[m].worst_pairs_1_3?.cvd >= 8 && modes[m].worst_pairs_1_3.normal >= 15 && /^\d-\d$/.test(modes[m].worst_pairs_all?.cvd_pair || ''))
       && !report.warnings.some(w => w.includes('dataViz'));
     results.push({ case:'tokens-dataviz-distinct-both-modes', expected:'PASS: series distinct in light and dark, no CVD warning', actual:report.result, detected_codes:report.errors.map(error => error.code), pass });
   }
@@ -571,13 +583,15 @@ try {
   testDistinct('tokens-dataviz-dark-accent-off-band', dir => {
     const darkFile = path.join(dir,'modes','dark.json'), dark = JSON.parse(fs.readFileSync(darkFile,'utf8'));
     dark.semantic.color.dataViz.series['1'].$value = '{primitive.color.brand.accentDark}'; write(dir,'modes/dark.json',dark);
-  }, m => m.length === 1 && m[0].startsWith('dark: dataViz.series.1 OKLCH L') && m[0].includes('dark band'));
+  }, m => m.every(x => x.startsWith('dark: ')) && m.some(x => x.startsWith('dark: dataViz.series.1 OKLCH L') && x.includes('dark band')));
   testDistinct('tokens-dataviz-near-feedback', lightSeries({ 4:'#B83A30' }), m => m.some(x => x.startsWith('light: dataViz.series.4 is') && x.includes('feedback.error')));
+  // The example's series before the all-pairs rule: every adjacent pair passes, series 1 and 3 do not.
+  testDistinct('tokens-dataviz-first-three-all-pairs', lightSeries({ 3:'#8966F9', 5:'#1195B4' }), m => m.length === 1 && m[0].startsWith('light: dataViz.series.1 / 3 normal-vision') && m[0].includes('all pairs'));
   testDistinct('tokens-dataviz-low-chroma', lightSeries({ 6:'#4F5B6E' }), m => m.some(x => x.startsWith('light: dataViz.series.6 OKLCH C')));
   {
     const dir = path.join(temp, 'tokens-dataviz-cvd-warning-band');
     seed(dir);
-    lightSeries({ 6:'#027FBB' })(dir);
+    lightSeries({ 4:'#8966F9', 5:'#EA3C93', 6:'#027FBB' })(dir);
     generate(dir);
     const { exit_code, report } = invoke('check-tokens.mjs', [dir]);
     const pass = exit_code === 0 && report.warnings.some(w => w.startsWith('light: dataViz.series.5 / 6 CVD') && w.includes('6-8 band'));

@@ -11,11 +11,12 @@ Mechanical checks for a profile-2 token set (see references/system.md#bd-token-0
   1. regenerates every consumable with vendor/theme-extract (uv run python) in a temp copy and
      requires the delivered tokens.css / adapters / resolved snapshots / DESIGN.md frontmatter to
      match byte for byte, with no extra generated-looking files left over;
-  2. contrast matrix per mode over meta.roles (alpha composited, unrounded comparison), plus
+  2. contrast matrix per mode over meta.roles (alpha composited, unrounded comparison; state-layer
+     rows painted as the browser paints them), plus
      every semantic.color.dataViz.series color against the four surfaces at 3:1;
   3. chart series distinctness per mode (DATAVIZ_DISTINCT): OKLCH lightness band and chroma floor,
-     adjacent series under simulated protanopia/deuteranopia and under normal vision, and distance
-     from the feedback colors (thresholds in the comment above the check);
+     adjacent series and all pairs of series 1-3 under simulated protanopia/deuteranopia and under
+     normal vision, and distance from the feedback colors (thresholds in the comment above the check);
   4. state-layer distinctness per mode (STATE_DISTINCT): on every surface that carries a state
      layer, painted as the browser paints it, default and hover are at least CIEDE2000 deltaE00 2
      apart and hover and pressed at least 3;
@@ -95,6 +96,14 @@ function parseColor(value) {
 const over = (fg, bg) => ({ r: fg.r * fg.a + bg.r * (1 - fg.a), g: fg.g * fg.a + bg.g * (1 - fg.a), b: fg.b * fg.a + bg.b * (1 - fg.a), a: 1 });
 const lum = c => [c.r, c.g, c.b].map(x => { x /= 255; return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4; }).reduce((s, x, i) => s + x * [0.2126, 0.7152, 0.0722][i], 0);
 const ratio = (a, b) => { const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x); return (hi + 0.05) / (lo + 0.05); };
+// A state layer as Chromium paints it (8-bit source-over, opacity stored as round(alpha * 255));
+// see the state-distinctness note below.
+const paint8 = (layer, surface, alpha) => {
+  const A = Math.round(alpha * 255);
+  const channel = key => Math.min(255, Math.round(layer[key] * A / 255) + ((surface[key] * (256 - A)) >> 8));
+  return { r: channel('r'), g: channel('g'), b: channel('b'), a: 1 };
+};
+const round8 = c => ({ r: Math.round(c.r), g: Math.round(c.g), b: Math.round(c.b), a: 1 });
 const SURFACES = ['surface.sunken', 'surface.default', 'surface.raised', 'surface.overlay'];
 const PAIRS = [
   ...['text.primary', 'text.secondary', 'text.tertiary', 'accent', 'feedback.success', 'feedback.warning', 'feedback.error']
@@ -105,7 +114,8 @@ const PAIRS = [
   ...SURFACES.map(bg => ['divider', bg, null])
 ];
 // Text on an interactive fill keeps 4.5:1 after the state layer (an overlay of the
-// text's own color, i.e. currentColor, at the state opacity) is composited. Controls
+// text's own color, i.e. currentColor, at the state opacity) is composited as the browser
+// paints it (paint8). Controls
 // (filled and text buttons, links) take hover/focus/pressed; dragged applies to
 // draggable rows and cards, i.e. body text on surfaces. The primary button pair is
 // enforced at every depth; the others describe the specimen's full component set
@@ -150,9 +160,9 @@ if (scratch) capture(result, 'contrast', () => {
       const alpha = leafAt(resolved, target)?.$value;
       const fg = color(fgRole), bgRaw = color(bgRole);
       if (!fg || !bgRaw || !base || typeof alpha !== 'number') continue;
-      const bg = bgRaw.a < 1 ? over(bgRaw, base) : bgRaw;
-      const text = fg.a < 1 ? over(fg, bg) : fg;
-      const exact = ratio(text, over({ ...text, a: alpha }, bg));
+      const bg = round8(bgRaw.a < 1 ? over(bgRaw, base) : bgRaw);
+      const text = round8(fg.a < 1 ? over(fg, bg) : fg);
+      const exact = ratio(text, paint8(text, bg, alpha));
       const pass = exact >= 4.5;
       const row = { fg: fgRole, bg: `${bgRole}+${state.slice(6)}`, ratio: Math.floor(exact * 100) / 100, threshold: 4.5, pass };
       if (!strict) row.advisory = true;
@@ -193,7 +203,11 @@ if (scratch) capture(result, 'contrast', () => {
 //   - adjacent series n and n+1, protanopia and deuteranopia simulated with Machado, Oliveira &
 //     Fernandes (2009) at severity 1.0, the smaller OKLab deltaE x100 of the two: >= 8 target;
 //     6-8 is a warning (legal only with secondary encoding such as direct labels); < 6 fails;
-//   - worst adjacent pair under normal vision: OKLab deltaE x100 >= 15.
+//   - worst adjacent pair under normal vision: OKLab deltaE x100 >= 15;
+//   - the pairs of series 1-3 (1/2, 1/3, 2/3) meet the same CVD and normal-vision requirements,
+//     because scatter, bubble and small-multiple charts put any two series side by side and use
+//     at most those three (tokens-schema.md §6.3); the worst pair over the full set is reported
+//     with its slots for consumers that draw more series in one chart, without a threshold.
 // The feedback floor reuses the normal-vision floor: every series color stays >= 15 from
 // feedback.success / warning / error of the same mode, so a series never reads as a status.
 // Contrast against the surfaces is DATAVIZ_CONTRAST above.
@@ -251,6 +265,25 @@ if (scratch) capture(result, 'dataViz distinctness', () => {
       else if (cvd < CVD_TARGET) result.warnings.push(`${mode}: ${pair} CVD deltaE ${round1(cvd)} is in the ${CVD_FLOOR}-${CVD_TARGET} band: legal only when the dataViz $description and DESIGN.md require secondary encoding (direct labels, gaps or texture)`);
       if (normal < NORMAL_FLOOR) fail(`${mode}: ${pair} normal-vision deltaE ${round1(normal)} < ${NORMAL_FLOOR}`);
     }
+    const pairWorst = indexes => {
+      let worst = { cvd: Infinity, normal: Infinity };
+      for (const i of indexes) for (const j of indexes) if (i < j) {
+        const cvd = Math.min(deltaE(colors[i], colors[j], 'protan'), deltaE(colors[i], colors[j], 'deutan')), normal = deltaE(colors[i], colors[j]);
+        if (cvd < worst.cvd) Object.assign(worst, { cvd, cvd_pair: `${keys[i]}-${keys[j]}` });
+        if (normal < worst.normal) Object.assign(worst, { normal, normal_pair: `${keys[i]}-${keys[j]}` });
+      }
+      return worst;
+    };
+    const firstThree = keys.slice(0, 3).map((_, i) => i);
+    for (const i of firstThree) for (const j of firstThree) if (j > i + 1) {
+      const pair = `dataViz.series.${keys[i]} / ${keys[j]}`;
+      const cvd = Math.min(deltaE(colors[i], colors[j], 'protan'), deltaE(colors[i], colors[j], 'deutan'));
+      const normal = deltaE(colors[i], colors[j]);
+      if (cvd < CVD_FLOOR) fail(`${mode}: ${pair} CVD deltaE ${round1(cvd)} < ${CVD_FLOOR} (series 1-3 are compared as all pairs)`);
+      else if (cvd < CVD_TARGET) result.warnings.push(`${mode}: ${pair} CVD deltaE ${round1(cvd)} is in the ${CVD_FLOOR}-${CVD_TARGET} band: legal only when the dataViz $description and DESIGN.md require secondary encoding (direct labels, gaps or texture)`);
+      if (normal < NORMAL_FLOOR) fail(`${mode}: ${pair} normal-vision deltaE ${round1(normal)} < ${NORMAL_FLOOR} (series 1-3 are compared as all pairs)`);
+    }
+    const top = pairWorst(firstThree), all = pairWorst(keys.map((_, i) => i));
     for (const role of ['feedback.success', 'feedback.warning', 'feedback.error']) {
       const feedback = roleColor(role);
       if (!feedback) continue;
@@ -260,7 +293,9 @@ if (scratch) capture(result, 'dataViz distinctness', () => {
         if (d < FEEDBACK_FLOOR) fail(`${mode}: dataViz.series.${key} is deltaE ${round1(d)} from ${role} (< ${FEEDBACK_FLOOR}); a series must not read as a status color`);
       });
     }
-    modes[mode] = { band: bandName, series: keys.length, worst_adjacent_cvd: round1(worstCvd), worst_adjacent_normal: round1(worstNormal), nearest_feedback: Number.isFinite(nearestFeedback) ? round1(nearestFeedback) : null };
+    const worstOf = w => Number.isFinite(w.cvd) ? { cvd: round1(w.cvd), cvd_pair: w.cvd_pair, normal: round1(w.normal), normal_pair: w.normal_pair } : null;
+    modes[mode] = { band: bandName, series: keys.length, worst_adjacent_cvd: round1(worstCvd), worst_adjacent_normal: round1(worstNormal),
+      worst_pairs_1_3: worstOf(top), worst_pairs_all: worstOf(all), nearest_feedback: Number.isFinite(nearestFeedback) ? round1(nearestFeedback) : null };
   }
   result.dataviz_distinct = modes;
 });
@@ -289,12 +324,6 @@ if (scratch) capture(result, 'dataViz distinctness', () => {
 // point semantic.state.* at its own opacities. Strictness follows the overlay contrast rows: the
 // primary button at every depth, the other surfaces at full depth, advisory at minimal depth.
 const DE00_FLOOR = 3, HOVER_DE00_FLOOR = 2;
-const paint8 = (layer, surface, alpha) => {
-  const A = Math.round(alpha * 255);
-  const channel = key => Math.min(255, Math.round(layer[key] * A / 255) + ((surface[key] * (256 - A)) >> 8));
-  return { r: channel('r'), g: channel('g'), b: channel('b'), a: 1 };
-};
-const round8 = c => ({ r: Math.round(c.r), g: Math.round(c.g), b: Math.round(c.b), a: 1 });
 function cielab(c) {
   const [r, g, b] = linearRGB(c);
   const xyz = [0.4124564 * r + 0.3575761 * g + 0.1804375 * b, 0.2126729 * r + 0.7151522 * g + 0.0721750 * b, 0.0193339 * r + 0.1191920 * g + 0.9503041 * b];

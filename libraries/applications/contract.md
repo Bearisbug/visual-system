@@ -11,7 +11,7 @@
 | schema_version | 数字 `2`；其他版本直接报错 |
 | id / name / language | 稳定 ID、正式显示名称、HTML 语言标签；例如英文或简体中文对应语言 |
 | colors | `paper`、`text`、`muted`、`brand`、`on_brand`、`rule`，均为 `#RRGGBB`；分别为浅底、主文字、次文字、强调底、强调底文字、装饰分隔线；强调底按品牌允许的背景映射，可用主色或深墨，不要求等于原色板同名键 |
-| type.fonts | 1–8 个字体面，每项为 `{family, file, license, weight_min, weight_max, unicode_range?}`。family 是真实字体家族名称，不重复；file / license 是字体文件及实际许可证的本地相对路径，字体支持 ttf / otf / woff2，两者文件名不同；weight_min / weight_max 是文件实际可用字重范围，静态字体两者相同；unicode_range 可选，写法同 CSS `unicode-range`。language 为中文时，限定范围的字体面不得覆盖中西共用标点（“”‘’…—·），这些标点由中文字体渲染。每个字体面都要被某条字体栈使用 |
+| type.fonts | 1–8 个字体面，每项为 `{family, file, license, weight_min, weight_max, unicode_range?}`。family 不重复，与 tokens 字体栈和 `brand/fonts/fonts.css` 里 `@font-face` 的族名一致，通常就是真实字体家族名称；同一个字体文件在西文栈里完整使用、在中文栈里又要限定范围时，限定范围的那一项另起族名（如 `Space Grotesk Latin`），与 fonts.css 里同名的 `@font-face` 对应；file / license 是字体文件及实际许可证的本地相对路径，字体支持 ttf / otf / woff2，两者文件名不同；weight_min / weight_max 是文件实际可用字重范围，静态字体两者相同；unicode_range 可选，写法同 CSS `unicode-range`。language 为中文时，限定范围的字体面不得覆盖中西共用标点（“”‘’…—·），这些标点由中文字体渲染。每个字体面都要被某条字体栈使用 |
 | type.stacks | `heading`、`body`、`label` 三条字体栈，各为 1–8 个取自 type.fonts 的家族名，末尾可再加一个通用族（如 `sans-serif`）。中文物料把限定在拉丁范围的品牌字体放在中文字体之前（[BD-TOKEN-001](../../references/system.md#bd-token-001)第 6 步）。输出 CSS 给每个字体面一个本地别名 `BrandTemplate <n>`（n 为它在 type.fonts 中的序号），原家族名保留在输入与构建记录 |
 | type.heading_weight / body_weight / label_weight | 三个文字角色的真实可用字重，必须落在该角色字体栈中每个字体面的字重范围内 |
 | type.heading_line_height / body_line_height / label_line_height | 标题、正文、标签行高，1–3 的有限数字倍率；按实际语言设定 |
