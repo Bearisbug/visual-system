@@ -236,7 +236,11 @@ emits `dataViz` by default — §6.3.
   - `layout` — `breakpoint.{sm,md,lg,xl}`, `contentMax`, `columns`, `gutter`, `screenMargin`, `touchTarget.{touch:44,pointer:32}`.
   - `density` — `{comfortable,compact}.{control,gap}` RATIO multipliers (`scaling:ratio`, `scope:inferred`).
   - `state` — `hover/pressed/focus/disabled/selected` as overlay-rgba / opacity / scale TRANSFORMS + focus ring; never measured per-component hexes.
-  - `motion` — `duration` (ms) + `easing` (cubicBezier) + `reducedMotion` multiplier.
+  - `motion` — `duration` (ms) + `easing` (cubicBezier) + `reducedMotion` (number 0–1). Under
+    `prefers-reduced-motion: reduce`, `reducedMotion` applies to movement only: it multiplies the
+    distance and duration of translate, scale and spring animations, while opacity and color
+    transitions keep their `duration` values. `0` removes movement and leaves fades and color
+    changes intact; it never zeroes the `duration` tokens.
   - `opacity` — numeric 0–1 scale (disabled, scrim, muted) consumed by `state.*`.
   - `material` (optional) — `{ blur: dimension, tint: color, … }` per named material, structured, not a
     `backdrop-filter` string. Covers translucent / frosted surfaces (iOS vibrancy) **AND code-block /
@@ -320,11 +324,25 @@ leaves keyed by consecutive integers from `1`:
   | Contrast | ≥ 3:1 (WCAG) against each of the four surface roles of that mode |
   | CVD | adjacent slots `n` and `n+1`, protanopia and deuteranopia simulated with Machado, Oliveira & Fernandes (2009) at severity 1.0, the smaller ΔE of the two: ≥ 8 passes; 6–8 passes only when the group's `$description` requires secondary encoding (direct labels, gaps or texture) wherever adjacent series meet; < 6 fails |
   | Normal vision | worst adjacent pair ΔE ≥ 15 |
+  | All pairs of `series.1`–`3` | each of the pairs 1–2, 1–3 and 2–3 meets the CVD and normal-vision requirements above |
   | Feedback | every series color against each of `feedback.success`, `feedback.warning` and `feedback.error` of the same mode: ΔE ≥ 15 |
+
+  Scatter, bubble and small-multiple charts can put any two series side by side, so they compare
+  all pairs and use at most three series, `series.1`–`3`; a fourth series folds into "Other" or a
+  separate facet (the same `dataviz` skill, `references/color-formula.md` check 4). The group's
+  `$description` records, per mode, the worst adjacent CVD and normal-vision ΔE, the worst CVD and
+  normal-vision ΔE among the pairs of `series.1`–`3`, and the worst CVD and normal-vision ΔE over
+  all pairs of the full set together with the two slots that produce each (e.g. `CVD dE 3.6 (2-6)`).
+  The full-set all-pairs figures are recorded for consumers that draw more series in one chart;
+  no threshold applies to them.
 
   `series.1` is the accent only when that mode's accent passes the lightness band and the chroma
   floor; otherwise `series.1` keeps the accent's OKLCH hue with L and C re-chosen inside the band and
-  above the floor. A series sampled off a captured app's charts stays `measured` and is never
+  above the floor. When the accent stays below the chroma floor because the brand is monochrome
+  (§6.2), `series.1` and `sequential` take the OKLCH hue of the most chromatic of that mode's link,
+  focus-ring (`focusRing.color`) and selection (`selection`) colors; when none of them reaches the
+  chroma floor, the producer chooses the hue of `series.1` and writes it into the group's
+  `$description`. A series sampled off a captured app's charts stays `measured` and is never
   re-colored; each check it fails is listed in the group's `$description`.
 - **Confidence.** Hues sampled off rendered charts are `measured`. A producer that computes them from
   the brand marks them `confidence: derived` and writes the derivation rule into the group's
@@ -469,7 +487,7 @@ must satisfy its row:
 `semantic.typography` is the UI reading scale; `semantic.typographyDisplay` is the fixed-canvas
 display scale (posters, covers, hero art). Both share the font families, the weight set and the
 color roles, and both are measured-role groups (must alias primitive). Only `semantic.typography`
-feeds the Tailwind `--text-*` adapter.
+feeds the `--text-*` entries of the Tailwind and shadcn adapters.
 
 ### 10.3 `meta.notUsed` — the "this system does not use" register
 

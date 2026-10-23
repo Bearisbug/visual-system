@@ -925,12 +925,47 @@ def emit_css(base_tree, base_leaves, meta_defaults, ext_ns, css_unit, units,
 # byte-stable across mode edits. Each file @imports ./tokens.css — a project
 # imports exactly ONE adapter (tailwind OR shadcn), never both.
 
+# Typography fields that become Tailwind `--text-<step>--<sub-key>` entries; the
+# `text-<step>` utility reads exactly these three (Tailwind 4.3.3 lib.js resolveWith).
+TEXT_SUBKEYS = (("lineHeight", "line-height"), ("letterSpacing", "letter-spacing"),
+                ("fontWeight", "font-weight"))
+
+
+def theme_scale_vars(base_leaves, resolved):
+    """`@theme inline` entries both adapters share: `--text-<step>` per
+    semantic.typography step plus its line-height / letter-spacing / font-weight
+    sub-keys, `--shadow-<name>` per semantic.elevation shadow, `--ease-<name>` per
+    semantic.motion.easing curve and `--transition-duration-<name>` per
+    semantic.motion.duration (Tailwind's `duration-*` utility reads the
+    --transition-duration namespace, not --duration)."""
+    texts, shadows, eases, durations = [], [], [], []
+    for path, info in base_leaves.items():
+        t = info["type"]
+        name = kebab_seg(path.split(".")[-1])
+        var = css_var_name(path)
+        if t == "typography" and re.match(r"semantic\.typography\.\w+$", path):
+            tv = resolved.get(path) or {}
+            if "fontSize" in tv:
+                texts.append(("--text-%s" % name, "var(%s-font-size)" % var))
+                for field, sub in TEXT_SUBKEYS:
+                    if field in tv:
+                        texts.append(("--text-%s--%s" % (name, sub), "var(%s-%s)" % (var, sub)))
+        elif t == "shadow" and re.match(r"semantic\.elevation\.\w+$", path):
+            shadows.append(("--shadow-%s" % name, "var(%s)" % var))
+        elif t == "cubicBezier" and re.match(r"semantic\.motion\.easing\.\w+$", path):
+            eases.append(("--ease-%s" % name, "var(%s)" % var))
+        elif t == "duration" and re.match(r"semantic\.motion\.duration\.\w+$", path):
+            durations.append(("--transition-duration-%s" % name, "var(%s)" % var))
+    return texts + shadows + eases + durations
+
+
 def emit_tailwind(base_leaves, resolved):
     """Tailwind v4 `@theme inline` adapter. Maps only tokens with a stable flat
-    home (colors via the PATH->FLAT contract, semantic radius, font families,
-    semantic typography sizes); everything else (categorical, dataViz gradients,
-    spacing) stays reachable through the raw tokens.css custom properties."""
-    colors, radii, fonts, texts = [], [], [], []
+    home (colors via the PATH->FLAT contract, semantic radius, font families, and
+    the theme_scale_vars entries: typography steps, elevation, motion); everything
+    else (categorical, dataViz gradients, spacing) stays reachable through the raw
+    tokens.css custom properties."""
+    colors, radii, fonts = [], [], []
     for path, info in base_leaves.items():
         t = info["type"]
         if t == "color":
@@ -944,11 +979,6 @@ def emit_tailwind(base_leaves, resolved):
             seg = segs[-2] if kebab_seg(segs[-1]) == "font-family" and len(segs) > 1 else segs[-1]
             fonts.append(("--font-%s" % kebab_seg(seg),
                           "var(%s)" % css_var_name(path)))
-        elif t == "typography" and re.match(r"semantic\.typography\.\w+$", path):
-            name = kebab_seg(path.split(".")[-1])
-            tv = resolved.get(path) or {}
-            if "fontSize" in tv:
-                texts.append(("--text-%s" % name, "var(%s-font-size)" % css_var_name(path)))
         elif t == "dimension" and re.match(r"semantic\.radius\.\w+$", path):
             radii.append(("--radius-%s" % kebab_seg(path.split(".")[-1]),
                           "var(%s)" % css_var_name(path)))
@@ -960,7 +990,7 @@ def emit_tailwind(base_leaves, resolved):
              '@import "./tokens.css";',
              "",
              "@theme inline {"]
-    for group in (colors, radii, fonts, texts):
+    for group in (colors, radii, fonts, theme_scale_vars(base_leaves, resolved)):
         for var, val in group:
             lines.append("  %s: %s;" % (var, val))
     lines.append("}")
@@ -1021,10 +1051,48 @@ SHADCN_MAP = [
 SHADCN_OPTIONAL = {"--chart-%d" % n for n in range(1, 6)}
 
 
-def emit_shadcn(base_leaves):
+# shadcn's Tailwind v4 radius ladder as offsets from lg (shadcn's --radius).
+SHADCN_RADIUS_STEPS = (("sm", -4), ("md", -2), ("lg", 0), ("xl", 4))
+
+
+def shadcn_radius_ladder(base_leaves, has_radius):
+    """[(step, value)] for --radius-<step>. A step the theme defines as
+    semantic.radius.<step> maps to it. A missing step is the nearest defined step
+    (the lower one on a tie) shifted by the shadcn spacing; when defined steps sit
+    on both sides it is held between its lower neighbour and the next defined step
+    above, so sm <= md <= lg <= xl whenever the defined steps are ordered. With
+    none defined, --radius stands in for lg."""
+    steps = [s for s, _ in SHADCN_RADIUS_STEPS]
+    offset = dict(SHADCN_RADIUS_STEPS)
+    defined = {s: "var(%s)" % css_var_name("semantic.radius." + s) for s in steps
+               if base_leaves.get("semantic.radius." + s, {}).get("type") == "dimension"}
+    if not defined:
+        if not has_radius:
+            return []
+        defined = {"lg": "var(--radius)"}
+    out = {}
+    for i, step in enumerate(steps):
+        if step in defined:
+            out[step] = defined[step]
+            continue
+        anchor = min(defined, key=lambda a: (abs(steps.index(a) - i), steps.index(a)))
+        d = offset[step] - offset[anchor]
+        val = "calc(%s %s %dpx)" % (defined[anchor], "+" if d > 0 else "-", abs(d))
+        if steps.index(anchor) < i:
+            above = [a for a in steps[i + 1:] if a in defined]
+            if above:
+                val = "min(%s, %s)" % (val, defined[above[0]])
+        elif any(a in defined for a in steps[:i]):
+            val = "max(%s, %s)" % (val, out[steps[i - 1]])
+        out[step] = val
+    return [(s, out[s]) for s in steps]
+
+
+def emit_shadcn(base_leaves, resolved):
     """shadcn/ui adapter: conventional shadcn variables wired to the theme's
     semantic vars via fixed candidate chains, plus the standard Tailwind v4
-    `@theme inline` bridge for the variables that were mappable."""
+    `@theme inline` bridge for the variables that were mappable, the radius
+    ladder and the theme_scale_vars entries."""
     mapped, missing = [], []
     for var, want_type, candidates in SHADCN_MAP:
         hit = next((p for p in candidates
@@ -1053,11 +1121,10 @@ def emit_shadcn(base_leaves):
             has_radius = True
             continue
         lines.append("  --color-%s: var(%s);" % (var.lstrip("-"), var))
-    if has_radius:
-        lines += ["  --radius-sm: calc(var(--radius) - 4px);",
-                  "  --radius-md: calc(var(--radius) - 2px);",
-                  "  --radius-lg: var(--radius);",
-                  "  --radius-xl: calc(var(--radius) + 4px);"]
+    for step, val in shadcn_radius_ladder(base_leaves, has_radius):
+        lines.append("  --radius-%s: %s;" % (step, val))
+    for var, val in theme_scale_vars(base_leaves, resolved):
+        lines.append("  %s: %s;" % (var, val))
     lines.append("}")
     return "\n".join(lines) + "\n"
 
@@ -1490,7 +1557,7 @@ def main():
         written.append(out_path)
 
     if "shadcn" in targets:
-        css = emit_shadcn(base_leaves)
+        css = emit_shadcn(base_leaves, resolve_all(base_leaves))
         out_path = os.path.join(design_dir, "tokens.shadcn.css")
         with open(out_path, "w", encoding="utf-8") as fh:
             fh.write(css)

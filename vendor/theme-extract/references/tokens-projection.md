@@ -81,17 +81,35 @@ Composites expand at emit time only: shadow → `box-shadow` / `NSShadow` / elev
 
 **`tokens.tailwind.css`** (`--emit tailwind`) — Tailwind v4 adapter, a `@theme inline` block of
 var() references INTO tokens.css (which it `@import`s): `--color-<flat>` for every color with a
-PATH→FLAT home, `--radius-<seg>` for `semantic.radius.*`, `--font-<seg>` for fontFamily leaves,
-`--text-<name>` for `semantic.typography.<name>` sizes. Unmapped groups (categorical, dataViz
-gradients, spacing) stay reachable through the raw tokens.css vars. Because values are var() refs,
-modes/themes cascade with zero per-mode duplication.
+PATH→FLAT home, `--radius-<seg>` for `semantic.radius.*`, `--font-<seg>` for fontFamily leaves, and
+the scale entries both adapters share:
+- `--text-<step>` for each `semantic.typography.<step>` size, plus the sub-keys
+  `--text-<step>--line-height`, `--text-<step>--letter-spacing` and `--text-<step>--font-weight`,
+  each written only when the step has that field;
+- `--shadow-<name>` for each `semantic.elevation.<name>` shadow;
+- `--ease-<name>` for each `semantic.motion.easing.<name>` and `--transition-duration-<name>` for
+  each `semantic.motion.duration.<name>`.
+
+Tailwind's `text-<step>` utility sets font-size, line-height, letter-spacing and font-weight from
+those sub-keys, and its `duration-*` utility reads the `--transition-duration` namespace, so a
+`--duration-*` variable would not be used (both checked in tailwindcss 4.3.3 `dist/lib.js`). Motion
+leaves outside `semantic.motion.duration` / `semantic.motion.easing` and the unmapped groups
+(categorical, dataViz gradients, spacing) stay reachable through the raw tokens.css vars. Because
+values are var() refs, modes/themes cascade with zero per-mode duplication.
 
 **`tokens.shadcn.css`** (`--emit shadcn`) — shadcn/ui adapter: a `:root` block wiring the shadcn
 conventional variables (`--background`/`--foreground`/`--primary`/…/`--ring`/`--radius`) to the
 theme's semantic vars through the fixed candidate chains in `SHADCN_MAP` (first existing,
 type-matching base leaf wins; a miss emits a `/* --x: no mappable token */` comment, never a
-guess), plus the standard Tailwind v4 `@theme inline` bridge and the `--radius-sm/md/lg/xl` calc
-ladder. `SHADCN_MAP` is a byte-stability contract like PATH_FLAT_COLORS — extend, don't reorder.
+guess), plus the standard Tailwind v4 `@theme inline` bridge, the `--radius-sm/md/lg/xl` ladder
+and the same `--text-*`, `--shadow-*`, `--ease-*` and `--transition-duration-*` entries as the
+Tailwind adapter. Each ladder step maps to `semantic.radius.<step>` when the set defines that leaf.
+A step the set lacks takes the nearest defined step (the lower one on a tie) shifted by shadcn's
+spacing, sm = lg − 4px, md = lg − 2px, xl = lg + 4px, so a set with only sm/md/lg gets
+xl = lg + 4px. When defined steps sit on both sides of a missing step, `min()`/`max()` hold it
+between them, so sm ≤ md ≤ lg ≤ xl whenever the defined steps are in order. A set that defines
+none of the four uses `--radius` as lg (sm `calc(var(--radius) - 4px)` … xl
+`calc(var(--radius) + 4px)`). `SHADCN_MAP` is a byte-stability contract like PATH_FLAT_COLORS — extend, don't reorder.
 `--chart-1…5` map to `semantic.color.dataViz.series.1…5` (tokens-schema.md §6.3) and are optional:
 a missing series leaf writes no line at all — no comment — so the adapter of a set without
 `dataViz.series` contains no chart line.
