@@ -124,7 +124,7 @@ L preview out/x.svg out/x-sm.svg -o out/sheet.png
 - 渲染出的每个 SVG 都用 `wash`、`ink` 作滤镜 id。用 `<img>` 引用互不影响；多个图标内联进同一页面时 id 会冲突，后面的图标套用第一个的纹理，内联前给每个文件的 id 加前缀。
 - 一套图标统一色块大小、偏置方向、线重与密度；色块颜色可以按主题区分，但都取自品牌色板。
 
-本节为 **provisional**：脚本在本机实跑过渲染、lint、预览与换色；一轮盲测按本节给带品牌目录的产品画出三枚功能图标并换成品牌色（`skill-tests/visual-system/blind-36-lineart-icons-brand/`）。Edge 155、WebKit 26.5（Safari 的渲染引擎，经 Playwright 驱动，不是 Safari 本体）、Firefox 151 下滤镜都能渲染，水彩纹理细节略有差异；48px 以下用 `sm` 与简化版做过对照（`skill-tests/visual-system/validation-lineart-crossbrowser-small/`）。
+本节为 **provisional**：脚本在本机实跑过渲染、lint、预览与换色；一轮盲测按本节给带品牌目录的产品画出三枚功能图标并换成品牌色。Edge 155、WebKit 26.5（Safari 的渲染引擎，经 Playwright 驱动，不是 Safari 本体）、Firefox 151 下滤镜都能渲染，水彩纹理细节略有差异；48px 以下用 `sm` 与简化版做过对照。
 
 ## 从单图扩成系列
 
