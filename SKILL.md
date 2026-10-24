@@ -24,7 +24,7 @@ description: 自家产品的视觉识别与界面设计系统，系统软件、�
 | 已有自有 Logo，仅改配色或材质 | [BD-EDIT-001](references/design.md#bd-edit-001)、[BD-MATERIAL-001](references/design.md#bd-material-001)及 [Prompt 模式](libraries/prompts/INDEX.md) |
 | 母版、SVG/PNG、favicon 与基础品牌交付 | [BD-MASTER-001](references/assets.md#bd-master-001)起的资产规则、[交付合同](references/validation-contract.md) |
 | 品牌语言、品牌手册、辅助图形或真实物料模板 | [品牌系统与应用流程](references/flow-system.md)，检索 [应用模板库](libraries/applications/INDEX.md) |
-| 设计系统、完整 tokens、宣传物料与界面共用参数、图标 | [BD-TOKEN-001](references/system.md#bd-token-001)、[BD-ICON-001](references/system.md#bd-icon-001)；按标准组件样例页验收时对照 [样例页规格](references/specimen-spec.md)；交给开发时再进入下一行流程 |
+| 设计系统、完整 tokens、宣传物料与界面共用参数、图标 | [BD-TOKEN-001](references/system.md#bd-token-001)、[BD-ICON-001](references/system.md#bd-icon-001)；要标准组件样例页时按 [样例页规格](references/specimen-spec.md) §8 写 `specimen.json`，用 `scripts/specimen/` 的渲染器生成、验收脚本检查；交给开发时再进入下一行流程 |
 | 开发视觉规范、tokens、字体/资产配置与组件状态 | [开发视觉交接流程](references/flow-handoff.md)，Web 任务再读 [消费验证](references/handoff-web.md) |
 | 品牌片头、字标动画、宣传视频 | 转交可用的视频工作流；已安装 code-video 时使用它，并交付用户的品牌目录；缺少承接能力时按 [BD-RUNTIME-001](references/runtime.md#bd-runtime-001)留下交接记录 |
 

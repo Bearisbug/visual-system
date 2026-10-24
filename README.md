@@ -57,7 +57,7 @@ libraries/styles/        12 styles, 152 AI studies (119 reinterpretations + 33 o
 libraries/fonts/         Space Grotesk, Noto Sans SC, JetBrains Mono (OFL) + tested pairing
 libraries/prompts/       prompt patterns: new concept, refine, material, wordmark, application
 libraries/applications/  announcement 1200×630, story 1080×1350, cover 1600×900 + renderer
-scripts/                 skill checks, release manifest validator, token checks, tokens → brand.json, application measurement, self-test, renderer tests
+scripts/                 skill checks, release manifest validator, token checks, tokens → brand.json, application measurement, self-test, renderer tests, specimen renderer and check
 vendor/theme-extract/    verbatim copy of the token generator and profile-2 format docs (SOURCE.json pins upstream commit and SHA-256)
 agents/openai.yaml       display metadata for Codex
 AGENTS.md                maintenance rules for editing the skill itself
@@ -126,6 +126,8 @@ node scripts/self-test.mjs --output /abs/path/to/validation-results.json
 node --test scripts/test-application-renderer.mjs
 node scripts/check-application.mjs /abs/path/to/application-output   # exits 2 (not_run) without a browser
 node scripts/check-tokens.mjs /abs/path/to/brand --lint /abs/path/to/example.css
+node scripts/specimen/render-specimen.mjs /abs/path/to/brand          # reads brand/specimen.json
+NODE_PATH=$(npm root -g) node scripts/specimen/check-specimen.mjs /abs/path/to/brand
 ```
 
 Each command prints JSON and exits 0 on a mechanical pass. A pass does not prove visual quality, originality, font loading or license validity.
