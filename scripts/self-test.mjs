@@ -588,10 +588,13 @@ try {
   // The example's series before the all-pairs rule: every adjacent pair passes, series 1 and 3 do not.
   testDistinct('tokens-dataviz-first-three-all-pairs', lightSeries({ 3:'#8966F9', 5:'#1195B4' }), m => m.length === 1 && m[0].startsWith('light: dataViz.series.1 / 3 normal-vision') && m[0].includes('all pairs'));
   testDistinct('tokens-dataviz-low-chroma', lightSeries({ 6:'#4F5B6E' }), m => m.some(x => x.startsWith('light: dataViz.series.6 OKLCH C')));
+  // Series 6 is a near duplicate of the non-adjacent series 3: only the all-pairs normal-vision floor catches it.
+  testDistinct('tokens-dataviz-all-pairs-near-duplicate', lightSeries({ 4:'#8966F9', 5:'#EA3C93', 6:'#027FBB' }),
+    m => m.length === 1 && m[0].startsWith('light: dataViz.series.3 / 6 normal-vision') && m[0].includes('every pair of the set'));
   {
     const dir = path.join(temp, 'tokens-dataviz-cvd-warning-band');
     seed(dir);
-    lightSeries({ 4:'#8966F9', 5:'#EA3C93', 6:'#027FBB' })(dir);
+    lightSeries({ 4:'#8966F9', 5:'#EA3C93', 6:'#0278BD' })(dir);
     generate(dir);
     const { exit_code, report } = invoke('check-tokens.mjs', [dir]);
     const pass = exit_code === 0 && report.warnings.some(w => w.startsWith('light: dataViz.series.5 / 6 CVD') && w.includes('6-8 band'));

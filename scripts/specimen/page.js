@@ -88,6 +88,6 @@ function glassMap() {
 const probe = document.createElement('div'); probe.style.backdropFilter = 'url(#glass)';
 const ua = navigator.userAgent, webkitOnly = /Safari/.test(ua) && !/Chrome/.test(ua);
 if (probe.style.backdropFilter !== '' && !webkitOnly) { shell.classList.add('svg-glass'); glassMap(); new ResizeObserver(glassMap).observe(shell); }
-if (q.get('mode') === 'dark') setMode('dark'); else fill();
+if (document.querySelector(`#mode [data-mode="${q.get('mode')}"]`)) setMode(q.get('mode')); else fill();
 if (q.has('dev')) dev.click();
 spy();

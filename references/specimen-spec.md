@@ -186,7 +186,7 @@ visual-system 按本规格交付 tokens（BD-TOKEN-001），并自带确定性�
 
 - 品牌概述：定位、视觉隐喻、主张，以及从「本系统不用」归纳的设计原则。
 - 标志：横向组合、竖向组合、符号，浅底、深底、图片上；全部色版；安全区与最小尺寸；错误用法（拉伸、旋转、改颜色关系、浅底版放深底、整体描边、加效果）各一张，标明「仅作说明」。
-- 应用图标与网页图标：App 图标各平台预览、网页图标 16 / 32 / 48 原尺寸、浅色与深色浏览器标签栏。顶栏的符号 28 px：品牌有小尺寸简化符号时用它，没有时用完整符号，并在最小尺寸卡上注明顶栏是文档页例外。
+- 应用图标与网页图标：App 图标各平台预览、网页图标 16 / 32 / 48 原尺寸、浅色与深色浏览器标签栏。顶栏的符号 28 px：品牌有小尺寸简化符号时用它，没有时用完整符号，并在最小尺寸卡上注明顶栏是文档页例外；品牌规定顶栏只放字标时，用 §8.2 的 `logo.topbar` 关掉符号。
 - 品牌色：品牌色板（数字端 RGB / HEX，印刷另行打样），以及每个品牌色落到哪个界面角色的映射表。
 - 品牌字体：每个字体族的字形样本、字重、用途；字标的字体参数与是否已转轮廓。
 - 辅助图形、插画与图片风格：品牌有这类资产时展示，并写使用规则。
@@ -261,16 +261,16 @@ NODE_PATH=$(npm root -g) node <visual-system 技能目录>/scripts/specimen/chec
 
 ### 8.2 specimen.json
 
-路径都相对品牌目录。片段与 `hero`、`notes`、`uses` 里的字符串按 HTML 原样插入，可用占位符：`{{src:路径}}`（从输出页到该文件的相对地址）、`{{inline:路径}}`（内联 SVG，供 `currentColor`）、`{{size:路径}}`（文件大小）、`{{hex:token 路径}}` / `{{hex-dark:token 路径}}`（resolved 快照里的色值）、`{{icon-count}}`。片段里直接写的相对路径以输出页所在目录为基准。
+路径都相对品牌目录。片段与 `hero`、`notes`、`uses` 里的字符串按 HTML 原样插入，可用占位符：`{{src:路径}}`（从输出页到该文件的相对地址）、`{{inline:路径}}`（内联 SVG，供 `currentColor`）、`{{size:路径}}`（文件大小）、`{{hex:token 路径}}`（默认模式 resolved 快照里的色值）/ `{{hex-light:token 路径}}` / `{{hex-dark:token 路径}}`（指定模式的色值）、`{{icon-count}}`。片段里直接写的相对路径以输出页所在目录为基准。
 
 | 字段 | 必填 | 含义 |
 | --- | --- | --- |
 | `brand`、`version`、`lang` | `brand` | 品牌名、版本号（顶栏徽标）、页面语言，默认 `zh-CN` |
 | `out` | 否 | 输出页，默认 `examples/specimen.html` |
-| `tokens` | 否 | `tokens.json`、`tokens.css`、resolved 快照与适配文件所在目录，默认品牌目录本身 |
+| `tokens` | 否 | `tokens.json`、`tokens.css`、resolved 快照与适配文件所在目录，默认品牌目录本身。默认模式取 `meta.defaultMode`（缺省 light），它的快照是 `tokens.resolved.json`、写在 tokens.css 的 `:root`，另一模式读 `tokens.resolved.<模式>.json` 与 `[data-theme="<模式>"]`；页面先显示默认模式，模式切换里它排第一 |
 | `stateLayer`、`fonts` | 是 | 状态层 CSS 与字体入口 |
 | `icons`、`favicon` | 是 | 图标目录（逐个 SVG）与网页图标 |
-| `logo` | 是 | `symbol`、`symbolReverse`、`symbolSmall`、`symbolSmallReverse`、`wordmark`、`wordmarkReverse`、`lockup`、`lockupReverse`；顶栏、登录与空状态用 |
+| `logo` | 是 | `symbol`、`symbolReverse`、`symbolSmall`、`symbolSmallReverse`、`wordmark`、`wordmarkReverse`、`lockup`、`lockupReverse`；顶栏、登录与空状态用。可选 `topbar`：`height`（顶栏字标高度，px）、`symbol: false`（顶栏只放字标）、`wordmark` / `wordmarkReverse`（顶栏另用的字标） |
 | `hero` | 否 | `eyebrow`、`title`、`titleLang`、`tagline`、`lead`、`facts`（`[[粗体, 说明], …]`，默认按 tokens 统计）、`panel`（首屏右栏底色的 token 路径，默认强调色）、`panelImage` |
 | `doc` | 否 | `fonts.zh / en / display`：文档层字体的 token 路径，默认正文与首个展示字阶的字体族；`stages`：`{名称: token 路径}`，生成 `.stage.<名称>` 底色供片段使用 |
 | `components` | 否 | `radius.control / card / sheet`：控件、卡片、底部弹层的圆角 token，默认按值取最接近 10、16 的一档与最大一档；`badge.fill / text`：徽标底色与字色，默认选中高亮与主文字；`icons`：`{用途: 图标名}`，覆盖内置的用途到图标名映射 |

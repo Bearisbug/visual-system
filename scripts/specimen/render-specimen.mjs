@@ -29,19 +29,23 @@ const rel = p => path.relative(path.dirname(at(OUT)), at(p)).split(path.sep).joi
 
 // ---- tokens ----
 const SRC = JSON.parse(read(tok('tokens.json')));
-const R = { light: JSON.parse(read(tok('tokens.resolved.json'))) };
-if (exists(tok('tokens.resolved.dark.json'))) R.dark = JSON.parse(read(tok('tokens.resolved.dark.json')));
-const MODES = Object.keys(R);
+// the default mode (meta.defaultMode, else light) is tokens.resolved.json; the other one is tokens.resolved.<mode>.json
+const MODE_NAME = { light: '浅色', dark: '深色' };
+const BASE = SRC.meta?.defaultMode ?? 'light';
+if (!MODE_NAME[BASE]) die(`meta.defaultMode ${BASE}: the specimen renders light and dark only`);
+const R = { [BASE]: JSON.parse(read(tok('tokens.resolved.json'))) };
+for (const m of Object.keys(MODE_NAME)) if (m !== BASE && exists(tok(`tokens.resolved.${m}.json`))) R[m] = JSON.parse(read(tok(`tokens.resolved.${m}.json`)));
+const MODES = Object.keys(R), OTHER = MODES[1];
 const CSS = read(tok('tokens.css'));
 const VARS = new Set([...CSS.matchAll(/(--[\w-]+)\s*:/g)].map(m => m[1]));
 const kebab = p => '--' + p.split('.').map(s => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()).join('-');
 const has = p => VARS.has(kebab(p));
 const V = p => { const n = kebab(p); if (!VARS.has(n)) die(`tokens.css has no ${n} (token ${p})`); return `var(${n})`; };
 const get = (tree, p) => p.split('.').reduce((n, k) => n?.[k], tree);
-const val = (p, mode = 'light') => get(R[mode], p)?.$value;
-const desc = p => get(R.light, p)?.$description;
-const kids = (p, tree = R.light) => { const n = get(tree, p); return n ? Object.keys(n).filter(k => !k.startsWith('$') && n[k] && typeof n[k] === 'object') : []; };
-const leaves = (p, tree = R.light) => { const out = []; const walk = q => { const n = get(tree, q); if (!n || typeof n !== 'object') return; if ('$value' in n) out.push(q); else for (const k of Object.keys(n)) if (!k.startsWith('$')) walk(`${q}.${k}`); }; walk(p); return out; };
+const val = (p, mode = BASE) => get(R[mode], p)?.$value;
+const desc = p => get(R[BASE], p)?.$description;
+const kids = (p, tree = R[BASE]) => { const n = get(tree, p); return n ? Object.keys(n).filter(k => !k.startsWith('$') && n[k] && typeof n[k] === 'object') : []; };
+const leaves = (p, tree = R[BASE]) => { const out = []; const walk = q => { const n = get(tree, q); if (!n || typeof n !== 'object') return; if ('$value' in n) out.push(q); else for (const k of Object.keys(n)) if (!k.startsWith('$')) walk(`${q}.${k}`); }; walk(p); return out; };
 const META = SRC.meta ?? {};
 const ROLES = META.roles ?? {};
 const CATS = META.categories ?? {};
@@ -120,15 +124,16 @@ const RADIUS = {
 };
 const BADGE = cfg.components?.badge ?? { fill: rolePath('selection'), text: rolePath('text.primary') };
 const SCRIM = has('semantic.color.scrim') ? 'semantic.color.scrim' : null;
+// without a scrim token the dark stand-in has to darken too: the dark primary text is light
+const scrimFor = m => m === 'dark' ? `color-mix(in srgb, ${RV('surface.sunken')} 72%, transparent)` : `color-mix(in srgb, ${RV('text.primary')} 40%, transparent)`;
 const aliasCss = [
   ':root, [data-theme] {',
   ...Object.entries({ 1: 4, 2: 8, 3: 12, 4: 16, 6: 24 }).map(([n, px]) => `  --sp-${n}: ${V(`primitive.dimension.space.${nearest(spaces, px).k}`)};`),
   `  --sp-radius-control: ${V(RADIUS.control)};`, `  --sp-radius-card: ${V(RADIUS.card)};`, `  --sp-radius-sheet: ${V(RADIUS.sheet)};`,
   `  --sp-badge-fill: ${V(BADGE.fill)};`, `  --sp-badge-text: ${V(BADGE.text)};`,
-  `  --sp-scrim: ${SCRIM ? V(SCRIM) : `color-mix(in srgb, ${RV('text.primary')} 40%, transparent)`};`,
+  `  --sp-scrim: ${SCRIM ? V(SCRIM) : scrimFor(BASE)};`,
   '}',
-  // without a scrim token the dark stand-in has to darken too: the dark primary text is light
-  ...(!SCRIM && MODES.includes('dark') ? ['[data-theme="dark"] {', `  --sp-scrim: color-mix(in srgb, ${RV('surface.sunken')} 72%, transparent);`, '}'] : []),
+  ...(!SCRIM && OTHER ? [`[data-theme="${OTHER}"] {`, `  --sp-scrim: ${scrimFor(OTHER)};`, '}'] : []),
 ].join('\n');
 
 // ---- typography ----
@@ -151,7 +156,7 @@ const fillFragment = (html, where) => {
   html = html.replace(/\{\{inline:([^}]+)\}\}/g, (_, p) => read(p.trim()).replace(/<\?xml[^>]*>\s*/, '').trim());
   html = html.replace(/\{\{size:([^}]+)\}\}/g, (_, p) => size(p.trim()));
   html = html.replace(/\{\{src:([^}]+)\}\}/g, (_, p) => { if (!exists(p.trim())) die(`${where}: {{src:${p}}} does not exist`); return esc(rel(p.trim())); });
-  html = html.replace(/\{\{(hex|hex-dark):([^}]+)\}\}/g, (_, k, p) => { const v = val(p.trim(), k === 'hex' ? 'light' : 'dark'); if (v === undefined) die(`${where}: no token ${p}`); return v; });
+  html = html.replace(/\{\{hex(?:-(light|dark))?:([^}]+)\}\}/g, (_, m, p) => { const v = R[m ?? BASE] && val(p.trim(), m ?? BASE); if (v === undefined) die(`${where}: no token ${p}`); return v; });
   html = html.replace(/\{\{icon-count\}\}/g, String(ICON_FILES.length));
   const left = html.match(/\{\{[^}]*\}\}/g);
   if (left) die(`${where}: unfilled placeholders ${[...new Set(left)].join(' ')}`);
@@ -176,7 +181,7 @@ const brand = cfg.brand ?? 'Brand';
 const logo = cfg.logo ?? {};
 const img = (p, attrs) => p ? `<img src="${esc(rel(p))}" ${attrs}>` : '';
 const themed = (light, dark, attrs) => dark ? img(light, `class="theme-light-only" ${attrs}`) + img(dark, `class="theme-dark-only" ${attrs}`) : img(light, attrs);
-for (const k of Object.keys(logo)) if (logo[k] && !exists(logo[k])) die(`logo.${k}: ${logo[k]} does not exist`);
+for (const [k, f] of [...Object.entries(logo), ...Object.entries(logo.topbar ?? {}).map(([k, f]) => [`topbar.${k}`, f])]) if (typeof f === 'string' && !exists(f)) die(`logo.${k}: ${f} does not exist`);
 
 // 01 brand sections come from the brand's fragments
 const BRAND_SECTIONS = [['brand', '品牌概述'], ['logo', '标志'], ['app-icon', '应用图标与网页图标'], ['brand-color', '品牌色'], ['brand-type', '品牌字体'], ['motif', '辅助图形'], ['voice', '语气与文案']];
@@ -204,9 +209,9 @@ function colorSection() {
   const rows = fgs.map(([k, min]) => `<tr><td>${fgName(k)} <span style="color:var(--semantic-color-text-tertiary)">≥ ${min}</span></td>${MODES.map(m => surfaces.map(s => { const r = contrast(val(fgPath(k), m), val(rolePath(s), m), m); return `<td class="${r < min ? 'bad' : ''}">${r.toFixed(2)}</td>`; }).join('')).join('')}</tr>`).join('');
   const onAcc = rolePath('onAccent') && rolePath('accent') ? `<tr><td>强调上的文字 / 强调 <span style="color:var(--semantic-color-text-tertiary)">≥ 4.5</span></td>${MODES.map(m => { const r = contrast(val(rolePath('onAccent'), m), val(rolePath('accent'), m), m); return `<td class="${r < 4.5 ? 'bad' : ''}" colspan="${surfaces.length}">${r.toFixed(2)}</td>`; }).join('')}</tr>` : '';
   const sName = { 'surface.sunken': '凹陷', 'surface.default': '页面', 'surface.raised': '抬升', 'surface.overlay': '浮层' };
-  const table = `<div class="card hscroll"><table class="ttable ctable" style="min-width:${260 + 80 * surfaces.length * MODES.length}px"><tr><th>前景</th>${MODES.map(m => `<th colspan="${surfaces.length}">${m === 'light' ? '浅色' : '深色'}</th>`).join('')}</tr><tr><th></th>${MODES.map(() => surfaces.map(s => `<th>${sName[s]}</th>`).join('')).join('')}</tr>${rows}${onAcc}</table></div>`;
+  const table = `<div class="card hscroll"><table class="ttable ctable" style="min-width:${260 + 80 * surfaces.length * MODES.length}px"><tr><th>前景</th>${MODES.map(m => `<th colspan="${surfaces.length}">${MODE_NAME[m]}</th>`).join('')}</tr><tr><th></th>${MODES.map(() => surfaces.map(s => `<th>${sName[s]}</th>`).join('')).join('')}</tr>${rows}${onAcc}</table></div>`;
   const absent = [];
-  if (!SCRIM) absent.push(['遮罩 scrim', `对话框与底部弹层的遮罩。本页样本临时用主文字色 40%${MODES.includes('dark') ? '，深色模式用凹陷表面 72%' : ''}（<code>color-mix</code>），补 token 前产品里不要照抄这个值。`]);
+  if (!SCRIM) absent.push(['遮罩 scrim', `对话框与底部弹层的遮罩。本页样本临时${MODES.map(m => `${MODES.length > 1 ? MODE_NAME[m] : ''}用${m === 'dark' ? '凹陷表面 72%' : '主文字色 40%'}`).join('，')}（<code>color-mix</code>），补 token 前产品里不要照抄这个值。`]);
   if (!has('semantic.color.surface.inverse')) absent.push(['反色表面 inverse', '提示条与工具提示没有反色表面可用，本页用浮层表面加阴影。']);
   if (SERIES && !['gridline', 'axis', 'track'].every(k => has(`semantic.color.dataViz.${k}`))) absent.push(['图表网格线、坐标轴、轨道', 'dataViz 没有 gridline / axis / track，本页图表分别借用分隔线、弱文字与凹陷表面。']);
   return [
@@ -511,7 +516,7 @@ function devSection() {
     `<div class="grid g2">`,
     `<div class="card">${head('引入顺序', 'HTML')}${pre([`<span class="c">&lt;!-- ${files.map((f, i) => `${i + 1} ${f[1]}`).join(' · ')} --&gt;</span>`, ...files.map(link), '', `<span class="c">&lt;!-- light / dark，不设 = 跟随系统 --&gt;</span>`, `&lt;html lang="${esc(cfg.lang ?? 'zh-CN')}" data-theme="dark"&gt;`].join('\n'))}</div>`,
     tw ? `<div class="card">${head('Tailwind v4', '适配文件会带上 tokens.css；状态层进 base 层')}${tw}</div>` : '',
-    `<div class="card">${head('全局规则', '写在引入 token 与字体之后')}${pre([`<span class="c">/* 可变字体必须显式写字重，不让浏览器合成 */</span>`, `:root { font-synthesis: none; color-scheme: light; }`, `:root[data-theme="dark"] { color-scheme: dark; }`, `@media (prefers-color-scheme: dark) {`, `  :root:not([data-theme="light"]) { color-scheme: dark; }`, `}`, `<span class="c">/* 带 lang 的元素重套正文字阶：继承来的字体栈不随 :lang 覆盖切换 */</span>`, `:where(body, body [lang]) {`, `  font-family: var(--semantic-typography-body-font-family);`, `  font-size: var(--semantic-typography-body-font-size);`, `  line-height: var(--semantic-typography-body-line-height);`, `  letter-spacing: var(--semantic-typography-body-letter-spacing);`, `}`, ...(TWSRC ? [`<span class="c">/* Tailwind 的 dark: 与 tokens.css 同一判据 */</span>`, `@custom-variant dark {`, `  &amp;:where([data-theme="dark"], [data-theme="dark"] *) { @slot; }`, `  @media (prefers-color-scheme: dark) {`, `    &amp;:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) { @slot; }`, `  }`, `}`] : [])].join('\n'))}</div>`,
+    `<div class="card">${head('全局规则', '写在引入 token 与字体之后')}${pre([`<span class="c">/* 可变字体必须显式写字重，不让浏览器合成 */</span>`, `:root { font-synthesis: none; color-scheme: ${BASE}; }`, ...(OTHER ? [`:root[data-theme="${OTHER}"] { color-scheme: ${OTHER}; }`, `@media (prefers-color-scheme: ${OTHER}) {`, `  :root:not([data-theme="${BASE}"]) { color-scheme: ${OTHER}; }`, `}`] : []), `<span class="c">/* 带 lang 的元素重套正文字阶：继承来的字体栈不随 :lang 覆盖切换 */</span>`, `:where(body, body [lang]) {`, `  font-family: var(--semantic-typography-body-font-family);`, `  font-size: var(--semantic-typography-body-font-size);`, `  line-height: var(--semantic-typography-body-line-height);`, `  letter-spacing: var(--semantic-typography-body-letter-spacing);`, `}`, ...(TWSRC && R.dark ? [`<span class="c">/* Tailwind 的 dark: 与 tokens.css 同一判据 */</span>`, `@custom-variant dark {`, `  &amp;:where([data-theme="dark"], [data-theme="dark"] *) { @slot; }`, `  @media ${BASE === 'dark' ? 'not (prefers-color-scheme: light)' : '(prefers-color-scheme: dark)'} {`, `    &amp;:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) { @slot; }`, `  }`, `}`] : [])].join('\n'))}</div>`,
     `<div class="card">${head('主按钮', '状态全部来自状态层')}${pre([`&lt;button class="state-layer focus-ring …"&gt;保存&lt;/button&gt;`, '', `<span class="c">&lt;!-- 提交中：仍可聚焦，事件里拦截 --&gt;</span>`, `&lt;button aria-disabled="true" class="state-layer focus-ring …"&gt;`, `  &lt;svg class="animate-spin"&gt;…&lt;/svg&gt;提交中`, `&lt;/button&gt;`].join('\n'))}</div>`,
     `</div>`,
     group('产品代码里的写法', '从适配文件读出；适配文件没映射的写变量'),
@@ -525,16 +530,16 @@ function devSection() {
 // 06 token tables
 function tokensSection() {
   const block = sel => { const m = CSS.match(new RegExp(`^${sel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\{\\n([\\s\\S]*?)^\\}`, 'm')); return m ? Object.fromEntries([...m[1].matchAll(/^\s*(--[\w-]+):\s*(.+?);\s*$/gm)].map(x => [x[1], x[2]])) : null; };
-  const light = block(':root');
-  if (!light) die('tokens.css has no top-level :root block');
-  const dark = block('[data-theme="dark"]') ?? {};
+  const base = block(':root');
+  if (!base) die('tokens.css has no top-level :root block');
+  const other = OTHER ? block(`[data-theme="${OTHER}"]`) ?? {} : {};
   const cell = v => /^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/.test(v) ? `<span class="sw" style="background:${esc(v)}"></span>${esc(v)}` : esc(v);
   const table = (h, rows) => `<div class="hscroll"><table class="ttable" style="min-width:640px"><tr><th>变量</th><th>${h[0]}</th><th>${h[1]}</th></tr>${rows.map(([n, a, b]) => `<tr><td>${esc(n)}</td><td>${a}</td><td>${b}</td></tr>`).join('')}</table></div>`;
   const GROUPS_T = [['语义 · 颜色', ['--semantic-color-']], ['语义 · 字阶', ['--semantic-typography-']], ['语义 · 间距、圆角、布局与图标', ['--semantic-space-', '--semantic-radius-', '--semantic-layout-', '--semantic-icon-']], ['语义 · 层级、状态、动效与材质', ['--semantic-elevation-', '--semantic-state-', '--semantic-motion-', '--semantic-material-']], ['基础值 primitive', ['--primitive-']]];
-  const out = GROUPS_T.map(([t, pf]) => { const rows = Object.keys(light).filter(n => pf.some(p => n.startsWith(p))).map(n => [n, cell(light[n]), n in dark && dark[n] !== light[n] ? cell(dark[n]) : '同浅色']); return rows.length ? `<details class="tok"><summary><b>${t}</b><span>${rows.length} 项</span></summary>${table(['浅色', '深色'], rows)}</details>` : ''; });
+  const out = GROUPS_T.map(([t, pf]) => { const rows = Object.keys(base).filter(n => pf.some(p => n.startsWith(p))).map(n => [n, cell(base[n]), n in other && other[n] !== base[n] ? cell(other[n]) : `同${MODE_NAME[BASE]}`]); return rows.length ? `<details class="tok"><summary><b>${t}</b><span>${rows.length} 项</span></summary>${table([MODE_NAME[BASE], OTHER ? MODE_NAME[OTHER] : '—'], rows)}</details>` : ''; });
   const langs = [...CSS.matchAll(/^\[lang\]:lang\((\w+)\) \{/gm)].map(m => m[1]);
-  for (const l of langs) { const other = block(`[lang]:not(:lang(${l}))`) ?? {}, ov = block(`[lang]:lang(${l})`) ?? {}; const rows = Object.keys(ov).map(n => [n, cell(other[n] ?? light[n] ?? ''), cell(ov[n])]); out.push(`<details class="tok"><summary><b>语言覆盖 · <code>[lang]:lang(${l})</code></b><span>${rows.length} 项</span></summary>${table([`其他语言`, l], rows)}</details>`); }
-  return [`    <h2>全部 token</h2>`, `    <p class="sub">${note('tokens', `从 tokens.css 逐项列出，浅色与深色并排。字阶的字体族与字距按语言覆盖：元素带 lang 时取「语言覆盖」表。展开分组查看。`)}</p>`, `<div class="card">${out.filter(Boolean).join('\n')}</div>`].join('\n');
+  for (const l of langs) { const other = block(`[lang]:not(:lang(${l}))`) ?? {}, ov = block(`[lang]:lang(${l})`) ?? {}; const rows = Object.keys(ov).map(n => [n, cell(other[n] ?? base[n] ?? ''), cell(ov[n])]); out.push(`<details class="tok"><summary><b>语言覆盖 · <code>[lang]:lang(${l})</code></b><span>${rows.length} 项</span></summary>${table([`其他语言`, l], rows)}</details>`); }
+  return [`    <h2>全部 token</h2>`, `    <p class="sub">${note('tokens', `从 tokens.css 逐项列出，${OTHER ? `${MODE_NAME[BASE]}与${MODE_NAME[OTHER]}并排` : `只有${MODE_NAME[BASE]}`}。字阶的字体族与字距按语言覆盖：元素带 lang 时取「语言覆盖」表。展开分组查看。`)}</p>`, `<div class="card">${out.filter(Boolean).join('\n')}</div>`].join('\n');
 }
 
 // 06 notUsed
@@ -562,11 +567,13 @@ const facts = cfg.hero?.facts?.map(f => f.map(T)) ?? [
   [`${UI_STEPS.length} 档`, `界面字阶${DISPLAY_STEPS.length ? `，另有展示字阶 ${DISPLAY_STEPS.length} 档` : ''}`],
   [`${SERIES || '—'} 色`, SERIES ? '图表系列色' : '没有图表系列色'],
   [`${ICON_FILES.length} 个`, '图标'],
-  [`${MODES.length} 套`, MODES.length > 1 ? '浅色与深色逐项对应' : '只有浅色'],
+  [`${MODES.length} 套`, OTHER ? `${MODE_NAME[BASE]}与${MODE_NAME[OTHER]}逐项对应` : `只有${MODE_NAME[BASE]}`],
 ];
 const hero = Object.fromEntries(Object.entries(cfg.hero ?? {}).map(([k, v]) => [k, typeof v === 'string' && !['panel', 'panelImage', 'titleLang'].includes(k) ? T(v) : v]));
 const symbolSmall = logo.symbolSmall ?? logo.symbol, symbolSmallRev = logo.symbolSmallReverse ?? logo.symbolReverse;
-const topMark = [symbolSmall && themed(symbolSmall, symbolSmallRev, 'width="28" height="28" alt=""'), logo.wordmark && themed(logo.wordmark, logo.wordmarkReverse, 'class="wm" alt=""').replace(/class="theme-(light|dark)-only" class="wm"/g, 'class="wm theme-$1-only"')].filter(Boolean).join('');
+const TOPBAR = logo.topbar ?? {};
+const [tbWm, tbWmRev] = TOPBAR.wordmark ? [TOPBAR.wordmark, TOPBAR.wordmarkReverse] : [logo.wordmark, logo.wordmarkReverse];
+const topMark = [TOPBAR.symbol !== false && symbolSmall && themed(symbolSmall, symbolSmallRev, 'width="28" height="28" alt=""'), tbWm && themed(tbWm, tbWmRev, 'class="wm" alt=""').replace(/class="theme-(light|dark)-only" class="wm"/g, 'class="wm theme-$1-only"')].filter(Boolean).join('');
 const BODY = [
   section('brand', 'brand', fragment('brand', '品牌概述')),
   ...BRAND_SECTIONS.slice(1).map(([id, t]) => section(id, 'brand', fragment(id, t))),
@@ -587,11 +594,12 @@ const docVars = [
   '/* 以下由渲染器按 specimen.json 生成 */',
   `:root { --doc-zh: ${fontVar(docFonts.zh, V('semantic.typography.body.fontFamily'))}; --doc-en: ${fontVar(docFonts.en, V('semantic.typography.body.fontFamily'))}; --doc-display: ${fontVar(docFonts.display, DISPLAY_STEPS.length ? V(`semantic.typographyDisplay.${DISPLAY_STEPS[0]}.fontFamily`) : V('semantic.typography.heading1.fontFamily'))}; --doc-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace; --doc-panel: ${hero.panel ? V(hero.panel) : RV('accent')}; }`,
   ...Object.entries(cfg.doc?.stages ?? {}).map(([n, p]) => `.stage.${n} { background: ${V(p)}; }`),
+  ...(TOPBAR.height ? [`.wordmark .wm { height: ${Number(TOPBAR.height)}px; }`] : []),
 ].join('\n');
 for (const v of new Set([...sampleCss.matchAll(/var\((--[\w-]+)/g)].map(m => m[1]))) if (!v.startsWith('--sp-') && !v.startsWith('--doc-') && !VARS.has(v) && !/^--(state|focus-ring|motion)-/.test(v)) die(`sample layer uses ${v}, which tokens.css does not define`);
 
 const html = `<!doctype html>
-<html lang="${esc(cfg.lang ?? 'zh-CN')}" data-theme="light">
+<html lang="${esc(cfg.lang ?? 'zh-CN')}" data-theme="${BASE}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -632,7 +640,7 @@ ${ICON_FILES.map(f => { const [vb, inner] = svgInner(f); return `<symbol id="i-$
       <a class="focus-ring" href="#dev">开发</a>
     </nav>
     <div class="seg-area tools q">
-      ${MODES.length > 1 ? '<div class="seg" id="mode"><button class="on state-layer focus-ring" data-mode="light" aria-pressed="true">浅色</button><button class="state-layer focus-ring" data-mode="dark" aria-pressed="false">深色</button></div>' : ''}
+      ${OTHER ? `<div class="seg" id="mode">${MODES.map((m, i) => `<button class="${i ? '' : 'on '}state-layer focus-ring" data-mode="${m}" aria-pressed="${!i}">${MODE_NAME[m]}</button>`).join('')}</div>` : ''}
       <button class="opt focus-ring dev-toggle" id="devtoggle" role="switch" aria-checked="false"><span class="switch" id="devsw"></span>开发视图</button>
     </div>
     <div class="divider"></div>

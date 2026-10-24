@@ -26,16 +26,19 @@ const at = rel => path.resolve(ROOT, rel);
 let chromium;
 try { ({ chromium } = createRequire(import.meta.url)('playwright')); } catch { console.error('check-specimen: Playwright not found; install it globally and run with NODE_PATH=$(npm root -g)'); process.exit(2); }
 
-const R = { light: JSON.parse(fs.readFileSync(at(path.join(TOK, 'tokens.resolved.json')))) };
-if (fs.existsSync(at(path.join(TOK, 'tokens.resolved.dark.json')))) R.dark = JSON.parse(fs.readFileSync(at(path.join(TOK, 'tokens.resolved.dark.json'))));
 const SRC = JSON.parse(fs.readFileSync(at(path.join(TOK, 'tokens.json'))));
+// same mode layout as render-specimen.mjs: the default mode is tokens.resolved.json
+const BASE = SRC.meta?.defaultMode ?? 'light';
+const R = { [BASE]: JSON.parse(fs.readFileSync(at(path.join(TOK, 'tokens.resolved.json')))) };
+const modeFile = m => path.join(TOK, `tokens.resolved.${m}.json`);
+for (const m of ['light', 'dark']) if (m !== BASE && fs.existsSync(at(modeFile(m)))) R[m] = JSON.parse(fs.readFileSync(at(modeFile(m))));
 const ROLES = SRC.meta?.roles ?? {};
 const leaf = (mode, p) => p.split('.').reduce((n, k) => n?.[k], R[mode])?.$value;
 const rgb = hex => { const h = hex.replace('#', ''); const [r, g, b] = [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); const a = h.length === 8 ? parseInt(h.slice(6, 8), 16) / 255 : 1; return a === 1 ? `rgb(${r}, ${g}, ${b})` : `rgba(${r}, ${g}, ${b}, ${+a.toFixed(3)})`; };
 const sameColor = (css, hex) => { const want = rgb(hex); if (css === want) return true; const n = s => s.match(/[\d.]+/g)?.map(Number) ?? []; const a = n(css), b = n(want); return a.length >= 3 && a.slice(0, 3).every((x, i) => Math.abs(x - b[i]) <= 1) && Math.abs((a[3] ?? 1) - (b[3] ?? 1)) < 0.01; };
 const sha = f => crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
 const relOut = f => path.relative(ROOT, f).split(path.sep).join('/');
-const INPUTS = [OUT_HTML, path.join(path.dirname(OUT_HTML), 'specimen-doc.css'), path.join(TOK, 'tokens.css'), path.join(TOK, 'tokens.resolved.json'), R.dark && path.join(TOK, 'tokens.resolved.dark.json'), cfg.stateLayer, cfg.fonts, path.relative(ROOT, CFG_PATH)].filter(Boolean).map(p => path.normalize(p).split(path.sep).join('/'));
+const INPUTS = [OUT_HTML, path.join(path.dirname(OUT_HTML), 'specimen-doc.css'), path.join(TOK, 'tokens.css'), path.join(TOK, 'tokens.resolved.json'), ...Object.keys(R).filter(m => m !== BASE).map(modeFile), cfg.stateLayer, cfg.fonts, path.relative(ROOT, CFG_PATH)].filter(Boolean).map(p => path.normalize(p).split(path.sep).join('/'));
 
 // C1 / C8 over the sample layer: the <style id="sample-layer"> block, plus inline styles on sample elements (read in the
 // browser below). Inline styles on cards, stages and captions are document layout and are not checked.
@@ -54,7 +57,7 @@ const scan = (where, text) => {
     for (const item of SRC.meta?.notUsed ?? []) { const c = item.css; if (c && ((c.property && prop === c.property.toLowerCase() && (!c.valuePattern || new RegExp(c.valuePattern, 'i').test(v))) || (!c.property && c.valuePattern && new RegExp(c.valuePattern, 'i').test(v)))) c8.push(`${item.id} · ${where}: ${p}: ${v}`); }
   }
 };
-scan('sample-layer', sampleCss.replace(/^\s*(:root, \[data-theme\]|\[data-theme="dark"\]) \{[\s\S]*?\n\}/gm, ''));
+scan('sample-layer', sampleCss.replace(/^\s*(:root, \[data-theme\]|\[data-theme="\w+"\]) \{[\s\S]*?\n\}/gm, ''));
 
 fs.mkdirSync(at(QA), { recursive: true });
 // only this check's own files: the directory may hold other evidence
@@ -77,7 +80,7 @@ try {
     page.on('console', m => { if (['error', 'warning'].includes(m.type())) logs.push(`${m.type()}: ${m.text()}`); });
     page.on('pageerror', e => logs.push(`pageerror: ${e.message}`));
     page.on('requestfailed', r => logs.push(`requestfailed: ${r.url().replace(pathToFileURL(ROOT).href, '')}`));
-    await page.goto(URL + (mode === 'dark' ? '?mode=dark' : ''));
+    await page.goto(URL + (mode === BASE ? '' : `?mode=${mode}`));
     await page.evaluate(() => document.fonts.ready);
     await page.$$eval('img[loading="lazy"]', imgs => imgs.forEach(i => { i.loading = 'eager'; }));
     await page.waitForFunction(() => [...document.images].every(i => i.complete), null, { timeout: 15000 });
@@ -178,7 +181,7 @@ try {
     expect(run.logs.length === 0, `${tag}: console ${run.logs.join(' / ')}`);
     result.runs.push(run); await ctx.close();
   }
-  // §5.1: forced colors and more contrast at 1440, light mode, the whole page
+  // §5.1: forced colors and more contrast at 1440, default mode, the whole page
   for (const [name, media] of [['forced-colors', { forcedColors: 'active' }], ['contrast-more', { contrast: 'more' }]]) {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
     const page = await ctx.newPage();

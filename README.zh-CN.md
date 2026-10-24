@@ -55,7 +55,7 @@ libraries/styles/        12 类风格、152 张 AI 图（119 重绘＋33 原创�
 libraries/fonts/         Space Grotesk、Noto Sans SC、JetBrains Mono（OFL）及一组已测搭配
 libraries/prompts/       Prompt 模式：新构思、轮廓细化、材质配色、字标、应用展示
 libraries/applications/  公告 1200×630、竖版 1080×1350、封面 1600×900 模板及渲染器
-scripts/                 Skill 自检、release manifest 校验、tokens 检查、tokens → brand.json、物料测量、自测、渲染器测试、样例页渲染器与验收
+scripts/                 Skill 自检、release manifest 校验、tokens 检查、图表系列色派生、tokens → brand.json、物料测量、自测、渲染器测试、样例页渲染器与验收
 vendor/theme-extract/    tokens 生成器与 profile-2 格式文档的原样副本（SOURCE.json 记录上游提交与 SHA-256）
 agents/openai.yaml       Codex 展示元数据
 AGENTS.md                维护本 Skill 时的规则
@@ -124,6 +124,7 @@ node scripts/self-test.mjs --output /abs/path/to/validation-results.json
 node --test scripts/test-application-renderer.mjs
 node scripts/check-application.mjs /abs/path/to/application-output   # 没有浏览器时退出码 2（not_run）
 node scripts/check-tokens.mjs /abs/path/to/brand --lint /abs/path/to/example.css
+node scripts/derive-dataviz.mjs /abs/path/to/brand                  # 打印每个模式的系列色 1–6，不写文件
 node scripts/specimen/render-specimen.mjs /abs/path/to/brand          # 读 brand/specimen.json
 NODE_PATH=$(npm root -g) node scripts/specimen/check-specimen.mjs /abs/path/to/brand
 ```

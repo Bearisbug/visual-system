@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { requireValue as assert, sha256, readJSON, report, capture, finish } from './lib/validation.mjs';
 import { generate, GENERATED_RE, leafAt } from './lib/tokens.mjs';
+import { parseColor, over, ratio, linearRGB, oklab, deltaE } from './lib/color.mjs';
 
 const args = process.argv.slice(2);
 if (args.includes('--help')) {
@@ -16,7 +17,7 @@ Mechanical checks for a profile-2 token set (see references/system.md#bd-token-0
      every semantic.color.dataViz.series color against the four surfaces at 3:1;
   3. chart series distinctness per mode (DATAVIZ_DISTINCT): OKLCH lightness band and chroma floor,
      adjacent series and all pairs of series 1-3 under simulated protanopia/deuteranopia and under
-     normal vision, and distance from the feedback colors (thresholds in the comment above the check);
+     normal vision, every pair of the set under normal vision, and distance from the feedback colors (thresholds in the comment above the check);
   4. state-layer distinctness per mode (STATE_DISTINCT): on every surface that carries a state
      layer, painted as the browser paints it, default and hover are at least CIEDE2000 deltaE00 2
      apart and hover and pressed at least 3;
@@ -78,24 +79,6 @@ capture(result, 'generator', () => {
 });
 
 // 2. Contrast matrix per mode, from snapshots regenerated from the current tokens.
-function parseColor(value) {
-  if (typeof value !== 'string') return null;
-  const v = value.trim();
-  let m = v.match(/^#([\da-f]{3}|[\da-f]{6}|[\da-f]{8})$/i);
-  if (m) {
-    const h = m[1].length === 3 ? [...m[1]].map(c => c + c).join('') : m[1];
-    return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16), a: h.length === 8 ? parseInt(h.slice(6, 8), 16) / 255 : 1 };
-  }
-  m = v.match(/^rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)(?:\s*[,/]\s*([\d.]+%?))?\s*\)$/i);
-  if (m) {
-    const alpha = m[4] === undefined ? 1 : m[4].endsWith('%') ? parseFloat(m[4]) / 100 : parseFloat(m[4]);
-    return { r: +m[1], g: +m[2], b: +m[3], a: alpha };
-  }
-  return null;
-}
-const over = (fg, bg) => ({ r: fg.r * fg.a + bg.r * (1 - fg.a), g: fg.g * fg.a + bg.g * (1 - fg.a), b: fg.b * fg.a + bg.b * (1 - fg.a), a: 1 });
-const lum = c => [c.r, c.g, c.b].map(x => { x /= 255; return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4; }).reduce((s, x, i) => s + x * [0.2126, 0.7152, 0.0722][i], 0);
-const ratio = (a, b) => { const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x); return (hi + 0.05) / (lo + 0.05); };
 // A state layer as Chromium paints it (8-bit source-over, opacity stored as round(alpha * 255));
 // see the state-distinctness note below.
 const paint8 = (layer, surface, alpha) => {
@@ -206,29 +189,15 @@ if (scratch) capture(result, 'contrast', () => {
 //   - worst adjacent pair under normal vision: OKLab deltaE x100 >= 15;
 //   - the pairs of series 1-3 (1/2, 1/3, 2/3) meet the same CVD and normal-vision requirements,
 //     because scatter, bubble and small-multiple charts put any two series side by side and use
-//     at most those three (tokens-schema.md §6.3); the worst pair over the full set is reported
-//     with its slots for consumers that draw more series in one chart, without a threshold.
+//     at most those three (tokens-schema.md §6.3);
+//   - every pair of the full set under normal vision: OKLab deltaE x100 >= 8. tokens-schema §6.3
+//     only reports this pair; visual-system (BD-TOKEN-001 step 8) gates it, because a search that
+//     only checks adjacent pairs and 1-3 settles on near-identical colors in non-adjacent slots.
 // The feedback floor reuses the normal-vision floor: every series color stays >= 15 from
 // feedback.success / warning / error of the same mode, so a series never reads as a status.
 // Contrast against the surfaces is DATAVIZ_CONTRAST above.
 const BAND = { light: [0.43, 0.77], dark: [0.48, 0.67] };
-const CHROMA_FLOOR = 0.10, CVD_TARGET = 8, CVD_FLOOR = 6, NORMAL_FLOOR = 15, FEEDBACK_FLOOR = 15;
-const MACHADO = {
-  protan: [[0.152286, 1.052583, -0.204868], [0.114503, 0.786281, 0.099216], [-0.003882, -0.048116, 1.051998]],
-  deutan: [[0.367322, 0.860646, -0.227968], [0.280085, 0.672501, 0.047413], [-0.011820, 0.042940, 0.968881]]
-};
-const linearRGB = c => [c.r, c.g, c.b].map(x => { x /= 255; return x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4; });
-function oklab([r, g, b]) {
-  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
-  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
-  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
-  return [0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s, 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s, 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s];
-}
-const simulate = (rgb, kind) => MACHADO[kind].map(row => Math.min(1, Math.max(0, row[0] * rgb[0] + row[1] * rgb[1] + row[2] * rgb[2])));
-const deltaE = (a, b, kind) => {
-  const p = oklab(kind ? simulate(linearRGB(a), kind) : linearRGB(a)), q = oklab(kind ? simulate(linearRGB(b), kind) : linearRGB(b));
-  return 100 * Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
-};
+const CHROMA_FLOOR = 0.10, CVD_TARGET = 8, CVD_FLOOR = 6, NORMAL_FLOOR = 15, FEEDBACK_FLOOR = 15, ALL_PAIRS_NORMAL_FLOOR = 8;
 const round1 = x => Math.floor(x * 10) / 10;
 if (scratch) capture(result, 'dataViz distinctness', () => {
   const roles = tree.meta?.roles || {};
@@ -284,6 +253,7 @@ if (scratch) capture(result, 'dataViz distinctness', () => {
       if (normal < NORMAL_FLOOR) fail(`${mode}: ${pair} normal-vision deltaE ${round1(normal)} < ${NORMAL_FLOOR} (series 1-3 are compared as all pairs)`);
     }
     const top = pairWorst(firstThree), all = pairWorst(keys.map((_, i) => i));
+    if (all.normal < ALL_PAIRS_NORMAL_FLOOR) fail(`${mode}: dataViz.series.${all.normal_pair.replace('-', ' / ')} normal-vision deltaE ${round1(all.normal)} < ${ALL_PAIRS_NORMAL_FLOOR} (every pair of the set)`);
     for (const role of ['feedback.success', 'feedback.warning', 'feedback.error']) {
       const feedback = roleColor(role);
       if (!feedback) continue;
