@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // 样例页验收（references/specimen-spec.md §5 与 §8）：在无头 Chromium 里打开 render-specimen.mjs 的输出，
-// 390 与 1440 两个宽度 × 每个模式按节截图，并检查 C1–C4、C7–C9 能机械判定的部分。
+// 390 与 1440 两个宽度 × 每个模式按节截图，320 宽检查整页不横向溢出，并检查 C1–C4、C7–C9 能机械判定的部分。
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -192,12 +192,23 @@ try {
     result[name] = 'screenshots only; review them by eye';
     await ctx.close();
   }
+  // WCAG 1.4.10 reflow: at 320 CSS px wide the page must not scroll sideways in any mode
+  result.reflow_320 = {};
+  for (const mode of modes) {
+    const ctx = await browser.newContext({ viewport: { width: 320, height: 640 }, deviceScaleFactor: 1 });
+    const page = await ctx.newPage();
+    await page.goto(URL + (mode === BASE ? '' : `?mode=${mode}`)); await page.evaluate(() => document.fonts.ready);
+    const over = await page.evaluate(() => Math.max(0, document.documentElement.scrollWidth - document.documentElement.clientWidth));
+    result.reflow_320[mode] = over;
+    expect(over <= 0, `320-${mode}: page overflows horizontally by ${over}px`);
+    await ctx.close();
+  }
 } finally { await browser.close(); }
 expect(c1.length === 0, `C1: literal values in the sample layer: ${c1.slice(0, 12).join(' | ')}${c1.length > 12 ? ` (+${c1.length - 12})` : ''}`);
 expect(c8.length === 0, `C8: notUsed matches in the sample layer: ${c8.join(' | ')}`);
 for (const f of fs.readdirSync(at(QA)).filter(f => OWN(f) && f.endsWith('.png')).sort()) result.outputs[`${relOut(at(QA))}/${f}`] = sha(at(path.join(QA, f)));
 result.failures = failures; result.result = failures.length ? 'fail' : 'pass';
-result.scope = 'Headless Chromium on this machine: sample-layer literal and notUsed scan, per-section screenshots at 390 and 1440 in every mode, swatch and role colours, type samples against the resolved tokens, states, keyboard focus, icon sizes, WCAG 1.4.12 text spacing and rendered fonts. Not a full accessibility audit; other platforms not covered; visual review is a separate step.';
+result.scope = 'Headless Chromium on this machine: sample-layer literal and notUsed scan, per-section screenshots at 390 and 1440 in every mode, page reflow at 320, swatch and role colours, type samples against the resolved tokens, states, keyboard focus, icon sizes, WCAG 1.4.12 text spacing and rendered fonts. Not a full accessibility audit; other platforms not covered; visual review is a separate step.';
 fs.writeFileSync(at(path.join(QA, 'specimen-check.json')), JSON.stringify(result, null, 2) + '\n');
 console.log(JSON.stringify({ result: result.result, failures, sections: result.runs[0]?.sections.length, screenshots: Object.keys(result.outputs).length }, null, 1));
 process.exitCode = failures.length ? 1 : 0;

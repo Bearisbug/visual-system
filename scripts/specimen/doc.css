@@ -67,7 +67,7 @@ code, .mono { font-family: var(--doc-mono); }
 
 section { padding: 112px 0; border-top: 1px solid var(--semantic-color-border-subtle); }
 section h2 { font: 600 44px/1.15 var(--doc-zh); letter-spacing: -0.5px; margin: 16px 0 16px; }
-section .sub { font: 400 17px/1.75 var(--doc-zh); color: var(--semantic-color-text-secondary); max-width: 700px; margin: 0 0 56px; }
+section > .sub { font: 400 17px/1.75 var(--doc-zh); color: var(--semantic-color-text-secondary); max-width: 700px; margin: 0 0 56px; overflow-wrap: break-word; }
 h3.group { font: 600 16px/1.4 var(--doc-zh); margin: 64px 0 16px; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; }
 .sub + h3.group { margin-top: 0; }
 h3.group span { font-weight: 400; font-size: 14px; color: var(--semantic-color-text-tertiary); }
@@ -145,7 +145,7 @@ body.devview .dev { display: block; }
 @media (prefers-reduced-motion: reduce) { .track i { transition-duration: calc(var(--d) * var(--semantic-motion-reduced-motion)) !important; } }
 .curve { width: 100%; height: 180px; }
 
-.pattern { min-height: 560px; position: relative; overflow: hidden; background: var(--semantic-color-surface-sunken); display: flex; align-items: center; justify-content: center; padding: 32px 16px; }
+.pattern { min-height: 560px; position: relative; overflow: hidden; background: var(--semantic-color-surface-sunken); display: flex; align-items: center; justify-content: safe center; padding: 32px 16px; }
 .app-img { background: var(--semantic-color-surface-sunken); display: flex; align-items: center; justify-content: center; padding: 28px; flex: 1 0 auto; }
 .app-img img { height: auto; border-radius: 6px; box-shadow: var(--semantic-elevation-raised); }
 

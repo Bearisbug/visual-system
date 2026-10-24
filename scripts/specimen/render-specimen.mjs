@@ -123,7 +123,7 @@ const RADIUS = {
   sheet: cfg.components?.radius?.sheet ?? `semantic.radius.${radii.at(-1).k}`,
 };
 const BADGE = cfg.components?.badge ?? { fill: rolePath('selection'), text: rolePath('text.primary') };
-const SCRIM = has('semantic.color.scrim') ? 'semantic.color.scrim' : null;
+const SCRIM = ['semantic.color.scrim', 'semantic.color.surface.scrim'].find(has) ?? null;
 // without a scrim token the dark stand-in has to darken too: the dark primary text is light
 const scrimFor = m => m === 'dark' ? `color-mix(in srgb, ${RV('surface.sunken')} 72%, transparent)` : `color-mix(in srgb, ${RV('text.primary')} 40%, transparent)`;
 const aliasCss = [
@@ -533,12 +533,13 @@ function tokensSection() {
   const base = block(':root');
   if (!base) die('tokens.css has no top-level :root block');
   const other = OTHER ? block(`[data-theme="${OTHER}"]`) ?? {} : {};
-  const cell = v => /^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/.test(v) ? `<span class="sw" style="background:${esc(v)}"></span>${esc(v)}` : esc(v);
+  // the swatch paints the variable with its mode pinned, never the literal: a hex literal in the page trips notUsed valuePattern lints
+  const cell = (v, n, mode) => /^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/.test(v) ? `<span class="sw" data-theme="${mode}" style="background:var(${n})"></span>${esc(v)}` : esc(v);
   const table = (h, rows) => `<div class="hscroll"><table class="ttable" style="min-width:640px"><tr><th>变量</th><th>${h[0]}</th><th>${h[1]}</th></tr>${rows.map(([n, a, b]) => `<tr><td>${esc(n)}</td><td>${a}</td><td>${b}</td></tr>`).join('')}</table></div>`;
   const GROUPS_T = [['语义 · 颜色', ['--semantic-color-']], ['语义 · 字阶', ['--semantic-typography-']], ['语义 · 间距、圆角、布局与图标', ['--semantic-space-', '--semantic-radius-', '--semantic-layout-', '--semantic-icon-']], ['语义 · 层级、状态、动效与材质', ['--semantic-elevation-', '--semantic-state-', '--semantic-motion-', '--semantic-material-']], ['基础值 primitive', ['--primitive-']]];
-  const out = GROUPS_T.map(([t, pf]) => { const rows = Object.keys(base).filter(n => pf.some(p => n.startsWith(p))).map(n => [n, cell(base[n]), n in other && other[n] !== base[n] ? cell(other[n]) : `同${MODE_NAME[BASE]}`]); return rows.length ? `<details class="tok"><summary><b>${t}</b><span>${rows.length} 项</span></summary>${table([MODE_NAME[BASE], OTHER ? MODE_NAME[OTHER] : '—'], rows)}</details>` : ''; });
+  const out = GROUPS_T.map(([t, pf]) => { const rows = Object.keys(base).filter(n => pf.some(p => n.startsWith(p))).map(n => [n, cell(base[n], n, BASE), n in other && other[n] !== base[n] ? cell(other[n], n, OTHER) : `同${MODE_NAME[BASE]}`]); return rows.length ? `<details class="tok"><summary><b>${t}</b><span>${rows.length} 项</span></summary>${table([MODE_NAME[BASE], OTHER ? MODE_NAME[OTHER] : '—'], rows)}</details>` : ''; });
   const langs = [...CSS.matchAll(/^\[lang\]:lang\((\w+)\) \{/gm)].map(m => m[1]);
-  for (const l of langs) { const other = block(`[lang]:not(:lang(${l}))`) ?? {}, ov = block(`[lang]:lang(${l})`) ?? {}; const rows = Object.keys(ov).map(n => [n, cell(other[n] ?? base[n] ?? ''), cell(ov[n])]); out.push(`<details class="tok"><summary><b>语言覆盖 · <code>[lang]:lang(${l})</code></b><span>${rows.length} 项</span></summary>${table([`其他语言`, l], rows)}</details>`); }
+  for (const l of langs) { const other = block(`[lang]:not(:lang(${l}))`) ?? {}, ov = block(`[lang]:lang(${l})`) ?? {}; const rows = Object.keys(ov).map(n => [n, esc(other[n] ?? base[n] ?? ''), esc(ov[n])]); out.push(`<details class="tok"><summary><b>语言覆盖 · <code>[lang]:lang(${l})</code></b><span>${rows.length} 项</span></summary>${table([`其他语言`, l], rows)}</details>`); }
   return [`    <h2>全部 token</h2>`, `    <p class="sub">${note('tokens', `从 tokens.css 逐项列出，${OTHER ? `${MODE_NAME[BASE]}与${MODE_NAME[OTHER]}并排` : `只有${MODE_NAME[BASE]}`}。字阶的字体族与字距按语言覆盖：元素带 lang 时取「语言覆盖」表。展开分组查看。`)}</p>`, `<div class="card">${out.filter(Boolean).join('\n')}</div>`].join('\n');
 }
 
