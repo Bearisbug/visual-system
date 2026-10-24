@@ -24,6 +24,10 @@ function charts() {
   const n = Number(document.body.dataset.series || 0);
   if (!n || !document.getElementById('line-chart')) return;
   const s = i => `var(--semantic-color-data-viz-series-${Math.min(i, n)})`;
+  // filled marks take seriesFill with a 1 px outline in the series color (tokens-schema §6.3 fill tier)
+  const hasFill = 'seriesFill' in document.body.dataset;
+  const f = i => hasFill ? `var(--semantic-color-data-viz-series-fill-${Math.min(i, n)})` : s(i);
+  const outline = i => hasFill ? `;stroke:${s(i)};stroke-width:1` : '';
   const grid = 'var(--semantic-color-border-subtle)', axis = 'var(--semantic-color-text-tertiary)';
   const label = (x, y, t, a = 'middle', c = axis) => `<text x="${x}" y="${y}" text-anchor="${a}" style="fill:${c};font:11px var(--semantic-typography-caption-font-family)">${t}</text>`;
   const W = 520, H = 260, L = 40, T = 16, B = 28, ph = H - T - B;
@@ -37,7 +41,7 @@ function charts() {
   const bars = [[62,48,30],[70,52,36],[58,60,42],[80,66,40],[90,72,56],[96,80,60]], cats = ['周一','周二','周三','周四','周五','周六'];
   const gw = (W - 10 - L) / 6;
   document.getElementById('bar-chart').innerHTML = frame
-    + bars.map((g, c) => g.map((v, k) => `<rect x="${L + c * gw + (gw - 50) / 2 + k * 18}" y="${ys(v)}" width="14" height="${v / 100 * ph}" rx="3" style="fill:${s(k + 1)}"/>`).join('') + label(L + c * gw + gw / 2, H - 8, cats[c])).join('');
+    + bars.map((g, c) => g.map((v, k) => `<rect x="${L + c * gw + (gw - 50) / 2 + k * 18}" y="${ys(v)}" width="14" height="${v / 100 * ph}" rx="3" style="fill:${f(k + 1)}${outline(k + 1)}"/>`).join('') + label(L + c * gw + gw / 2, H - 8, cats[c])).join('');
   const area = [[18,22,30,34,42,48,52,60,66,70,76,82], [8,12,14,20,24,26,32,34,38,44,46,52]];
   const pathOf = d => d.map((v, i) => `${i ? 'L' : 'M'}${xs(i)} ${ys(v)}`).join(' ');
   document.getElementById('area-chart').innerHTML = frame
@@ -50,9 +54,11 @@ function charts() {
     + [0, 50, 100].map(v => label(xsc(v), H - 8, v / 10 + ' 次')).join('');
   const parts = [['直接访问', 46], ['搜索', 28], ['推荐', 16], ['其他', 10]].slice(0, Math.max(2, Math.min(4, n)));
   let a = -Math.PI / 2; const R = 72, C = 100;
-  const arc = (p, i) => { const a2 = a + p / 100 * Math.PI * 2, g = 0.03; const d = `M${C + R * Math.cos(a + g)} ${C + R * Math.sin(a + g)} A${R} ${R} 0 ${p > 50 ? 1 : 0} 1 ${C + R * Math.cos(a2 - g)} ${C + R * Math.sin(a2 - g)}`; a = a2; return `<path d="${d}" fill="none" stroke-width="28" style="stroke:${s(i + 1)}"/>`; };
+  const seg = (a1, a2, g, w, c, big) => `<path d="M${C + R * Math.cos(a1 + g)} ${C + R * Math.sin(a1 + g)} A${R} ${R} 0 ${big} 1 ${C + R * Math.cos(a2 - g)} ${C + R * Math.sin(a2 - g)}" fill="none" stroke-width="${w}" style="stroke:${c}"/>`;
+  const arc = (p, i) => { const a1 = a, a2 = a + p / 100 * Math.PI * 2, big = p > 50 ? 1 : 0; a = a2;
+    return seg(a1, a2, 0.03, 28, s(i + 1), big) + (hasFill ? seg(a1, a2, 0.03 + 1 / R, 26, f(i + 1), big) : ''); };
   document.getElementById('donut').innerHTML = `<circle cx="${C}" cy="${C}" r="${R}" fill="none" stroke-width="28" style="stroke:var(--semantic-color-surface-sunken)"/>` + parts.map((p, i) => arc(p[1], i)).join('');
-  document.getElementById('donut-legend').innerHTML = parts.map((p, i) => `<span style="display:flex;align-items:center;gap:8px"><i style="width:10px;height:10px;border-radius:3px;background:${s(i + 1)}"></i>${p[0]}<b style="font-weight:600;margin-left:8px">${p[1]}%</b></span>`).join('');
+  document.getElementById('donut-legend').innerHTML = parts.map((p, i) => `<span style="display:flex;align-items:center;gap:8px"><i style="width:10px;height:10px;border-radius:3px;background:${f(i + 1)}${hasFill ? `;box-shadow:inset 0 0 0 1px ${s(i + 1)}` : ''}"></i>${p[0]}<b style="font-weight:600;margin-left:8px">${p[1]}%</b></span>`).join('');
 }
 
 function setMode(m) {

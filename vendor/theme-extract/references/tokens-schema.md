@@ -299,12 +299,13 @@ leaves keyed by consecutive integers from `1`:
 
 | Group | Keys | Order | Use |
 | --- | --- | --- | --- |
-| `series.<n>` | `1…N`, default N = 6 | plotting order; `series.1` is the first series | categorical series: lines, bars, slices |
+| `series.<n>` | `1…N`, default N = 6 | plotting order; `series.1` is the first series | categorical series: lines, points, outlines; bars and slices when `seriesFill` is absent |
+| `seriesFill.<n>` | the keys of `series` | same as `series` | optional fill of series n for filled marks: bars, areas, cells, slices, nodes |
 | `sequential.<step>` | `1…N` | low → high magnitude | single-hue intensity: heatmaps, choropleths |
 | `diverging.<step>` | `1…N`, N odd | negative pole → neutral middle step → positive pole | values above / below a reference |
 
 - **Tier purity holds.** Each leaf aliases a primitive. The hues live under
-  `primitive.color.dataViz.{series,sequential,diverging}.<key>`, dark-mode hues under
+  `primitive.color.dataViz.{series,seriesFill,sequential,diverging}.<key>`, dark-mode hues under
   `primitive.color.dataVizDark.*` (same pattern as `neutralDark`). A step whose hex already exists as a
   primitive aliases that primitive instead of adding a copy — the duplicate-primitive gate fails on a
   second leaf with the same hex. Typical cases: `series.1` is the accent itself (when the accent passes
@@ -348,6 +349,22 @@ leaves keyed by consecutive integers from `1`:
   chroma floor, the producer chooses the hue of `series.1` and writes it into the group's
   `$description`. A series sampled off a captured app's charts stays `measured` and is never
   re-colored; each check it fails is listed in the group's `$description`.
+- **Fill tier.** `seriesFill.<n>` lets filled marks use a lighter tint than the series color, which
+  has to stay at 3:1 on the surfaces. Each fill passes, per mode:
+
+  | Check | Requirement |
+  | --- | --- |
+  | Hue | OKLCH hue within 45° of `series.<n>` of the same mode |
+  | Chroma | OKLCH C ≥ 0.07 |
+  | CVD | adjacent fills `n` and `n+1`, and each pair among `seriesFill.1`–`3`: ΔE ≥ 6 under the simulation above |
+  | All pairs | every pair of the set: normal-vision ΔE ≥ 8, because stacked bars and cells put any two fills side by side |
+
+  No surface contrast applies to a fill. A filled mark whose fill is below 3:1 against the surface it
+  sits on draws a ≥ 1 px outline in `series.<n>`; the outline carries the 3:1 boundary and the
+  secondary encoding that lets the CVD floor sit at 6. A mode whose fills all reach 3:1 can point
+  `seriesFill` at the `series` primitives. The group's `$description` records, per mode, the worst
+  adjacent CVD ΔE and the worst all-pairs normal-vision ΔE of the fills and their lowest contrast
+  against the four surface roles.
 - **Confidence.** Hues sampled off rendered charts are `measured`. A producer that computes them from
   the brand or takes them from a preset palette marks them `confidence: derived` and writes the
   derivation rule or the preset into the group's `$description`, so a reviewer can recompute every
@@ -358,9 +375,10 @@ leaves keyed by consecutive integers from `1`:
 - **Design generation** (visual-system) emits `dataViz` by default; which palettes it emits and how it
   derives them are that producer's rules. `meta.categories.dataViz = notApplicable` records a product
   without charts.
-- **Projection.** `tokens.css` carries every palette leaf as `--semantic-color-data-viz-<group>-<key>`.
-  The shadcn adapter wires `series.1…5` to `--chart-1…5` (tokens-projection.md); a `--chart-N` whose
-  series leaf is absent is not written at all.
+- **Projection.** `tokens.css` carries every palette leaf as `--semantic-color-data-viz-<group>-<key>`
+  (`seriesFill` as `--semantic-color-data-viz-series-fill-<key>`). The shadcn adapter wires
+  `series.1…5` to `--chart-1…5` (tokens-projection.md); a `--chart-N` whose series leaf is absent is
+  not written at all.
 
 ---
 

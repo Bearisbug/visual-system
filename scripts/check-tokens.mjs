@@ -18,6 +18,8 @@ Mechanical checks for a profile-2 token set (see references/system.md#bd-token-0
   3. chart series distinctness per mode (DATAVIZ_DISTINCT): OKLCH lightness band and chroma floor,
      adjacent series and all pairs of series 1-3 under simulated protanopia/deuteranopia and under
      normal vision, every pair of the set under normal vision, and distance from the feedback colors as a warning (thresholds in the comment above the check);
+     the optional fill tier semantic.color.dataViz.seriesFill (DATAVIZ_FILL): same keys as series, hue near the series
+     color, chroma floor, fill distinctness, and the lowest fill contrast reported with whether filled marks need an outline;
   4. state-layer distinctness per mode (STATE_DISTINCT): on every surface that carries a state
      layer, painted as the browser paints it, default and hover are at least CIEDE2000 deltaE00 2
      apart and hover and pressed at least 3;
@@ -199,8 +201,13 @@ if (scratch) capture(result, 'contrast', () => {
 // the same mode is a warning: charts then mark status with an icon or a text label beside the
 // feedback color, never with color alone.
 // Contrast against the surfaces is DATAVIZ_CONTRAST above.
+// The optional fill tier seriesFill (DATAVIZ_FILL; tokens-schema §6.3 "Fill tier") has the keys of series and,
+// per mode: OKLCH hue within 45 deg of the series color of the same key, chroma >= 0.07, adjacent fills and the
+// pairs among fills 1-3 CVD deltaE >= 6, every pair normal-vision deltaE >= 8. Fills carry no surface contrast
+// floor; the report records their lowest contrast so a consumer knows filled marks need a series-color outline.
 const BAND = { light: [0.43, 0.77], dark: [0.60, 0.92] };
 const CHROMA_FLOOR = 0.10, CVD_TARGET = 8, CVD_FLOOR = 6, NORMAL_FLOOR = 15, FEEDBACK_FLOOR = 15, ALL_PAIRS_NORMAL_FLOOR = 8;
+const FILL_HUE = 45, FILL_CHROMA_FLOOR = 0.07, FILL_CVD_FLOOR = 6;
 const round1 = x => Math.floor(x * 10) / 10;
 if (scratch) capture(result, 'dataViz distinctness', () => {
   const roles = tree.meta?.roles || {};
@@ -269,6 +276,38 @@ if (scratch) capture(result, 'dataViz distinctness', () => {
     const worstOf = w => Number.isFinite(w.cvd) ? { cvd: round1(w.cvd), cvd_pair: w.cvd_pair, normal: round1(w.normal), normal_pair: w.normal_pair } : null;
     modes[mode] = { band: bandName, series: keys.length, worst_adjacent_cvd: round1(worstCvd), worst_adjacent_normal: round1(worstNormal),
       worst_pairs_1_3: worstOf(top), worst_pairs_all: worstOf(all), nearest_feedback: Number.isFinite(nearestFeedback) ? round1(nearestFeedback) : null };
+    const fill = leafAt(resolved, 'semantic.color.dataViz.seriesFill');
+    if (fill) {
+      const failFill = message => { result.errors.push({ context: 'dataViz', code: 'DATAVIZ_FILL', message: `${mode}: ${message}` }); result.result = 'FAIL'; };
+      const fkeys = Object.keys(fill).filter(key => /^\d+$/.test(key)).sort((a, b) => a - b);
+      if (fkeys.join() !== keys.join()) failFill(`dataViz.seriesFill keys ${fkeys.join(',')} differ from dataViz.series keys ${keys.join(',')}`);
+      else {
+        const fills = fkeys.map(key => {
+          const parsed = parseColor(fill[key]?.$value);
+          assert(parsed, 'COLOR_FORMAT', `${mode}: dataViz.seriesFill.${key} is not a hex/rgb color the checker can compute`);
+          return opaque(parsed);
+        });
+        const lch = c => { const [, a, b] = oklab(linearRGB(c)); return { C: Math.hypot(a, b), H: (Math.atan2(b, a) * 180 / Math.PI + 360) % 360 }; };
+        fkeys.forEach((key, i) => {
+          const f = lch(fills[i]), s = lch(colors[i]), gap = Math.min(Math.abs(f.H - s.H) % 360, 360 - Math.abs(f.H - s.H) % 360);
+          if (gap > FILL_HUE) failFill(`dataViz.seriesFill.${key} hue is ${Math.round(gap)} deg from dataViz.series.${key} (> ${FILL_HUE})`);
+          if (f.C < FILL_CHROMA_FLOOR) failFill(`dataViz.seriesFill.${key} OKLCH C ${f.C.toFixed(3)} < ${FILL_CHROMA_FLOOR}`);
+        });
+        const fcvd = (a, b) => Math.min(deltaE(a, b, 'protan'), deltaE(a, b, 'deutan'));
+        let adj = Infinity, allN = { v: Infinity }, contrast = Infinity;
+        for (let i = 0; i < fills.length; i++) for (let j = i + 1; j < fills.length; j++) {
+          const pair = `dataViz.seriesFill.${fkeys[i]} / ${fkeys[j]}`, k = fcvd(fills[i], fills[j]), n = deltaE(fills[i], fills[j]);
+          if (j === i + 1) adj = Math.min(adj, k);
+          if ((j === i + 1 || j < 3) && k < FILL_CVD_FLOOR) failFill(`${pair} CVD deltaE ${round1(k)} < ${FILL_CVD_FLOOR}`);
+          if (n < allN.v) allN = { v: n, pair: `${fkeys[i]}-${fkeys[j]}` };
+        }
+        if (allN.v < ALL_PAIRS_NORMAL_FLOOR) failFill(`dataViz.seriesFill.${allN.pair.replace('-', ' / ')} normal-vision deltaE ${round1(allN.v)} < ${ALL_PAIRS_NORMAL_FLOOR} (every pair of the set)`);
+        const surfaces = ['surface.sunken', 'surface.default', 'surface.raised', 'surface.overlay'].map(roleColor).filter(Boolean);
+        for (const f of fills) for (const sf of surfaces) contrast = Math.min(contrast, ratio(f, opaque(sf)));
+        modes[mode].fill = { worst_adjacent_cvd: round1(adj), worst_pairs_all_normal: round1(allN.v), worst_pairs_all_pair: allN.pair,
+          lowest_surface_contrast: Number.isFinite(contrast) ? Math.floor(contrast * 100) / 100 : null, outline_required: contrast < 3 };
+      }
+    }
   }
   result.dataviz_distinct = modes;
 });
@@ -372,7 +411,7 @@ capture(result, 'state roles', () => {
 if (result.depth === 'full') capture(result, 'dataViz', () => {
   const status = tree.meta.categories.dataViz?.status;
   const series = leafAt(tree, 'semantic.color.dataViz.series') || {};
-  assert(status !== 'missing', 'DATAVIZ_REQUIRED', 'meta.categories.dataViz is missing: derive the chart series from the accent, or mark notApplicable only when the user says the product has no charts');
+  assert(status !== 'missing', 'DATAVIZ_REQUIRED', 'meta.categories.dataViz is missing: pick a chart preset from libraries/dataviz, or mark notApplicable only when the user says the product has no charts');
   assert(status !== 'present' || [1, 2, 3, 4, 5, 6].every(n => series[n]?.$value !== undefined), 'DATAVIZ_REQUIRED', 'dataViz is present but semantic.color.dataViz.series lacks leaves 1..6');
 });
 if (scratch) fs.rmSync(scratch, { recursive: true, force: true });

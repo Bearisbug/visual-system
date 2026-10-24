@@ -127,7 +127,8 @@ node scripts/self-test.mjs --output /abs/path/to/validation-results.json
 node --test scripts/test-application-renderer.mjs
 node scripts/check-application.mjs /abs/path/to/application-output   # exits 2 (not_run) without a browser
 node scripts/check-tokens.mjs /abs/path/to/brand --lint /abs/path/to/example.css
-node scripts/dataviz-preset.mjs /abs/path/to/brand --preset vivid    # fits a chart color preset, prints series 1-6 per mode, writes nothing
+node scripts/dataviz-preset.mjs /abs/path/to/brand --preset vivid    # fits a chart color preset, prints series 1-6 and their fills per mode, writes nothing
+node scripts/dataviz-preview.mjs --out /tmp/dataviz.html             # renders the chart presets as dashboard cards; add a tokens dir for brand surfaces
 node scripts/specimen/render-specimen.mjs /abs/path/to/brand          # reads brand/specimen.json
 NODE_PATH=$(npm root -g) node scripts/specimen/check-specimen.mjs /abs/path/to/brand
 ```

@@ -592,25 +592,63 @@ try {
     const pass = !report.errors.some(error => error.message.includes('feedback.')) && report.warnings.some(w => w.startsWith('light: dataViz.series.4 is') && w.includes('feedback.error'));
     results.push({ case:'tokens-dataviz-near-feedback', expected:'warning only: series 4 within deltaE 15 of feedback.error', actual:report.result, detected_codes:report.errors.map(error => error.code), pass, exit_code });
   }
-  // Every preset, copied into the example by dataviz-preset.mjs, passes check-tokens in both modes.
+  // Writes a fitted set the way BD-TOKEN-001 step 8 does: light series and fills from the preset, dark series from
+  // its dark values, dark fills pointing at the dark series primitives, and a light fill equal to a dark series
+  // color pointing at that primitive (the generator rejects duplicate primitive hexes).
+  const applySet = (dir, { light, dark }) => {
+    const map = hexes => Object.fromEntries(hexes.map((h, i) => [i + 1, { $value: h }]));
+    const darkHex = dark.map(x => x[0]);
+    editTokens(dir, j => {
+      j.primitive.color.dataViz.series = map(light.map(x => x[0])); j.primitive.color.dataVizDark.series = map(darkHex);
+      j.primitive.color.dataViz.seriesFill = Object.fromEntries(light.flatMap(([, fill], i) => darkHex.includes(fill) ? [] : [[i + 1, { $value: fill }]]));
+      j.semantic.color.dataViz.seriesFill = {};
+      for (let k = 1; k <= 6; k++) {
+        const same = darkHex.indexOf(light[k - 1][1]) + 1;
+        j.semantic.color.dataViz.series[k].$value = `{primitive.color.dataViz.series.${k}}`;
+        j.semantic.color.dataViz.seriesFill[k] = { $value: same ? `{primitive.color.dataVizDark.series.${same}}` : `{primitive.color.dataViz.seriesFill.${k}}` };
+      }
+      if (!Object.keys(j.primitive.color.dataViz.seriesFill).length) delete j.primitive.color.dataViz.seriesFill;
+    });
+    const modeFile = JSON.parse(fs.readFileSync(path.join(dir,'modes','dark.json'),'utf8'));
+    modeFile.semantic.color.dataViz.seriesFill = {};
+    for (let k = 1; k <= 6; k++) { modeFile.semantic.color.dataViz.series[k].$value = `{primitive.color.dataVizDark.series.${k}}`; modeFile.semantic.color.dataViz.seriesFill[k] = { $value: `{primitive.color.dataVizDark.series.${k}}` }; }
+    write(dir,'modes/dark.json',modeFile);
+    generate(dir);
+  };
+  // Every preset, copied into the example by dataviz-preset.mjs, passes check-tokens in both modes, fills included.
+  const fitted = {};
   for (const { id } of JSON.parse(fs.readFileSync(path.join(here, '../libraries/dataviz/presets.json'), 'utf8')).presets) {
     const dir = path.join(temp, `tokens-dataviz-preset-${id}`);
     seed(dir);
     generate(dir);
     const child = spawnSync(process.execPath, [path.join(here, 'dataviz-preset.mjs'), dir, '--preset', id], { encoding: 'utf8', timeout: 60000 });
     const sets = {}; let mode = null;
-    for (const line of child.stdout.split('\n')) { const m = line.match(/^(light|dark) \(/), c = line.match(/^ {2}\d {2}(#[0-9A-F]{6})/); if (m) sets[mode = m[1]] = []; else if (c && mode) sets[mode].push(c[1]); }
-    const ok = child.status === 0 && sets.light?.length === 6 && sets.dark?.length === 6;
-    if (ok) {
-      editTokens(dir, j => { j.primitive.color.dataViz.series = Object.fromEntries(sets.light.map((h, i) => [i + 1, { $value: h }])); j.primitive.color.dataVizDark.series = Object.fromEntries(sets.dark.map((h, i) => [i + 1, { $value: h }]));
-        for (let k = 1; k <= 6; k++) j.semantic.color.dataViz.series[k].$value = `{primitive.color.dataViz.series.${k}}`; });
-      const dark = JSON.parse(fs.readFileSync(path.join(dir,'modes','dark.json'),'utf8'));
-      for (let k = 1; k <= 6; k++) dark.semantic.color.dataViz.series[k].$value = `{primitive.color.dataVizDark.series.${k}}`;
-      write(dir,'modes/dark.json',dark);
-      generate(dir);
-    }
+    for (const line of child.stdout.split('\n')) { const m = line.match(/^(light|dark) \(/), c = line.match(/^ {2}\d {2}(#[0-9A-F]{6}) {2}(#[0-9A-F]{6})/); if (m) sets[mode = m[1]] = []; else if (c && mode) sets[mode].push([c[1], c[2]]); }
+    const ok = child.status === 0 && sets.light?.length === 6 && sets.dark?.length === 6 && sets.dark.every(([series, fill]) => series === fill);
+    if (ok) { applySet(dir, sets); fitted[id] = sets; }
     const { exit_code, report } = ok ? invoke('check-tokens.mjs', [dir]) : { exit_code: null, report: { result:'NOT_RUN', errors:[] } };
-    results.push({ case:`tokens-dataviz-preset-${id}`, expected:'PASS: preset fitted by dataviz-preset.mjs passes check-tokens', actual:report.result, detected_codes:report.errors.map(error => error.code), pass: ok && exit_code === 0 });
+    const fill = report.dataviz_distinct || {};
+    const pass = ok && exit_code === 0 && typeof fill.light?.fill?.outline_required === 'boolean' && fill.dark?.fill?.outline_required === false;
+    results.push({ case:`tokens-dataviz-preset-${id}`, expected:'PASS: preset fitted by dataviz-preset.mjs passes check-tokens; dark fills need no outline', actual:report.result, detected_codes:report.errors.map(error => error.code), pass });
+  }
+  function testFill(name, fills, check) {
+    const dir = path.join(temp, name);
+    seed(dir);
+    const base = fitted.vivid;
+    if (base) applySet(dir, { light: base.light.map(([series, fill], i) => [series, fills[i + 1] ?? fill]), dark: base.dark });
+    const { exit_code, report } = base ? invoke('check-tokens.mjs', [dir]) : { exit_code: null, report: { result:'NOT_RUN', errors:[] } };
+    const messages = report.errors.filter(error => error.code === 'DATAVIZ_FILL').map(error => error.message);
+    results.push({ case:name, expected:'DATAVIZ_FILL', actual:report.result, detected_codes:report.errors.map(error => error.code), pass: exit_code === 1 && messages.length > 0 && check(messages) });
+  }
+  testFill('tokens-dataviz-fill-low-chroma', { 3:'#E5E1D8' }, m => m.some(x => x.startsWith('light: dataViz.seriesFill.3 OKLCH C')));
+  testFill('tokens-dataviz-fill-hue-drift', { 1:'#2DD4BF' }, m => m.some(x => x.startsWith('light: dataViz.seriesFill.1 hue')));
+  // Fill 4 a near copy of the non-adjacent fill 1, its hue still within 45 deg of series 4: only the all-pairs floor catches it.
+  testFill('tokens-dataviz-fill-near-duplicate', { 4:'#3C83F5' }, m => m.some(x => x.startsWith('light: dataViz.seriesFill.1 / 4 normal-vision') && x.includes('every pair of the set')));
+  {
+    const dir = path.join(temp, 'tokens-dataviz-preset-vivid');
+    const child = spawnSync(process.execPath, [path.join(here, 'dataviz-preset.mjs'), dir, '--preset', 'vivid', '--avoid', '0'], { encoding: 'utf8', timeout: 60000 });
+    const pass = child.status === 0 && /warning: series 2 H \d+ is \d+ deg from reserved H 0/.test(child.stdout);
+    results.push({ case:'dataviz-preset-avoid', expected:'warning only: vivid series 2 (pink) near reserved hue 0', actual:`exit ${child.status}`, detected_codes:[], pass });
   }
   // The example's series before the all-pairs rule: every adjacent pair passes, series 1 and 3 do not.
   testDistinct('tokens-dataviz-first-three-all-pairs', lightSeries({ 3:'#8966F9', 5:'#1195B4' }), m => m.length === 1 && m[0].startsWith('light: dataViz.series.1 / 3 normal-vision') && m[0].includes('all pairs'));

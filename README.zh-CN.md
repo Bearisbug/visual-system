@@ -125,7 +125,8 @@ node scripts/self-test.mjs --output /abs/path/to/validation-results.json
 node --test scripts/test-application-renderer.mjs
 node scripts/check-application.mjs /abs/path/to/application-output   # 没有浏览器时退出码 2（not_run）
 node scripts/check-tokens.mjs /abs/path/to/brand --lint /abs/path/to/example.css
-node scripts/dataviz-preset.mjs /abs/path/to/brand --preset vivid    # 套用图表预置色板，打印每个模式的系列色 1–6，不写文件
+node scripts/dataviz-preset.mjs /abs/path/to/brand --preset vivid    # 套用图表预置色板，打印每个模式的系列色 1–6 与填充色，不写文件
+node scripts/dataviz-preview.mjs --out /tmp/dataviz.html             # 把图表预置色板画成仪表盘卡片；加 tokens 目录时用该品牌的表面色
 node scripts/specimen/render-specimen.mjs /abs/path/to/brand          # 读 brand/specimen.json
 NODE_PATH=$(npm root -g) node scripts/specimen/check-specimen.mjs /abs/path/to/brand
 ```

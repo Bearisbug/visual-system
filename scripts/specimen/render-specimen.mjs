@@ -177,6 +177,7 @@ const use = (p, fallback = '') => cfg.uses?.[p] != null ? T(cfg.uses[p]) : desc(
 const GROUPS = { brand: '01 — 品牌基础', base: '02 — 基础', comp: '03 — 组件', page: '04 — 页面模式', apps: '05 — 物料', dev: '06 — 开发参考' };
 const section = (id, g, body, tag) => `  <section id="${id}">\n    <p class="eyebrow">${GROUPS[g]}${tag ? ` · ${tag}` : ''}</p>\n${body}\n  </section>`;
 const SERIES = catStatus('dataViz') === 'present' ? kids('semantic.color.dataViz.series').length : 0;
+const FILL = SERIES > 0 && kids('semantic.color.dataViz.seriesFill').length > 0;
 const brand = cfg.brand ?? 'Brand';
 const logo = cfg.logo ?? {};
 const img = (p, attrs) => p ? `<img src="${esc(rel(p))}" ${attrs}>` : '';
@@ -355,20 +356,22 @@ function motionSection() {
 // 02 charts
 function chartsSection() {
   if (!SERIES) return `    <h2>数据可视化</h2>\n    <p class="sub">${catStatus('dataViz') === 'notApplicable' ? NA : MISS}${esc(CATS.dataViz?.reason ?? 'tokens 没有系列色')}</p>`;
-  const chips = kids('semantic.color.dataViz.series').map(k => { const p = `semantic.color.dataViz.series.${k}`, v = kebab(p), sh = SH.get(v); return `<div class="card"><div class="chip" data-token="${p}" style="background:var(${v})"></div>${cap({ name: `系列 ${k}`, dataVar: v, dev: sh ? `shadcn fill-${sh}` : `var(${v})` })}</div>`; });
+  const chips = kids('semantic.color.dataViz.series').map(k => { const p = `semantic.color.dataViz.series.${k}`, v = kebab(p), sh = SH.get(v), fv = kebab(`semantic.color.dataViz.seriesFill.${k}`);
+    const chip = FILL ? `<div class="chip" data-token="semantic.color.dataViz.seriesFill.${k}" style="background:var(${fv});display:flex;flex-direction:column;justify-content:flex-end"><i data-token="${p}" style="height:10px;background:var(${v})"></i></div>` : `<div class="chip" data-token="${p}" style="background:var(${v})"></div>`;
+    return `<div class="card">${chip}${cap({ name: `系列 ${k}`, dataVar: v, dev: [sh ? `shadcn fill-${sh}` : `var(${v})`, FILL ? `填充 var(${fv})` : ''].filter(Boolean).join(' · ') })}</div>`; });
   const strip = kind => kids(`semantic.color.dataViz.${kind}`).length ? `<div><div class="ramp-label">${kind === 'sequential' ? '顺序色' : '发散色'} ${kind} 1–${kids(`semantic.color.dataViz.${kind}`).length}</div><div style="display:flex;height:36px;border-radius:8px;overflow:hidden">${kids(`semantic.color.dataViz.${kind}`).map(k => `<i data-token="semantic.color.dataViz.${kind}.${k}" style="flex:1;background:${V(`semantic.color.dataViz.${kind}.${k}`)}"></i>`).join('')}</div></div>` : '';
   const borrowed = !['gridline', 'axis', 'track'].every(k => has(`semantic.color.dataViz.${k}`));
   const ramps = [strip('sequential'), strip('diverging')].filter(Boolean);
   return [
     `    <h2>数据可视化</h2>`,
-    `    <p class="sub">${note('charts', '系列色按编号顺序取用，两条数据用 1、2，三条用 1–3，不跳号挑色；系列色不当文字颜色。散点、气泡、小倍数这类任意两个系列都可能挨在一起的图最多用系列 1–3；折线、柱状图用到 4 个及以上时在线尾或数据点旁直接标注系列名。')}</p>`,
+    `    <p class="sub">${note('charts', '系列色按编号顺序取用，两条数据用 1、2，三条用 1–3，不跳号挑色；系列色不当文字颜色。散点、气泡、小倍数这类任意两个系列都可能挨在一起的图最多用系列 1–3；折线、柱状图用到 4 个及以上时在线尾或数据点旁直接标注系列名。')}${FILL ? '柱、扇区、色块这类填充标记用填充色 seriesFill，外加 1 px 系列色描边；折线、点和轮廓用系列色。色卡上部是填充色，下沿是系列色。' : ''}</p>`,
     grid(6, chips, ' style="margin-bottom:16px"'),
     `<div class="grid g2">`,
     `<div class="card"><div class="stage plain" style="padding:28px"><svg id="line-chart" viewBox="0 0 520 260" style="width:100%" role="img" aria-label="折线图：三个区域十二周的数值"></svg></div>${cap({ name: '折线 · 系列 1–3', val: '线宽 2 · 线尾直接标注', use: borrowed ? `${MISS}网格线借用分隔线色，坐标轴文字借用弱文字色` : '' })}</div>`,
-    `<div class="card"><div class="stage plain" style="padding:28px"><svg id="bar-chart" viewBox="0 0 520 260" style="width:100%" role="img" aria-label="柱状图：三个系列六天的数值"></svg></div>${cap({ name: '分组柱状 · 系列 1–3', val: '柱宽 14 · 柱间 4' })}</div>`,
+    `<div class="card"><div class="stage plain" style="padding:28px"><svg id="bar-chart" viewBox="0 0 520 260" style="width:100%" role="img" aria-label="柱状图：三个系列六天的数值"></svg></div>${cap({ name: '分组柱状 · 系列 1–3', val: `柱宽 14 · 柱间 4${FILL ? ' · 填充色加 1 px 系列色描边' : ''}` })}</div>`,
     `<div class="card"><div class="stage plain" style="padding:28px"><svg id="area-chart" viewBox="0 0 520 260" style="width:100%" role="img" aria-label="面积图：两个系列十二周的累计值"></svg></div>${cap({ name: '面积 · 系列 1–2', val: '填充 24% · 描边 2' })}</div>`,
     `<div class="card"><div class="stage plain" style="padding:28px"><svg id="scatter" viewBox="0 0 520 260" style="width:100%" role="img" aria-label="散点图：三组样本的次数与数值"></svg></div>${cap({ name: '散点 · 只用系列 1–3', val: '点径 8 · 描边 2 页面色' })}</div>`,
-    `<div class="card"><div class="stage plain" style="padding:28px;gap:40px;flex-wrap:wrap"><svg id="donut" viewBox="0 0 200 200" style="width:180px" role="img" aria-label="环形图：四类来源占比"></svg><div id="donut-legend" class="q" style="display:flex;flex-direction:column;gap:10px;font-size:13px"></div></div>${cap({ name: `环形 · 系列 1–${Math.min(4, SERIES)}`, val: '环宽 28', use: borrowed ? `${MISS}轨道借用凹陷表面` : '' })}</div>`,
+    `<div class="card"><div class="stage plain" style="padding:28px;gap:40px;flex-wrap:wrap"><svg id="donut" viewBox="0 0 200 200" style="width:180px" role="img" aria-label="环形图：四类来源占比"></svg><div id="donut-legend" class="q" style="display:flex;flex-direction:column;gap:10px;font-size:13px"></div></div>${cap({ name: `环形 · 系列 1–${Math.min(4, SERIES)}`, val: `环宽 28${FILL ? ' · 填充色加 1 px 系列色描边' : ''}`, use: borrowed ? `${MISS}轨道借用凹陷表面` : '' })}</div>`,
     ramps.length ? `<div class="card"><div class="stage plain" style="flex-direction:column;align-items:stretch;gap:20px;padding:36px 28px">${ramps.join('')}</div>${cap({ name: '顺序与发散', val: '热力图用顺序色；高于或低于基准的值用发散色', dev: '--semantic-color-data-viz-sequential-&lt;n&gt; / -diverging-&lt;n&gt;' })}</div>` : '',
     `</div>`,
   ].filter(Boolean).join('\n');
@@ -611,7 +614,7 @@ ${cfg.fonts ? `<link rel="stylesheet" href="${esc(rel(cfg.fonts))}">\n` : ''}${c
 ${sampleCss}
 </style>
 </head>
-<body data-series="${SERIES}">
+<body data-series="${SERIES}"${FILL ? ' data-series-fill' : ''}>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
 <filter id="glass" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
   <feImage id="glass-map" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="map"/>
