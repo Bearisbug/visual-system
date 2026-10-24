@@ -577,14 +577,41 @@ try {
     results.push({ case:name, expected:'DATAVIZ_DISTINCT', actual:report.result, detected_codes:report.errors.map(error => error.code), pass: exit_code === 1 && messages.length > 0 && check(messages) });
   }
   const lightSeries = values => dir => editTokens(dir, j => { for (const [key, hex] of Object.entries(values)) j.primitive.color.dataViz.series[key].$value = hex; });
-  // Series from a fixed +60 deg hue rotation of the accent: series 3-5 land on the feedback hues.
+  // Series from a fixed +60 deg hue rotation of the accent: series 3 and 4 collide under CVD.
   testDistinct('tokens-dataviz-hue-rotation-collides', lightSeries({ 2:'#9D4A9A', 3:'#BD4A3E', 4:'#967501', 5:'#2A9749', 6:'#0D95A6' }),
-    m => m.every(x => x.startsWith('light: ')) && m.some(x => x.includes('series.3 / 4 CVD')) && m.some(x => x.includes('normal-vision')) && m.some(x => x.includes('series.3 is') && x.includes('feedback.error')));
-  testDistinct('tokens-dataviz-dark-accent-off-band', dir => {
-    const darkFile = path.join(dir,'modes','dark.json'), dark = JSON.parse(fs.readFileSync(darkFile,'utf8'));
-    dark.semantic.color.dataViz.series['1'].$value = '{primitive.color.brand.accentDark}'; write(dir,'modes/dark.json',dark);
-  }, m => m.every(x => x.startsWith('dark: ')) && m.some(x => x.startsWith('dark: dataViz.series.1 OKLCH L') && x.includes('dark band')));
-  testDistinct('tokens-dataviz-near-feedback', lightSeries({ 4:'#B83A30' }), m => m.some(x => x.startsWith('light: dataViz.series.4 is') && x.includes('feedback.error')));
+    m => m.every(x => x.startsWith('light: ')) && m.some(x => x.includes('series.3 / 4 CVD')) && m.some(x => x.includes('normal-vision')));
+  // Dark series 2 at L 0.57: inside the dataviz validator's dark band, below this schema's 0.60.
+  testDistinct('tokens-dataviz-dark-below-band', dir => editTokens(dir, j => { j.primitive.color.dataVizDark.series['2'].$value = '#9F5D91'; }),
+    m => m.every(x => x.startsWith('dark: ')) && m.some(x => x.startsWith('dark: dataViz.series.2 OKLCH L') && x.includes('dark band')));
+  {
+    const dir = path.join(temp, 'tokens-dataviz-near-feedback');
+    seed(dir);
+    lightSeries({ 4:'#B83A30' })(dir);
+    generate(dir);
+    const { exit_code, report } = invoke('check-tokens.mjs', [dir]);
+    const pass = !report.errors.some(error => error.message.includes('feedback.')) && report.warnings.some(w => w.startsWith('light: dataViz.series.4 is') && w.includes('feedback.error'));
+    results.push({ case:'tokens-dataviz-near-feedback', expected:'warning only: series 4 within deltaE 15 of feedback.error', actual:report.result, detected_codes:report.errors.map(error => error.code), pass, exit_code });
+  }
+  // Every preset, copied into the example by dataviz-preset.mjs, passes check-tokens in both modes.
+  for (const { id } of JSON.parse(fs.readFileSync(path.join(here, '../libraries/dataviz/presets.json'), 'utf8')).presets) {
+    const dir = path.join(temp, `tokens-dataviz-preset-${id}`);
+    seed(dir);
+    generate(dir);
+    const child = spawnSync(process.execPath, [path.join(here, 'dataviz-preset.mjs'), dir, '--preset', id], { encoding: 'utf8', timeout: 60000 });
+    const sets = {}; let mode = null;
+    for (const line of child.stdout.split('\n')) { const m = line.match(/^(light|dark) \(/), c = line.match(/^ {2}\d {2}(#[0-9A-F]{6})/); if (m) sets[mode = m[1]] = []; else if (c && mode) sets[mode].push(c[1]); }
+    const ok = child.status === 0 && sets.light?.length === 6 && sets.dark?.length === 6;
+    if (ok) {
+      editTokens(dir, j => { j.primitive.color.dataViz.series = Object.fromEntries(sets.light.map((h, i) => [i + 1, { $value: h }])); j.primitive.color.dataVizDark.series = Object.fromEntries(sets.dark.map((h, i) => [i + 1, { $value: h }]));
+        for (let k = 1; k <= 6; k++) j.semantic.color.dataViz.series[k].$value = `{primitive.color.dataViz.series.${k}}`; });
+      const dark = JSON.parse(fs.readFileSync(path.join(dir,'modes','dark.json'),'utf8'));
+      for (let k = 1; k <= 6; k++) dark.semantic.color.dataViz.series[k].$value = `{primitive.color.dataVizDark.series.${k}}`;
+      write(dir,'modes/dark.json',dark);
+      generate(dir);
+    }
+    const { exit_code, report } = ok ? invoke('check-tokens.mjs', [dir]) : { exit_code: null, report: { result:'NOT_RUN', errors:[] } };
+    results.push({ case:`tokens-dataviz-preset-${id}`, expected:'PASS: preset fitted by dataviz-preset.mjs passes check-tokens', actual:report.result, detected_codes:report.errors.map(error => error.code), pass: ok && exit_code === 0 });
+  }
   // The example's series before the all-pairs rule: every adjacent pair passes, series 1 and 3 do not.
   testDistinct('tokens-dataviz-first-three-all-pairs', lightSeries({ 3:'#8966F9', 5:'#1195B4' }), m => m.length === 1 && m[0].startsWith('light: dataViz.series.1 / 3 normal-vision') && m[0].includes('all pairs'));
   testDistinct('tokens-dataviz-low-chroma', lightSeries({ 6:'#4F5B6E' }), m => m.some(x => x.startsWith('light: dataViz.series.6 OKLCH C')));

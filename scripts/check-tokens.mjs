@@ -17,7 +17,7 @@ Mechanical checks for a profile-2 token set (see references/system.md#bd-token-0
      every semantic.color.dataViz.series color against the four surfaces at 3:1;
   3. chart series distinctness per mode (DATAVIZ_DISTINCT): OKLCH lightness band and chroma floor,
      adjacent series and all pairs of series 1-3 under simulated protanopia/deuteranopia and under
-     normal vision, every pair of the set under normal vision, and distance from the feedback colors (thresholds in the comment above the check);
+     normal vision, every pair of the set under normal vision, and distance from the feedback colors as a warning (thresholds in the comment above the check);
   4. state-layer distinctness per mode (STATE_DISTINCT): on every surface that carries a state
      layer, painted as the browser paints it, default and hover are at least CIEDE2000 deltaE00 2
      apart and hover and pressed at least 3;
@@ -179,9 +179,11 @@ if (scratch) capture(result, 'contrast', () => {
 
 // Chart series distinctness per mode (DATAVIZ_DISTINCT; tokens-schema.md §6.3 "Series
 // distinctness"). Thresholds and the color-vision model are those of the categorical-palette
-// validator in Claude Code's bundled dataviz skill (scripts/validate_palette.js, checks 2-4b):
-//   - OKLCH lightness band: light 0.43-0.77, dark 0.48-0.67. The dark band applies when the
-//     mode's surface.default has OKLab L < 0.5, so mode names do not matter;
+// validator in Claude Code's bundled dataviz skill (scripts/validate_palette.js, checks 2-4b),
+// except the dark lightness band:
+//   - OKLCH lightness band: light 0.43-0.77, dark 0.60-0.92 (tokens-schema's own; the validator's
+//     0.48-0.67 leaves series dim on dark surfaces). The dark band applies when the mode's
+//     surface.default has OKLab L < 0.5, so mode names do not matter;
 //   - OKLCH chroma >= 0.10 (below it a hue reads as gray);
 //   - adjacent series n and n+1, protanopia and deuteranopia simulated with Machado, Oliveira &
 //     Fernandes (2009) at severity 1.0, the smaller OKLab deltaE x100 of the two: >= 8 target;
@@ -193,10 +195,11 @@ if (scratch) capture(result, 'contrast', () => {
 //   - every pair of the full set under normal vision: OKLab deltaE x100 >= 8. tokens-schema §6.3
 //     only reports this pair; visual-system (BD-TOKEN-001 step 8) gates it, because a search that
 //     only checks adjacent pairs and 1-3 settles on near-identical colors in non-adjacent slots.
-// The feedback floor reuses the normal-vision floor: every series color stays >= 15 from
-// feedback.success / warning / error of the same mode, so a series never reads as a status.
+// A series color closer than 15 (the normal-vision floor) to feedback.success / warning / error of
+// the same mode is a warning: charts then mark status with an icon or a text label beside the
+// feedback color, never with color alone.
 // Contrast against the surfaces is DATAVIZ_CONTRAST above.
-const BAND = { light: [0.43, 0.77], dark: [0.48, 0.67] };
+const BAND = { light: [0.43, 0.77], dark: [0.60, 0.92] };
 const CHROMA_FLOOR = 0.10, CVD_TARGET = 8, CVD_FLOOR = 6, NORMAL_FLOOR = 15, FEEDBACK_FLOOR = 15, ALL_PAIRS_NORMAL_FLOOR = 8;
 const round1 = x => Math.floor(x * 10) / 10;
 if (scratch) capture(result, 'dataViz distinctness', () => {
@@ -260,7 +263,7 @@ if (scratch) capture(result, 'dataViz distinctness', () => {
       keys.forEach((key, i) => {
         const d = deltaE(colors[i], opaque(feedback));
         nearestFeedback = Math.min(nearestFeedback, d);
-        if (d < FEEDBACK_FLOOR) fail(`${mode}: dataViz.series.${key} is deltaE ${round1(d)} from ${role} (< ${FEEDBACK_FLOOR}); a series must not read as a status color`);
+        if (d < FEEDBACK_FLOOR) result.warnings.push(`${mode}: dataViz.series.${key} is deltaE ${round1(d)} from ${role} (< ${FEEDBACK_FLOOR}): charts must mark status with an icon or a text label beside the feedback color, and DESIGN.md says so`);
       });
     }
     const worstOf = w => Number.isFinite(w.cvd) ? { cvd: round1(w.cvd), cvd_pair: w.cvd_pair, normal: round1(w.normal), normal_pair: w.normal_pair } : null;

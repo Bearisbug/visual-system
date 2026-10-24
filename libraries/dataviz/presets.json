@@ -1,0 +1,68 @@
+{
+  "presets": [
+    {
+      "id": "vivid",
+      "name": "鲜明",
+      "series": [
+        { "name": "blue", "light": "#2662E6", "dark": "#5D94FF" },
+        { "name": "orange", "light": "#CA4C03", "dark": "#FE9557" },
+        { "name": "pink", "light": "#C9237B", "dark": "#FB6DB8" },
+        { "name": "violet", "light": "#7436E3", "dark": "#8C68FE" },
+        { "name": "green", "light": "#018455", "dark": "#64F7B3" },
+        { "name": "sky", "light": "#007AB0", "dark": "#80C5FF" }
+      ],
+      "spares": [
+        { "name": "amber", "light": "#A86003", "dark": "#FACF4E" },
+        { "name": "teal", "light": "#009482", "dark": "#4AE6D6" }
+      ]
+    },
+    {
+      "id": "standard",
+      "name": "标准",
+      "series": [
+        { "name": "blue", "light": "#2E69B2", "dark": "#69A1E8" },
+        { "name": "orange", "light": "#BC5B03", "dark": "#F8A052" },
+        { "name": "teal", "light": "#009284", "dark": "#55CEC0" },
+        { "name": "gold", "light": "#957602", "dark": "#E5C95E" },
+        { "name": "purple", "light": "#88529F", "dark": "#C18DD8" },
+        { "name": "green", "light": "#448335", "dark": "#7FC76F" }
+      ],
+      "spares": [
+        { "name": "rose", "light": "#C04255", "dark": "#EF7D88" },
+        { "name": "indigo", "light": "#5150AA", "dark": "#8388E0" }
+      ]
+    },
+    {
+      "id": "soft",
+      "name": "柔和",
+      "series": [
+        { "name": "plum", "light": "#7F3E7A", "dark": "#C27CBB" },
+        { "name": "teal", "light": "#009284", "dark": "#6CD9D8" },
+        { "name": "sand", "light": "#A8742A", "dark": "#EFC37E" },
+        { "name": "blue", "light": "#2765A5", "dark": "#70A9E8" },
+        { "name": "clay", "light": "#AC5343", "dark": "#E7917B" },
+        { "name": "lilac", "light": "#806AB9", "dark": "#BCA9F7" }
+      ],
+      "spares": [
+        { "name": "sage", "light": "#3E8651", "dark": "#89D298" },
+        { "name": "rose", "light": "#A1475C", "dark": "#DF8797" }
+      ]
+    },
+    {
+      "id": "pastel",
+      "name": "粉彩",
+      "series": [
+        { "name": "cyan", "light": "#008EAE", "dark": "#7DEFFB" },
+        { "name": "red", "light": "#CB4451", "dark": "#FDA0A2" },
+        { "name": "violet", "light": "#7457D1", "dark": "#B6AAFF" },
+        { "name": "orange", "light": "#B06505", "dark": "#FFC986" },
+        { "name": "pink", "light": "#AB48AF", "dark": "#F7B8F8" },
+        { "name": "yellow", "light": "#918112", "dark": "#E7E890" }
+      ],
+      "spares": [
+        { "name": "blue", "light": "#2F6DD3", "dark": "#8EB8FE" },
+        { "name": "green", "light": "#488E38", "dark": "#B3F2A6" }
+      ]
+    }
+  ]
+}

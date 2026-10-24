@@ -1,4 +1,4 @@
-// Color math shared by check-tokens.mjs and derive-dataviz.mjs: parsing, compositing, WCAG 2.x contrast,
+// Color math shared by check-tokens.mjs and dataviz-preset.mjs: parsing, compositing, WCAG 2.x contrast,
 // OKLab and Machado, Oliveira & Fernandes (2009) color-vision simulation at severity 1.0.
 export function parseColor(value) {
   if (typeof value !== 'string') return null;

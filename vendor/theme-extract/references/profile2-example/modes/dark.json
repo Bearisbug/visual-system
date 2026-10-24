@@ -25,7 +25,7 @@
       },
       "dataViz": {
         "series": {
-          "1": { "$value": "{primitive.color.dataVizDark.series.1}" },
+          "1": { "$value": "{primitive.color.brand.accentDark}" },
           "2": { "$value": "{primitive.color.dataVizDark.series.2}" },
           "3": { "$value": "{primitive.color.dataVizDark.series.3}" },
           "4": { "$value": "{primitive.color.dataVizDark.series.4}" },

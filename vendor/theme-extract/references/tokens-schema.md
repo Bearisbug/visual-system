@@ -311,21 +311,23 @@ leaves keyed by consecutive integers from `1`:
   the lightness and chroma checks below), the diverging middle step is a neutral.
 - **Per mode.** `modes/<mode>.json` re-points every palette leaf to that mode's hues (light and dark
   each get their own set); a leaf left un-re-pointed shows the base hue on the other mode's surfaces.
-- **Series distinctness.** A `series` set a producer derives passes every check below in every mode.
-  ΔE is the Euclidean distance in OKLab ×100. The lightness band, chroma floor, simulation model and
-  the color-vision-deficiency (CVD) and normal-vision floors are those of the categorical-palette
-  validator in Claude Code's bundled `dataviz` skill (`scripts/validate_palette.js`, checks 2–5); the
-  feedback floor reuses its normal-vision floor.
+- **Series distinctness.** A `series` set a producer derives or picks passes every check below in
+  every mode; the Feedback row only warns. ΔE is the Euclidean distance in OKLab ×100. The light
+  lightness band, chroma floor, simulation model and the color-vision-deficiency (CVD) and
+  normal-vision floors are those of the categorical-palette validator in Claude Code's bundled
+  `dataviz` skill (`scripts/validate_palette.js`, checks 2–5); the feedback distance reuses its
+  normal-vision floor. The dark band is this schema's own: the validator's dark band (0.48–0.67)
+  leaves series dim on dark surfaces.
 
   | Check | Requirement |
   | --- | --- |
-  | Lightness | OKLCH L inside the mode band: light 0.43–0.77, dark 0.48–0.67 |
+  | Lightness | OKLCH L inside the mode band: light 0.43–0.77, dark 0.60–0.92 |
   | Chroma | OKLCH C ≥ 0.10 |
   | Contrast | ≥ 3:1 (WCAG) against each of the four surface roles of that mode |
   | CVD | adjacent slots `n` and `n+1`, protanopia and deuteranopia simulated with Machado, Oliveira & Fernandes (2009) at severity 1.0, the smaller ΔE of the two: ≥ 8 passes; 6–8 passes only when the group's `$description` requires secondary encoding (direct labels, gaps or texture) wherever adjacent series meet; < 6 fails |
   | Normal vision | worst adjacent pair ΔE ≥ 15 |
   | All pairs of `series.1`–`3` | each of the pairs 1–2, 1–3 and 2–3 meets the CVD and normal-vision requirements above |
-  | Feedback | every series color against each of `feedback.success`, `feedback.warning` and `feedback.error` of the same mode: ΔE ≥ 15 |
+  | Feedback (warning) | every series color against each of `feedback.success`, `feedback.warning` and `feedback.error` of the same mode: ΔE ≥ 15; a closer pair is listed in the group's `$description`, and charts then mark status with an icon or a text label beside the feedback color, never with color alone |
 
   Scatter, bubble and small-multiple charts can put any two series side by side, so they compare
   all pairs and use at most three series, `series.1`–`3`; a fourth series folds into "Other" or a
@@ -336,8 +338,10 @@ leaves keyed by consecutive integers from `1`:
   The full-set all-pairs figures are recorded for consumers that draw more series in one chart;
   no threshold applies to them.
 
-  `series.1` is the accent only when that mode's accent passes the lightness band and the chroma
-  floor; otherwise `series.1` keeps the accent's OKLCH hue with L and C re-chosen inside the band and
+  A producer may take the series from a preset palette instead of the brand; the group's
+  `$description` then names the preset and every slot replaced by one of its spare colors, and the
+  rest of this paragraph does not apply. For a series derived from the brand, `series.1` is the
+  accent only when that mode's accent passes the lightness band and the chroma floor; otherwise `series.1` keeps the accent's OKLCH hue with L and C re-chosen inside the band and
   above the floor. When the accent stays below the chroma floor because the brand is monochrome
   (§6.2), `series.1` and `sequential` take the OKLCH hue of the most chromatic of that mode's link,
   focus-ring (`focusRing.color`) and selection (`selection`) colors; when none of them reaches the
@@ -345,8 +349,9 @@ leaves keyed by consecutive integers from `1`:
   `$description`. A series sampled off a captured app's charts stays `measured` and is never
   re-colored; each check it fails is listed in the group's `$description`.
 - **Confidence.** Hues sampled off rendered charts are `measured`. A producer that computes them from
-  the brand marks them `confidence: derived` and writes the derivation rule into the group's
-  `$description`, so a reviewer can recompute every step.
+  the brand or takes them from a preset palette marks them `confidence: derived` and writes the
+  derivation rule or the preset into the group's `$description`, so a reviewer can recompute every
+  step.
 - **Screenshot extraction** captures a palette only when the screenshots show it. A palette bound to
   named metrics by legend labels stays `metric.*`; never invent `series` for an app whose charts the
   capture does not show.
